@@ -4,7 +4,6 @@ import { LangTag, ScriptName } from './langPicker/types';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { List, ListItem, ListItemText, Typography } from '@material-ui/core';
 import { debounce } from 'lodash';
-import { LgPickI18nClean } from './localization/reducers';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -36,12 +35,12 @@ interface IProps {
   secondary?: boolean;
   langTags: LangTag[];
   scriptName: ScriptName;
+  t: ILanguagePickerStrings;
 }
 
 export function LanguageChoice(props: IProps) {
-  const { list, langTags, scriptName, secondary, choose } = props;
+  const { list, langTags, scriptName, secondary, t, choose } = props;
   const classes = useStyles();
-  const t: ILanguagePickerStrings = LgPickI18nClean.languagePicker;
   const [dense] = React.useState(true);
   const [height, setHeight] = React.useState(window.innerHeight);
 
@@ -56,7 +55,7 @@ export function LanguageChoice(props: IProps) {
   };
 
   React.useEffect(() => {
-    const handleResize = debounce(() => setHeight(window.innerWidth), 100);
+    const handleResize = debounce(() => setHeight(window.innerHeight), 100);
 
     window.addEventListener('resize', handleResize);
 

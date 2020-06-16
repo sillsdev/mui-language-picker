@@ -1,7 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { IState, ILanguagePickerStrings } from './model';
-import localStrings from './selector/localize';
+import { ILanguagePickerStrings } from './model';
 import { LangTag } from './langPicker/types';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
@@ -376,6 +374,7 @@ export const LanguagePicker = (props: IProps) => {
               choose={handleChoose}
               langTags={langTags}
               scriptName={scriptName}
+              t={t}
             />
           </>
         );
@@ -455,7 +454,7 @@ export const LanguagePicker = (props: IProps) => {
                 variant="filled"
                 required={true}
               >
-                {scriptList(tag).map((s) => (
+                {scriptList(tag).map((s: string) => (
                   <MenuItem key={s} value={s}>
                     {scriptName[s] + ' - ' + s}
                   </MenuItem>
@@ -518,8 +517,4 @@ export const LanguagePicker = (props: IProps) => {
   );
 };
 
-const mapStateToProps = (state: IState): IStateProps => ({
-  t: localStrings(state, { layout: 'languagePicker' }),
-});
-
-export default connect(mapStateToProps)(LanguagePicker);
+export default LanguagePicker;

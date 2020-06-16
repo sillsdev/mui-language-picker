@@ -2,10 +2,14 @@
   "name": "mui-language-picker",
   "version": "1.0.0",
   "description": "Material UI language picker",
-  "main": "LanguagePicker.tsx",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "clean": "rimraf dist src/index coverage",
+    "copyCss": "copyfiles --flat src/LanguagePicker.css dist",
+    "index": "node src/langPicker/makeIndexes.js",
+    "build": "npm run index && tsc && npm run copyCss",
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -38,26 +42,20 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
-    "axios": "^0.19.2",
+    "copyfiles": "^2.3.0",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-localization": "^1.0.15",
-    "react-redux": "^7.2.0",
-    "reselect": "^4.0.0",
+    "rimraf": "^3.0.2",
     "typescript": "^3.9.5",
-    "typings": "^2.1.1"
+    "write": "^2.0.0"
   },
   "peerdependencies": {
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
-    "axios": "^0.19.2",
     "lodash": "^4.17.15",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-localization": "^1.0.15",
-    "react-redux": "^7.2.0",
-    "reselect": "^4.0.0"
+    "react-dom": "^16.13.1"
   },
   "prettier": {
     "trailingComma": "es5"
