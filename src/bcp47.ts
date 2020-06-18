@@ -1,4 +1,4 @@
-import { langTags } from './LanguagePicker';
+import { langTags } from './langTags';
 
 // https://tools.ietf.org/html/bcp47 page 4
 const lgPat = /^([a-z]{2,3}([a-z]{3}(-[a-z]{3}){2})?)(-[A-Z][a-z]{3})?(-[A-Z]{2}|-[0-9]{3})?(-[0-9a-z]{5,8}|-[0-9][0-9a-zA-Z]{3})*(-[0-9A-WY-Za-wy-z]-[0-9A-Za-z]{2,8})*(-[xX]-[0-9a-zA-Z]{1,8})*$/;
@@ -11,7 +11,7 @@ export function bcp47Match(code: string) {
   );
 }
 
-const multi = (pat: RegExp, input: string): Array<string> => {
+const multi = (pat: RegExp, input: string): string[] => {
   const result = Array<string>();
   let index = 0;
   while (true) {
@@ -61,7 +61,7 @@ export function bcp47Index(code: string) {
     if (lt.iso639_3 === code) {
       inAll.push(i);
     } else {
-      if (lt.tags && lt.tags.filter(ltTag => ltTag === code).length > 0)
+      if (lt.tags && lt.tags.filter((ltTag) => ltTag === code).length > 0)
         inAll.push(i);
     }
   });
@@ -80,14 +80,14 @@ export function bcp47Index(code: string) {
   if (spart.length <= 1) return part;
   const long = tagLen(spart[0]);
   const longList = part
-    .filter(ll => tagLen(ll) === long)
+    .filter((ll) => tagLen(ll) === long)
     .sort((i, j) => (langTags[i].name < langTags[j].name ? -1 : 1));
   return longList;
 }
 
 export function bcp47Find(code: string) {
   const result = bcp47Index(code)
-    ?.map(i => langTags[i])
+    ?.map((i) => langTags[i])
     .sort((i, j) => (i.tag < j.tag ? -1 : 1));
   if (result?.length === 0) return null;
   if (result?.length === 1) return result[0];

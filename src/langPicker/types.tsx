@@ -5,16 +5,16 @@ export interface LangTag {
   iso639_3?: string;
   localname?: string;
   name: string;
-  names?: Array<string>;
+  names?: string[];
   nophonvars?: boolean;
   region?: string;
   regionname?: string;
-  regions?: Array<string>;
+  regions?: string[];
   script: string;
   sldr: boolean;
   tag: string;
-  tags?: Array<string>;
-  variants?: Array<string>;
+  tags?: string[];
+  variants?: string[];
   defaultFont?: string;
   fonts?: string[];
 }
@@ -25,7 +25,7 @@ export interface IRanked {
 }
 
 export interface LangTagMap {
-  [code: string]: Array<number>;
+  [code: string]: number[];
 }
 
 export interface ScriptList {

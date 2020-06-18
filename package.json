@@ -1,6 +1,6 @@
 {
   "name": "mui-language-picker",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Material UI language picker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -8,7 +8,9 @@
     "clean": "rimraf dist src/index coverage",
     "copyCss": "copyfiles --flat src/LanguagePicker.css dist",
     "index": "node src/langPicker/makeIndexes.js",
-    "build": "npm run index && tsc && npm run copyCss",
+    "build": "npm run index && npm test && tsc && npm run copyCss",
+    "lint": "tslint -c tslint.json 'src/**/*.{ts.tsx}'",
+    "pretest": "npm run lint",
     "test": "jest"
   },
   "repository": {
@@ -18,7 +20,8 @@
   "keywords": [
     "language",
     "bcp47",
-    "font"
+    "font",
+    "script"
   ],
   "author": "Greg Trihus <greg_trihus@sil.org>",
   "license": "MIT",
@@ -43,21 +46,36 @@
     "@types/react-dom": "^16.9.8",
     "@types/react-redux": "^7.1.9",
     "copyfiles": "^2.3.0",
-    "lodash": "^4.17.15",
+    "jest": "^26.0.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "rimraf": "^3.0.2",
+    "ts-jest": "^26.1.0",
+    "tslint": "^6.1.2",
     "typescript": "^3.9.5",
     "write": "^2.0.0"
   },
   "peerdependencies": {
     "@material-ui/core": "^4.10.0",
     "@material-ui/icons": "^4.9.1",
-    "lodash": "^4.17.15",
     "react": "^16.13.1",
     "react-dom": "^16.13.1"
   },
   "prettier": {
     "trailingComma": "es5"
+  },
+  "dependencies": {
+    "lodash": "^4.17.15"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "\\.(ts|tsx)$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|.*\\.test)\\.(ts|tsx)$"
   }
 }

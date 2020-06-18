@@ -13,6 +13,7 @@ export interface ILanguagePickerStrings {
   cancel: string;
 }
 
+/* tslint:disable-next-line variable-name */
 export const languagePickerStrings_en = {
   font: 'Font',
   script: 'Script',

@@ -27,19 +27,7 @@ import { getScripts } from './index/LgScripts';
 import { scriptName } from './index/LgScriptName';
 import { fontMap } from './index/LgFontMap';
 import { bcp47Find, bcp47Index, bcp47Parse } from './bcp47';
-import jsonData from './data/langtags.json';
-
-export let langTags = jsonData as LangTag[];
-langTags.push({
-  full: 'qaa',
-  iso639_3: 'qaa',
-  localname: 'Unknown',
-  name: 'Unknown',
-  regionname: 'anywhere',
-  script: 'Latn',
-  sldr: false,
-  tag: 'qaa',
-});
+import { langTags } from './langTags';
 
 const MAXOPTIONS = 50;
 
@@ -152,11 +140,11 @@ export const LanguagePicker = (props: IProps) => {
     setOpen(false);
   };
 
-  const displayTag = (tag: LangTag) => {
-    if (tag && tag.name) {
-      setResponse(tag.name + ' (' + tag.tag + ')');
-      setCurValue(tag.tag);
-      setCurName(tag.name);
+  const displayTag = (tagP: LangTag) => {
+    if (tagP && tagP.name) {
+      setResponse(tagP.name + ' (' + tagP.tag + ')');
+      setCurValue(tagP.tag);
+      setCurName(tagP.name);
     }
   };
 
@@ -188,11 +176,11 @@ export const LanguagePicker = (props: IProps) => {
     { value: 'SimSun', label: 'SimSun (Chinese)', rtl: false },
   ];
 
-  const selectFont = (tag: LangTag | undefined) => {
-    if (!tag || tag.tag === 'und') return;
-    const parse = bcp47Parse(tag.tag);
-    let script = parse.script ? parse.script : tag.script;
-    let region = parse.region ? parse.region : tag.region;
+  const selectFont = (tagP: LangTag | undefined) => {
+    if (!tagP || tagP.tag === 'und') return;
+    const parse = bcp47Parse(tagP.tag);
+    const script = parse.script ? parse.script : tagP.script;
+    const region = parse.region ? parse.region : tagP.region;
     let code = script;
     if (region) {
       code = script + '-' + region;
@@ -223,11 +211,11 @@ export const LanguagePicker = (props: IProps) => {
     setResponse(value !== 'und' ? name + ' (' + value + ')' : '');
   }, [value, name, font]);
 
-  const handleScriptChange = (tag: LangTag | undefined) => (e: any) => {
+  const handleScriptChange = (tagP: LangTag | undefined) => (e: any) => {
     const val = e.target.value;
     setDefaultScript(val);
     const parse = bcp47Parse(curValue);
-    const script = parse.script ? parse.script : tag?.script;
+    const script = parse.script ? parse.script : tagP?.script;
     if (script !== val) {
       let newTag = parse.language + '-' + val;
       if (parse.region) newTag += '-' + parse.region;
@@ -247,15 +235,15 @@ export const LanguagePicker = (props: IProps) => {
     }
   };
 
-  const selectScript = (tag: LangTag) => {
-    const tagParts = bcp47Parse(tag.tag);
-    selectFont(tag);
-    setDefaultScript(tagParts.script ? tagParts.script : tag.script);
+  const selectScript = (tagP: LangTag) => {
+    const tagParts = bcp47Parse(tagP.tag);
+    selectFont(tagP);
+    setDefaultScript(tagParts.script ? tagParts.script : tagP.script);
   };
 
-  const scriptList = (tag: LangTag | undefined) => {
-    if (!tag) return [];
-    return getScripts(tag.tag.split('-')[0]);
+  const scriptList = (tagP: LangTag | undefined) => {
+    if (!tagP) return [];
+    return getScripts(tagP.tag.split('-')[0]);
   };
 
   const handleLanguageClick = () => {
@@ -263,42 +251,42 @@ export const LanguagePicker = (props: IProps) => {
     setTag(undefined);
   };
 
-  const handleChoose = (tag: LangTag) => {
-    let newTag = tag;
+  const handleChoose = (tagP: LangTag) => {
+    let newTag = tagP;
     const found = bcp47Find(response);
     let maxMatch = '';
-    let tagList = [tag.full];
-    if (tag.iso639_3) {
-      tagList.push(tag.iso639_3);
-      tagList.push(tag.iso639_3 + '-' + tag.script);
-      if (tag.region) {
-        tagList.push(tag.iso639_3 + '-' + tag.region);
-        tagList.push(tag.iso639_3 + '-' + tag.script + '-' + tag.region);
+    let tagList = [tagP.full];
+    if (tagP.iso639_3) {
+      tagList.push(tagP.iso639_3);
+      tagList.push(tagP.iso639_3 + '-' + tagP.script);
+      if (tagP.region) {
+        tagList.push(tagP.iso639_3 + '-' + tagP.region);
+        tagList.push(tagP.iso639_3 + '-' + tagP.script + '-' + tagP.region);
       }
     }
-    if (tag.tags) {
-      tagList = tagList.concat(tag.tags.map((t) => t));
+    if (tagP.tags) {
+      tagList = tagList.concat(tagP.tags.map((p) => p));
     }
-    tagList.forEach((t) => {
-      const tLen = t.length;
+    tagList.forEach((i) => {
+      const tLen = i.length;
       if (tLen > maxMatch.length) {
-        if (t === response.slice(0, tLen)) {
+        if (i === response.slice(0, tLen)) {
           if (response.length === tLen || response[tLen] === '-') {
-            maxMatch = t;
+            maxMatch = i;
           }
         }
       }
     });
     if (maxMatch !== '') {
-      newTag = { ...tag, tag: tag.tag + response.slice(maxMatch.length) };
+      newTag = { ...tagP, tag: tagP.tag + response.slice(maxMatch.length) };
       displayTag(newTag);
     }
     setTag(newTag);
     if (maxMatch === '') {
-      if (found === tag) {
-        newTag = { ...tag, tag: response };
-      } else if (Array.isArray(found) && found.indexOf(tag) !== -1) {
-        newTag = { ...tag, tag: response };
+      if (found === tagP) {
+        newTag = { ...tagP, tag: response };
+      } else if (Array.isArray(found) && found.indexOf(tagP) !== -1) {
+        newTag = { ...tagP, tag: response };
       }
     }
     displayTag(newTag);

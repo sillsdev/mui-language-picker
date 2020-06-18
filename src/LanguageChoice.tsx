@@ -84,9 +84,9 @@ export function LanguageChoice(props: IProps) {
     );
   };
 
-  const langElems = (list: number[], langTags: LangTag[]) => {
-    return list.map((r) => {
-      const tag = langTags[r];
+  const langElems = (refList: number[], refTags: LangTag[]) => {
+    return refList.map((r) => {
+      const tag = refTags[r];
       return (
         <ListItem
           button
