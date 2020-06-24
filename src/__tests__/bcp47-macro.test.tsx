@@ -25,3 +25,26 @@ test('parse zh-yue', async () => {
     irregular: null,
   });
 });
+
+test('test zh-min-bei', async () => {
+  expect(bcp47Match('zh-min-bei')).toBeTruthy();
+});
+
+test('find zh-min-bei', async () => {
+  const code = bcp47Find('zh-min-bei');
+  expect(Array.isArray(code)).toBeTruthy();
+  expect(Array.isArray(code) && code.length).toEqual(2);
+});
+
+test('parse zh-min-bei', async () => {
+  expect(bcp47Parse('zh-min-bei')).toEqual({
+    language: 'zh-min-bei',
+    extlang: 'bei',
+    script: null,
+    region: null,
+    variant: null,
+    extension: null,
+    privateUse: [],
+    irregular: null,
+  });
+});

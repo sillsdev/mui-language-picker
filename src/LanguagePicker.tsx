@@ -287,13 +287,13 @@ export const LanguagePicker = (props: IProps) => {
       }
     });
     if (maxMatch !== '') {
-      let newCode = tagP.tag;
-      if (parse.extlang && parse.language) {
-        const tagParts = tagP.tag.split('-');
-        tagParts[0] = parse.language;
-        newCode = tagParts.join('-');
-      }
-      newTag = { ...tagP, tag: newCode + response.slice(maxMatch.length) };
+      // let newCode = tagP.tag;
+      // if (parse.extlang && parse.language) {
+      //   const tagParts = tagP.tag.split('-');
+      //   tagParts[0] = parse.language;
+      //   newCode = tagParts.join('-');
+      // }
+      newTag = { ...tagP, tag: tagP.tag + response.slice(maxMatch.length) };
       displayTag(newTag);
     }
     setTag(newTag);

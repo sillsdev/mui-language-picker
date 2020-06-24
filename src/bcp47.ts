@@ -78,6 +78,27 @@ export function bcp47Index(code: string) {
       if (lt.tag === code.slice(0, lt.tag.length)) part.push(i);
     }
   });
+  if (part.length === 0) {
+    const parse = bcp47Parse(code);
+    if (!parse.extlang) return part;
+    const parts = parse.language?.split('-');
+    let isValid = true;
+    parts?.forEach((pt, j) => {
+      let codeFound = false;
+      const ptLen = pt.length;
+      langTags.forEach((lt, i) => {
+        if (j === 0 && lt.tag.slice(0, ptLen) === pt) {
+          codeFound = true;
+        } else if (lt.tag === pt) {
+          codeFound = true;
+          if (!part.includes(i)) part.push(i);
+        }
+      });
+      if (!codeFound) isValid = false;
+    });
+    if (!isValid) return [];
+    return part.sort((i, j) => (tagLen(i) < tagLen(j) ? -1 : 1));
+  }
   const spart = part.sort((i, j) => (tagLen(i) < tagLen(j) ? 1 : -1));
   if (spart.length <= 1) return part;
   const long = tagLen(spart[0]);
