@@ -1,7 +1,7 @@
 import { langTags } from './langTags';
 
 // https://tools.ietf.org/html/bcp47 page 4
-const lgPat = /^([a-z]{2,3}([a-z]{3}(-[a-z]{3}){2})?)(-[A-Z][a-z]{3})?(-[A-Z]{2}|-[0-9]{3})?(-[0-9a-z]{5,8}|-[0-9][0-9a-zA-Z]{3})*(-[0-9A-WY-Za-wy-z]-[0-9A-Za-z]{2,8})*(-[xX]-[0-9a-zA-Z]{1,8})*$/;
+const lgPat = /^([a-z]{2,3}(-[a-z]{3}){0,3})(-[A-Z][a-z]{3})?(-[A-Z]{2}|-[0-9]{3})?(-[0-9a-z]{5,8}|-[0-9][0-9a-zA-Z]{3})*(-[0-9A-WY-Za-wy-z]-[0-9A-Za-z]{2,8})*(-[xX]-[0-9a-zA-Z]{1,8})*$/;
 
 export function bcp47Match(code: string) {
   const result = lgPat.test(code);
@@ -27,10 +27,11 @@ export function bcp47Parse(code: string) {
   const match = lgPat.exec(code);
   // console.log(match);
   const language = match ? match[1] : null;
-  const script = match && match[4] ? match[4].slice(1) : null;
-  const region = match && match[5] ? match[5].slice(1) : null;
-  const variant = match && match[6] ? match[6].slice(1) : null;
-  const extension = match && match[7] ? match[7].slice(1) : null;
+  const extlang = match && match[2] ? match[2].slice(1) : null;
+  const script = match && match[3] ? match[3].slice(1) : null;
+  const region = match && match[4] ? match[4].slice(1) : null;
+  const variant = match && match[5] ? match[5].slice(1) : null;
+  const extension = match && match[6] ? match[6].slice(1) : null;
   const privateUse = multi(/-[xX]-([0-9a-zA-Z]{1,8})/, code);
   const irregular = !match && bcp47Match(code) ? code : null;
   return {
@@ -41,6 +42,7 @@ export function bcp47Parse(code: string) {
     extension,
     privateUse,
     irregular,
+    extlang,
   };
 }
 

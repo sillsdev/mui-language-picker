@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom/extend-expect';
-import { langTags } from './langTags';
-import { bcp47Match, bcp47Parse, bcp47Find, bcp47Index } from './bcp47';
+import { langTags } from '../langTags';
+import { bcp47Match, bcp47Parse, bcp47Find, bcp47Index } from '../bcp47';
 
 test('test en', async () => {
   expect(bcp47Match('en')).toBeTruthy();
@@ -66,6 +66,7 @@ test('test i-default', async () => {
 test('parse en', async () => {
   expect(bcp47Parse('en')).toEqual({
     language: 'en',
+    extlang: null,
     script: null,
     region: null,
     variant: null,
@@ -78,6 +79,7 @@ test('parse en', async () => {
 test('parse eng', async () => {
   expect(bcp47Parse('eng')).toEqual({
     language: 'eng',
+    extlang: null,
     script: null,
     region: null,
     variant: null,
@@ -90,6 +92,7 @@ test('parse eng', async () => {
 test('parse engl', async () => {
   expect(bcp47Parse('engl')).toEqual({
     language: null,
+    extlang: null,
     script: null,
     region: null,
     variant: null,
@@ -103,6 +106,7 @@ test('parse zh-Hans', async () => {
   expect(bcp47Parse('zh-Hans')).toEqual({
     language: 'zh',
     script: 'Hans',
+    extlang: null,
     region: null,
     variant: null,
     extension: null,
@@ -114,6 +118,7 @@ test('parse zh-Hans', async () => {
 test('parse zh-CN', async () => {
   expect(bcp47Parse('zh-CN')).toEqual({
     language: 'zh',
+    extlang: null,
     script: null,
     region: 'CN',
     variant: null,
@@ -126,6 +131,7 @@ test('parse zh-CN', async () => {
 test('parse es-419', async () => {
   expect(bcp47Parse('es-419')).toEqual({
     language: 'es',
+    extlang: null,
     script: null,
     region: '419',
     variant: null,
@@ -138,6 +144,7 @@ test('parse es-419', async () => {
 test('parse zh-Hant-TW', async () => {
   expect(bcp47Parse('zh-Hant-TW')).toEqual({
     language: 'zh',
+    extlang: null,
     script: 'Hant',
     region: 'TW',
     variant: null,
@@ -150,6 +157,7 @@ test('parse zh-Hant-TW', async () => {
 test('parse en-x-phonipa', async () => {
   expect(bcp47Parse('en-x-phonipa')).toEqual({
     language: 'en',
+    extlang: null,
     script: null,
     region: null,
     variant: null,
@@ -162,6 +170,7 @@ test('parse en-x-phonipa', async () => {
 test('parse en-x-phonipa-x-test', async () => {
   expect(bcp47Parse('en-x-phonipa-x-test')).toEqual({
     language: 'en',
+    extlang: null,
     script: null,
     region: null,
     variant: null,
@@ -174,6 +183,7 @@ test('parse en-x-phonipa-x-test', async () => {
 test('parse nan-Latn-035', async () => {
   expect(bcp47Parse('nan-Latn-035')).toEqual({
     language: 'nan',
+    extlang: null,
     script: 'Latn',
     region: '035',
     variant: null,
@@ -186,6 +196,7 @@ test('parse nan-Latn-035', async () => {
 test('parse rm-sursilv', async () => {
   expect(bcp47Parse('rm-sursilv')).toEqual({
     language: 'rm',
+    extlang: null,
     script: null,
     region: null,
     variant: 'sursilv',
@@ -198,6 +209,7 @@ test('parse rm-sursilv', async () => {
 test('parse gsw-u-sd', async () => {
   expect(bcp47Parse('gsw-u-sd')).toEqual({
     language: 'gsw',
+    extlang: null,
     script: null,
     region: null,
     variant: null,
@@ -210,6 +222,7 @@ test('parse gsw-u-sd', async () => {
 test('parse i-default', async () => {
   expect(bcp47Parse('i-default')).toEqual({
     language: null,
+    extlang: null,
     script: null,
     region: null,
     variant: null,

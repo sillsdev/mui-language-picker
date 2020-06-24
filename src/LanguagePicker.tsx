@@ -264,6 +264,15 @@ export const LanguagePicker = (props: IProps) => {
         tagList.push(tagP.iso639_3 + '-' + tagP.script + '-' + tagP.region);
       }
     }
+    const parse = bcp47Parse(response);
+    if (parse.extlang && parse.language) {
+      tagList.push(parse.language);
+      tagList.push(parse.language + '-' + tagP.script);
+      if (tagP.region) {
+        tagList.push(parse.language + '-' + tagP.region);
+        tagList.push(parse.language + '-' + tagP.script + '-' + tagP.region);
+      }
+    }
     if (tagP.tags) {
       tagList = tagList.concat(tagP.tags.map((p) => p));
     }
@@ -278,7 +287,13 @@ export const LanguagePicker = (props: IProps) => {
       }
     });
     if (maxMatch !== '') {
-      newTag = { ...tagP, tag: tagP.tag + response.slice(maxMatch.length) };
+      let newCode = tagP.tag;
+      if (parse.extlang && parse.language) {
+        const tagParts = tagP.tag.split('-');
+        tagParts[0] = parse.language;
+        newCode = tagParts.join('-');
+      }
+      newTag = { ...tagP, tag: newCode + response.slice(maxMatch.length) };
       displayTag(newTag);
     }
     setTag(newTag);
