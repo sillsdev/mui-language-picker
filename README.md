@@ -52,13 +52,13 @@ Output should be a Language Picker when entered opens a dialog
 | value      | string                  | BCP 47 language code                |
 | setCode\*  | (value: string) => void | callback to change BCP 47 value     |
 | name       | string                  | language name                       |
-| setName\*  | (value: string) => void | callback to change language name    |
+| setName\*  | (name: string) => void  | callback to change language name    |
 | font       | string                  | font family name                    |
-| setFont\*  | (value: string) => void | callback to change font family name |
+| setFont\*  | (font: string) => void  | callback to change font family name |
 | disabled\* | boolean                 | true if control disabled            |
-| t          | object                  | localization strings (see below)    |
+| t          | ILanguagePickerStrings  | localization strings (see below)    |
 
-`* parameters marked with an astrix are optional`
+\* parameters marked with an asterisk are optional
 
 ### Localization Strings
 
