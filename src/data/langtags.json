@@ -41683,7 +41683,14 @@
     "script": "Hans",
     "sldr": false,
     "tag": "gan",
-    "tags": ["gan-CN", "gan-Hans"]
+    "tags": [
+      "gan-CN",
+      "gan-Hans",
+      "zh-gan",
+      "zh-gan-CN",
+      "zh-gan-Hans",
+      "zh-gan-Hans-CN"
+    ]
   },
   {
     "full": "gan-Hant-CN",
@@ -41696,7 +41703,8 @@
     "regionname": "China",
     "script": "Hant",
     "sldr": false,
-    "tag": "gan-Hant"
+    "tag": "gan-Hant",
+    "tags": ["zh-gan-Hant", "zh-gan-Hant-CN"]
   },
   {
     "full": "gan-Latn-CN",
@@ -41709,7 +41717,8 @@
     "regionname": "China",
     "script": "Latn",
     "sldr": false,
-    "tag": "gan-Latn"
+    "tag": "gan-Latn",
+    "tags": ["zh-gan-Latn", "zh-gan-Latn-CN"]
   },
   {
     "full": "gao-Latn-PG",
@@ -146477,7 +146486,14 @@
     "script": "Hant",
     "sldr": false,
     "tag": "yue",
-    "tags": ["yue-HK", "yue-Hant"]
+    "tags": [
+      "yue-HK",
+      "yue-Hant",
+      "zh-yue",
+      "zh-yue-HK",
+      "zh-yue-Hant",
+      "zh-yue-Hant-HK"
+    ]
   },
   {
     "full": "yue-Brai-HK",
@@ -146543,7 +146559,8 @@
     ],
     "script": "Brai",
     "sldr": false,
-    "tag": "yue-Brai"
+    "tag": "yue-Brai",
+    "tags": ["zh-yue-Brai", "zh-yue-Brai-HK"]
   },
   {
     "full": "yue-Hans-CN",
@@ -146610,7 +146627,7 @@
     "script": "Hans",
     "sldr": false,
     "tag": "yue-CN",
-    "tags": ["yue-Hans"]
+    "tags": ["yue-Hans", "zh-yue-CN", "zh-yue-Hans", "zh-yue-Hans-CN"]
   },
   {
     "full": "yue-Latn-CN",
@@ -146676,6 +146693,7 @@
     "script": "Latn",
     "sldr": false,
     "tag": "yue-Latn",
+    "tags": ["zh-yue-Latn", "zh-yue-Latn-CN"],
     "variants": ["jyutping"]
   },
   {
@@ -148320,7 +148338,7 @@
     "script": "Bopo",
     "sldr": false,
     "tag": "zh-Bopo",
-    "tags": ["cmn-Bopo", "cmn-Bopo-TW"]
+    "tags": ["cmn-Bopo", "cmn-Bopo-TW", "zh-cmn-Bopo", "zh-cmn-Bopo-TW"]
   },
   {
     "full": "zh-Brai-CN",
@@ -148380,7 +148398,7 @@
     "script": "Brai",
     "sldr": false,
     "tag": "zh-Brai",
-    "tags": ["cmn-Brai", "cmn-Brai-CN"]
+    "tags": ["cmn-Brai", "cmn-Brai-CN", "zh-cmn-Brai", "zh-cmn-Brai-CN"]
   },
   {
     "full": "zh-Hans-CN",
@@ -148437,7 +148455,18 @@
     "script": "Hans",
     "sldr": false,
     "tag": "zh-CN",
-    "tags": ["cmn", "cmn-CN", "cmn-Hans", "cmn-Hans-CN", "zh", "zh-Hans"]
+    "tags": [
+      "cmn",
+      "cmn-CN",
+      "cmn-Hans",
+      "cmn-Hans-CN",
+      "zh",
+      "zh-Hans",
+      "zh-cmn",
+      "zh-cmn-CN",
+      "zh-cmn-Hans",
+      "zh-cmn-Hans-CN"
+    ]
   },
   {
     "full": "zh-Hant-GB",
