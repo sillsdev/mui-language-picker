@@ -6,9 +6,8 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist src/index coverage",
-    "copyCss": "copyfiles --flat src/LanguagePicker.css dist",
     "index": "node src/langPicker/makeIndexes.js",
-    "build": "npm run index && npm test && tsc && npm run copyCss",
+    "build": "npm run index && npm test && tsc",
     "lint": "tslint -c tslint.json 'src/**/*.{ts.tsx}'",
     "pretest": "npm run lint",
     "test": "jest"

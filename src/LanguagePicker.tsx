@@ -20,7 +20,6 @@ import {
 import ClearIcon from '@material-ui/icons/Clear';
 import { woBadChar } from './util';
 import LanguageChoice from './LanguageChoice';
-import './LanguagePicker.css';
 import clsx from 'clsx';
 import { hasExact, getExact, hasPart, getPart } from './index/LgExact';
 import { getScripts } from './index/LgScripts';
@@ -33,6 +32,12 @@ const MAXOPTIONS = 50;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      '& .MuiDialog-paperScrollPaper': {
+        marginBottom: 'auto',
+        width: '90%',
+      },
+    },
     check: {
       justifyContent: 'flex-end',
     },
@@ -405,6 +410,7 @@ export const LanguagePicker = (props: IProps) => {
         open={open}
         onClose={handleCancel}
         aria-labelledby="form-dialog-title"
+        className={classes.root}
       >
         <DialogTitle id="form-dialog-title">{t.selectLanguage}</DialogTitle>
         <DialogContent dividers>

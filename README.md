@@ -19,13 +19,10 @@ import {
   languagePickerStrings_en,
 } from "mui-language-picker";
 
-var MyComponent = () = {
+const MyComponent = (props: any) => {
   const [bcp47, setBcp47] = React.useState("und");
   const [lgName, setLgName] = React.useState("");
   const [fontName, setFontName] = React.useState("");
-  const [tStr] = React.useState<ILanguagePickerStrings>(
-    languagePickerStrings_en
-  );
 
   return (
     <LanguagePicker
@@ -35,9 +32,9 @@ var MyComponent = () = {
       setName={setLgName}
       font={fontName}
       setFont={setFontName}
-      t={tStr}
-      />;
-  )
+      t={languagePickerStrings_en}
+      />
+  );
 }
 ```
 

@@ -1,0 +1,42 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`can render Language Picker snapshot 1`] = `
+<div>
+  <div
+    id="LangBcp47"
+  >
+    <div
+      class="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense"
+      style="width: 300px;"
+    >
+      <label
+        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-filled Mui-required Mui-required"
+        data-shrink="false"
+        for="lang-bcp47"
+        id="lang-bcp47-label"
+      >
+        Language
+        <span
+          aria-hidden="true"
+          class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+        >
+           
+          *
+        </span>
+      </label>
+      <div
+        class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense"
+      >
+        <input
+          aria-invalid="false"
+          class="MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+          id="lang-bcp47"
+          required=""
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+  </div>
+</div>
+`;
