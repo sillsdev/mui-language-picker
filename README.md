@@ -33,9 +33,9 @@ const MyComponent = (props: any) => {
       font={fontName}
       setFont={setFontName}
       t={languagePickerStrings_en}
-      />
+    />
   );
-}
+};
 ```
 
 ```sh
@@ -86,5 +86,7 @@ npm run build
 ### Test
 
 ```sh
+npm run clean
+npm run index
 npm test
 ```

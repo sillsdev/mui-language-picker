@@ -40,3 +40,388 @@ exports[`can render Language Picker snapshot 1`] = `
   </div>
 </div>
 `;
+
+exports[`enter e 1`] = `
+<body
+  style="padding-right: 0px; overflow: hidden;"
+>
+  <div
+    aria-hidden="true"
+  >
+    <div
+      id="LangBcp47"
+    >
+      <div
+        class="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense"
+        style="width: 300px;"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-filled Mui-required Mui-required"
+          data-shrink="false"
+          for="lang-bcp47"
+          id="lang-bcp47-label"
+        >
+          Language
+          <span
+            aria-hidden="true"
+            class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+          >
+             
+            *
+          </span>
+        </label>
+        <div
+          class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+            id="lang-bcp47"
+            required=""
+            type="text"
+            value=""
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="MuiDialog-root makeStyles-root-10"
+    id="LanguagePicker"
+    role="presentation"
+    style="position: fixed; z-index: 1300; right: 0px; bottom: 0px; top: 0px; left: 0px;"
+  >
+    <div
+      aria-hidden="true"
+      class="MuiBackdrop-root"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+    />
+    <div
+      data-test="sentinelStart"
+      tabindex="0"
+    />
+    <div
+      class="MuiDialog-container MuiDialog-scrollPaper"
+      role="none presentation"
+      style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
+      tabindex="-1"
+    >
+      <div
+        aria-labelledby="form-dialog-title"
+        class="MuiPaper-root MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiPaper-elevation24 MuiPaper-rounded"
+        role="dialog"
+      >
+        <div
+          class="MuiDialogTitle-root"
+          id="form-dialog-title"
+        >
+          <h2
+            class="MuiTypography-root MuiTypography-h6"
+          >
+            Choose Language Details
+          </h2>
+        </div>
+        <div
+          class="MuiDialogContent-root MuiDialogContent-dividers"
+        >
+          <div
+            class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+          >
+            <label
+              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined Mui-focused Mui-focused"
+              data-shrink="true"
+              for="language"
+              id="language-label"
+            >
+              Find a language by name, code, or country
+            </label>
+            <div
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth Mui-focused Mui-focused MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+            >
+              <input
+                aria-invalid="false"
+                class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+                id="language"
+                type="text"
+                value=""
+              />
+              <div
+                class="MuiInputAdornment-root makeStyles-hide-17 MuiInputAdornment-positionEnd"
+              >
+                <button
+                  aria-label="clear language"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd"
+                  tabindex="0"
+                  type="button"
+                >
+                  <span
+                    class="MuiIconButton-label"
+                  >
+                    <svg
+                      aria-hidden="true"
+                      class="MuiSvgIcon-root"
+                      focusable="false"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                  </span>
+                  <span
+                    class="MuiTouchRipple-root"
+                  />
+                </button>
+              </div>
+              <fieldset
+                aria-hidden="true"
+                class="PrivateNotchedOutline-root-19 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  class="PrivateNotchedOutline-legendLabelled-21 PrivateNotchedOutline-legendNotched-22"
+                >
+                  <span>
+                    Find a language by name, code, or country
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+          <label
+            class="MuiFormControlLabel-root"
+          >
+            <div
+              class="MuiFormControl-root MuiTextField-root makeStyles-textField-14 MuiFormControl-marginNormal"
+              style="width: 400px;"
+            >
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled Mui-required Mui-required"
+                data-shrink="false"
+                for="select-script"
+                id="select-script-label"
+              >
+                Script
+                <span
+                  aria-hidden="true"
+                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+                >
+                   
+                  *
+                </span>
+              </label>
+              <div
+                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl"
+              >
+                <div
+                  aria-haspopup="listbox"
+                  aria-labelledby="select-script-label select-script"
+                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                  id="select-script"
+                  role="button"
+                  tabindex="0"
+                >
+                  <span>
+                    ​
+                  </span>
+                </div>
+                <input
+                  aria-hidden="true"
+                  class="MuiSelect-nativeInput"
+                  required=""
+                  tabindex="-1"
+                  value=""
+                />
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 10l5 5 5-5z"
+                  />
+                </svg>
+              </div>
+              
+            </div>
+            <span
+              class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+            />
+          </label>
+          <label
+            class="MuiFormControlLabel-root"
+          >
+            <div
+              class="MuiFormControl-root MuiTextField-root makeStyles-fontField-15 MuiFormControl-marginNormal"
+            >
+              <label
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled Mui-required Mui-required"
+                data-shrink="false"
+                for="select-font"
+                id="select-font-label"
+              >
+                Font
+                <span
+                  aria-hidden="true"
+                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+                >
+                   
+                  *
+                </span>
+              </label>
+              <div
+                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl"
+              >
+                <div
+                  aria-haspopup="listbox"
+                  aria-labelledby="select-font-label select-font"
+                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                  id="select-font"
+                  role="button"
+                  tabindex="0"
+                >
+                  <span>
+                    ​
+                  </span>
+                </div>
+                <input
+                  aria-hidden="true"
+                  class="MuiSelect-nativeInput"
+                  required=""
+                  tabindex="-1"
+                  value=""
+                />
+                <svg
+                  aria-hidden="true"
+                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M7 10l5 5 5-5z"
+                  />
+                </svg>
+              </div>
+              
+            </div>
+            <span
+              class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+            />
+          </label>
+        </div>
+        <div
+          class="MuiDialogActions-root MuiDialogActions-spacing"
+        >
+          <a
+            href="https://www.w3.org/International/questions/qa-choosing-language-tags"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            <p
+              class="MuiTypography-root MuiTypography-body1"
+            >
+              Code Explained
+            </p>
+          </a>
+          <div
+            class="makeStyles-grow-18"
+          >
+             
+          </div>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+            tabindex="0"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                Cancel
+              </p>
+            </span>
+            <span
+              class="MuiTouchRipple-root"
+            />
+          </button>
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary Mui-disabled Mui-disabled"
+            disabled=""
+            tabindex="-1"
+            type="button"
+          >
+            <span
+              class="MuiButton-label"
+            >
+              <p
+                class="MuiTypography-root MuiTypography-body1"
+              >
+                Save
+              </p>
+            </span>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      data-test="sentinelEnd"
+      tabindex="0"
+    />
+  </div>
+</body>
+`;
+
+exports[`enter en contains en-001 entry 1`] = `
+<div
+  aria-disabled="false"
+  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-button"
+  role="button"
+  tabindex="0"
+>
+  <div
+    class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline"
+  >
+    <span
+      class="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+    >
+      <div
+        class="makeStyles-firstLine-44"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+        >
+          English
+        </p>
+        <div
+          class="makeStyles-grow-45"
+        >
+           
+        </div>
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+        >
+          en-001
+        </p>
+      </div>
+    </span>
+    <p
+      class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+    >
+      <span
+        class="MuiTypography-root MuiTypography-body1"
+      >
+        A Language of World.
+      </span>
+      <br />
+      <span
+        class="MuiTypography-root MuiTypography-body1"
+      />
+    </p>
+  </div>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</div>
+`;

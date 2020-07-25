@@ -74,21 +74,25 @@ export function LanguageChoice(props: IProps) {
   const detail = (tag: LangTag) => {
     return (
       <>
-        <Typography>
+        <Typography component={'span'}>
           {t.languageOf
             .replace('$1', tag.regionname ? tag.regionname : '')
             .replace('$2', scriptDetail(tag))}
         </Typography>
-        <Typography>{tag.names ? tag.names.join(', ') : ''}</Typography>
+        <br />
+        <Typography component={'span'}>
+          {tag.names ? tag.names.join(', ') : ''}
+        </Typography>
       </>
     );
   };
 
   const langElems = (refList: number[], refTags: LangTag[]) => {
-    return refList.map((r) => {
+    return refList.map((r, i) => {
       const tag = refTags[r];
       return (
         <ListItem
+          key={`${tag.tag} ${i}`}
           button
           onClick={handleChoose(tag)}
           onKeyDown={handleKeydown(tag)}

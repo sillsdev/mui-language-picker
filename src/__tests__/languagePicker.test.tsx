@@ -1,4 +1,5 @@
 import React from 'react';
+import keycode from 'keycode';
 import {
   render,
   fireEvent,
@@ -32,4 +33,35 @@ test('can render Language Picker snapshot', async () => {
   const { getByText, container } = render(<MyComponent />);
   await waitForElement(() => getByText(/^Language$/i));
   expect(container).toMatchSnapshot();
+});
+
+test('enter e', async () => {
+  const { getByText, container } = render(<MyComponent />);
+  await waitForElement(() => getByText(/^Language$/i));
+  fireEvent.keyDown(getByText(/^Language/i).nextSibling?.firstChild as any, {
+    key: 'E',
+    code: 'KeyE',
+  });
+  await waitForElement(() => getByText(/^Choose Language Details$/i));
+  expect(container.parentElement).toMatchSnapshot();
+});
+
+test('enter en contains en-001 entry', async () => {
+  const { getByText, getAllByText, container } = render(<MyComponent />);
+  await waitForElement(() => getByText(/^Language$/i));
+  fireEvent.keyDown(getByText(/^Language/i).nextSibling?.firstChild as any, {
+    key: 'E',
+    code: 'KeyE',
+  });
+  await waitForElement(() => getByText(/^Choose Language Details$/i));
+  fireEvent.change(
+    getAllByText(/Find a language by name, code, or country/i)[0].nextSibling
+      ?.firstChild as any,
+    { target: { value: 'en' } }
+  );
+  await waitForElement(() => getByText(/^en-001$/i));
+  expect(
+    getByText(/^en-001$/i).parentElement?.parentElement?.parentElement
+      ?.parentElement
+  ).toMatchSnapshot();
 });
