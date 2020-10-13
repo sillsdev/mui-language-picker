@@ -4,6 +4,8 @@ Material UI react language picker
 
 ## Installation
 
+Complete installation for [material-ui](https://material-ui.com/getting-started/installation/).
+
 ```sh
 npm install mui-language-picker --save
 ```
@@ -73,7 +75,16 @@ export const languagePickerStrings_en = {
   inScript: " in the $1 script",
   select: "Save",
   cancel: "Cancel",
+  phonetic: "Phonetic",
 } as ILanguagePickerStrings;
+```
+
+### Change control background
+If the theme involves using a dark background, the control background can be changed with css. See also [material-ui](https://material-ui.com/) documentation.
+```css
+#LangBcp47 .MuiFilledInput-root {
+  background-color: rgba(255, 255, 255, 0.9);
+}
 ```
 
 ### Build

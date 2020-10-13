@@ -1,7 +1,7 @@
 import { langTags } from './langTags';
 
 // https://tools.ietf.org/html/bcp47 page 4
-const lgPat = /^([a-z]{2,3}(-[a-z]{3}){0,3})(-[A-Z][a-z]{3})?(-[A-Z]{2}|-[0-9]{3})?(-[0-9a-z]{5,8}|-[0-9][0-9a-zA-Z]{3})*(-[0-9A-WY-Za-wy-z]-[0-9A-Za-z]{2,8})*(-[xX]-[0-9a-zA-Z]{1,8})*$/;
+const lgPat = /^([a-z]{2,3}(-[a-z]{3}){0,3})(-[A-Z][a-z]{3})?(-[A-Z]{2}|-[0-9]{3})?(-[0-9a-z]{5,8}|-[0-9][0-9a-zA-Z]{3})*(-([0-9A-WY-Za-wy-z]-[0-9A-Za-z]{2,8}|fonipa))*(-[xX]-[0-9a-zA-Z]{1,8})*$/;
 
 export function bcp47Match(code: string) {
   const result = lgPat.test(code);

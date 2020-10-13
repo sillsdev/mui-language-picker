@@ -348,3 +348,50 @@ test('index i-default', async () => {
   const result = bcp47Index('i-default');
   expect(result?.length).toEqual(0);
 });
+
+test('test en-fonipa', async () => {
+  expect(bcp47Match('en-fonipa')).toBeTruthy();
+});
+
+test('test es-419-fonipa', async () => {
+  expect(bcp47Match('es-419-fonipa')).toBeTruthy();
+});
+
+test('parse en', async () => {
+  expect(bcp47Parse('en')).toEqual({
+    language: 'en',
+    extlang: null,
+    script: null,
+    region: null,
+    variant: null,
+    extension: null,
+    privateUse: [],
+    irregular: null,
+  });
+});
+
+test('parse en-fonipa', async () => {
+  expect(bcp47Parse('en-fonipa')).toEqual({
+    language: 'en',
+    extlang: null,
+    script: null,
+    region: null,
+    variant: 'fonipa',
+    extension: null,
+    privateUse: [],
+    irregular: null,
+  });
+});
+
+test('parse es-419-fonipa', async () => {
+  expect(bcp47Parse('es-419-fonipa')).toEqual({
+    language: 'es',
+    extlang: null,
+    script: null,
+    region: '419',
+    variant: 'fonipa',
+    extension: null,
+    privateUse: [],
+    irregular: null,
+  });
+});
