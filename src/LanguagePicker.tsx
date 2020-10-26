@@ -1,7 +1,7 @@
-import React from "react";
-import { ILanguagePickerStrings } from "./model";
-import { LangTag } from "./langPicker/types";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import React from 'react';
+import { ILanguagePickerStrings } from './model';
+import { LangTag } from './langPicker/types';
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
   Button,
   Dialog,
@@ -16,37 +16,37 @@ import {
   MenuItem,
   InputAdornment,
   IconButton,
-} from "@material-ui/core";
-import ClearIcon from "@material-ui/icons/Clear";
-import { woBadChar } from "./util";
-import LanguageChoice from "./LanguageChoice";
-import clsx from "clsx";
-import { hasExact, getExact, hasPart, getPart } from "./index/LgExact";
-import { getScripts } from "./index/LgScripts";
-import { scriptName } from "./index/LgScriptName";
-import { fontMap } from "./index/LgFontMap";
-import { bcp47Find, bcp47Index, bcp47Parse } from "./bcp47";
-import { langTags } from "./langTags";
-import useDebounce from "./useDebounce";
+} from '@material-ui/core';
+import ClearIcon from '@material-ui/icons/Clear';
+import { woBadChar } from './util';
+import LanguageChoice from './LanguageChoice';
+import clsx from 'clsx';
+import { hasExact, getExact, hasPart, getPart } from './index/LgExact';
+import { getScripts } from './index/LgScripts';
+import { scriptName } from './index/LgScriptName';
+import { fontMap } from './index/LgFontMap';
+import { bcp47Find, bcp47Index, bcp47Parse } from './bcp47';
+import { langTags } from './langTags';
+import useDebounce from './useDebounce';
 
 const MAXOPTIONS = 50;
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      "& .MuiDialog-paperScrollPaper": {
-        marginBottom: "auto",
-        width: "90%",
+      '& .MuiDialog-paperScrollPaper': {
+        marginBottom: 'auto',
+        width: '90%',
       },
     },
     check: {
-      justifyContent: "flex-end",
+      justifyContent: 'flex-end',
     },
     label: {
-      flexDirection: "row-reverse",
+      flexDirection: 'row-reverse',
     },
     label2: {
-      flexDirection: "row-reverse",
+      flexDirection: 'row-reverse',
       marginRight: 0,
     },
     textField: {
@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: 200,
     },
     hide: {
-      display: "none",
+      display: 'none',
     },
     grow: {
       flexGrow: 1,
@@ -94,10 +94,10 @@ export const LanguagePicker = (props: IProps) => {
   const [curName, setCurName] = React.useState(name);
   const [curFont, setCurFont] = React.useState(font);
   const [secondary, setSecondary] = React.useState(true);
-  const [response, setResponse] = React.useState("");
+  const [response, setResponse] = React.useState('');
   const [tag, setTag] = React.useState<LangTag>();
-  const [defaultScript, setDefaultScript] = React.useState("");
-  const [defaultFont, setDefaultFont] = React.useState("");
+  const [defaultScript, setDefaultScript] = React.useState('');
+  const [defaultFont, setDefaultFont] = React.useState('');
   const [fontOpts, setFontOpts] = React.useState(Array<string>());
   const langEl = React.useRef<any>();
 
@@ -107,15 +107,16 @@ export const LanguagePicker = (props: IProps) => {
   const SHIFT = 16;
   const CTRL = 17;
 
-  const IpaTag = "fonipa";
+  const IpaTag = 'fonipa';
+  if (!scriptName.hasOwnProperty(IpaTag)) scriptName[IpaTag] = t.phonetic;
 
   const handleClickOpen = (e: any) => {
     if (disabled) return;
     if (e.keyCode && [TAB, SHIFT, CTRL].indexOf(e.keyCode) !== -1) return;
     const found = bcp47Find(curValue);
-    if (curValue !== "und") {
+    if (curValue !== 'und') {
       if (found && !Array.isArray(found)) {
-        setResponse(curName + " (" + curValue + ")");
+        setResponse(curName + ' (' + curValue + ')');
         setTag(found);
         selectFont(found);
         setDefaultScript(found.script);
@@ -123,7 +124,7 @@ export const LanguagePicker = (props: IProps) => {
       } else {
         const key = curValue.toLocaleLowerCase();
         if (hasExact(key)) {
-          setResponse(curName + " (" + curValue + ")");
+          setResponse(curName + ' (' + curValue + ')');
           const langTag = langTags[getExact(key)[0]];
           setTag(langTag);
           selectFont(langTag);
@@ -138,21 +139,24 @@ export const LanguagePicker = (props: IProps) => {
   };
   const handleClear = () => {
     setFontOpts([]);
-    setResponse("");
+    setResponse('');
     setTag(undefined);
-    setDefaultFont("");
+    setDefaultFont('');
     if (langEl.current) langEl.current.click();
   };
   const handleCancel = () => {
     setCurValue(value);
     setCurName(name);
     setCurFont(font);
+    setTag(undefined);
+    setDefaultScript('');
+    setResponse('');
     setOpen(false);
   };
 
   const displayTag = (tagP: LangTag, val?: string) => {
     if (tagP && tagP.name) {
-      setResponse(tagP.name + " (" + tagP.tag + ")");
+      setResponse(tagP.name + ' (' + tagP.tag + ')');
       setCurValue(val ? val : tagP.tag);
       setCurName(tagP.name);
     }
@@ -165,7 +169,7 @@ export const LanguagePicker = (props: IProps) => {
     if (tag) {
       displayTag(tag, curValue);
     } else {
-      setResponse("");
+      setResponse('');
     }
     setOpen(false);
   };
@@ -180,20 +184,20 @@ export const LanguagePicker = (props: IProps) => {
   };
 
   const safeFonts = [
-    { value: "NotoSansLatn", label: "Noto Sans (Recommended)", rtl: false },
-    { value: "AnnapurnaSIL", label: "Annapurna SIL (Indic)", rtl: false },
-    { value: "Scheherazade", label: "Scheherazade (Arabic)", rtl: true },
-    { value: "SimSun", label: "SimSun (Chinese)", rtl: false },
+    { value: 'NotoSansLatn', label: 'Noto Sans (Recommended)', rtl: false },
+    { value: 'AnnapurnaSIL', label: 'Annapurna SIL (Indic)', rtl: false },
+    { value: 'Scheherazade', label: 'Scheherazade (Arabic)', rtl: true },
+    { value: 'SimSun', label: 'SimSun (Chinese)', rtl: false },
   ];
 
   const selectFont = (tagP: LangTag | undefined) => {
-    if (!tagP || tagP.tag === "und") return;
+    if (!tagP || tagP.tag === 'und') return;
     const parse = bcp47Parse(tagP.tag);
     const script = parse.script ? parse.script : tagP.script;
     const region = parse.region ? parse.region : tagP.region;
     let code = script;
     if (region) {
-      code = script + "-" + region;
+      code = script + '-' + region;
       if (!fontMap.hasOwnProperty(code)) {
         code = script;
       }
@@ -211,14 +215,14 @@ export const LanguagePicker = (props: IProps) => {
   };
 
   React.useEffect(() => {
-    if (response === "") handleClear();
+    if (response === '') handleClear();
   }, [response]);
 
   React.useEffect(() => {
     setCurValue(value);
     setCurName(name);
     setCurFont(font);
-    setResponse(value !== "und" ? name + " (" + value + ")" : "");
+    setResponse(value !== 'und' ? name + ' (' + value + ')' : '');
   }, [value, name, font]);
 
   const handleScriptChange = (tagP: LangTag | undefined) => (e: any) => {
@@ -227,19 +231,19 @@ export const LanguagePicker = (props: IProps) => {
     const parse = bcp47Parse(curValue);
     const script = parse.script ? parse.script : tagP?.script;
     if (script !== val) {
-      let newTag = parse.language || "und";
-      if (val !== IpaTag) newTag += "-" + val;
-      if (parse.region) newTag += "-" + parse.region;
+      let newTag = parse.language || 'und';
+      if (val !== IpaTag) newTag += '-' + val;
+      if (parse.region) newTag += '-' + parse.region;
       const found = bcp47Find(newTag);
       if (found) {
         const firstFind = Array.isArray(found) ? found[0] : found;
         setTag(firstFind);
         let myTag = firstFind.tag;
         if (val === IpaTag) myTag += `-${IpaTag}`;
-        else if (parse.variant !== IpaTag) myTag += "-" + parse.variant;
-        if (parse.extension) myTag += "-" + parse.extension;
+        else if (parse.variant !== IpaTag) myTag += '-' + parse.variant;
+        if (parse.extension) myTag += '-' + parse.extension;
         parse.privateUse.forEach((i) => {
-          myTag += "-x-" + i;
+          myTag += '-x-' + i;
         });
         displayTag({ ...firstFind, tag: myTag });
         selectFont(firstFind);
@@ -255,7 +259,7 @@ export const LanguagePicker = (props: IProps) => {
 
   const scriptList = (tagP: LangTag | undefined) => {
     if (!tagP) return [];
-    return getScripts(tagP.tag.split("-")[0]);
+    return getScripts(tagP.tag.split('-')[0]).concat(IpaTag);
   };
 
   const handleLanguageClick = () => {
@@ -266,23 +270,23 @@ export const LanguagePicker = (props: IProps) => {
   const handleChoose = (tagP: LangTag) => {
     let newTag = tagP;
     const found = bcp47Find(response);
-    let maxMatch = "";
+    let maxMatch = '';
     let tagList = [tagP.full];
     if (tagP.iso639_3) {
       tagList.push(tagP.iso639_3);
-      tagList.push(tagP.iso639_3 + "-" + tagP.script);
+      tagList.push(tagP.iso639_3 + '-' + tagP.script);
       if (tagP.region) {
-        tagList.push(tagP.iso639_3 + "-" + tagP.region);
-        tagList.push(tagP.iso639_3 + "-" + tagP.script + "-" + tagP.region);
+        tagList.push(tagP.iso639_3 + '-' + tagP.region);
+        tagList.push(tagP.iso639_3 + '-' + tagP.script + '-' + tagP.region);
       }
     }
     const parse = bcp47Parse(response);
     if (parse.extlang && parse.language) {
       tagList.push(parse.language);
-      tagList.push(parse.language + "-" + tagP.script);
+      tagList.push(parse.language + '-' + tagP.script);
       if (tagP.region) {
-        tagList.push(parse.language + "-" + tagP.region);
-        tagList.push(parse.language + "-" + tagP.script + "-" + tagP.region);
+        tagList.push(parse.language + '-' + tagP.region);
+        tagList.push(parse.language + '-' + tagP.script + '-' + tagP.region);
       }
     }
     if (tagP.tags) {
@@ -292,13 +296,13 @@ export const LanguagePicker = (props: IProps) => {
       const tLen = i.length;
       if (tLen > maxMatch.length) {
         if (i === response.slice(0, tLen)) {
-          if (response.length === tLen || response[tLen] === "-") {
+          if (response.length === tLen || response[tLen] === '-') {
             maxMatch = i;
           }
         }
       }
     });
-    if (maxMatch !== "") {
+    if (maxMatch !== '') {
       // let newCode = tagP.tag;
       // if (parse.extlang && parse.language) {
       //   const tagParts = tagP.tag.split('-');
@@ -309,7 +313,7 @@ export const LanguagePicker = (props: IProps) => {
       displayTag(newTag);
     }
     setTag(newTag);
-    if (maxMatch === "") {
+    if (maxMatch === '') {
       if (found === tagP) {
         newTag = { ...tagP, tag: response };
       } else if (Array.isArray(found) && found.indexOf(tagP) !== -1) {
@@ -334,7 +338,7 @@ export const LanguagePicker = (props: IProps) => {
   const optList = () => {
     if (!tag && response) {
       let list = Array<number>();
-      debouncedResponse.split(" ").forEach((w) => {
+      debouncedResponse.split(' ').forEach((w) => {
         if (w.length > 1) {
           const wLangTags = bcp47Index(w);
           if (wLangTags) {
@@ -347,9 +351,9 @@ export const LanguagePicker = (props: IProps) => {
           }
         }
       });
-      debouncedResponse.split(" ").forEach((w) => {
+      debouncedResponse.split(' ').forEach((w) => {
         if (w.length > 1) {
-          const lastDash = w.lastIndexOf("-");
+          const lastDash = w.lastIndexOf('-');
           if (lastDash !== -1) {
             const wLangTags = bcp47Index(w.slice(0, lastDash));
             if (wLangTags) list = mergeList(list, wLangTags);
@@ -407,7 +411,7 @@ export const LanguagePicker = (props: IProps) => {
         label={t.language}
         required={true}
         style={{ width: 300 }}
-        value={value !== "und" ? name + " (" + value + ")" : ""}
+        value={value !== 'und' ? name + ' (' + value + ')' : ''}
         onClick={handleClickOpen}
         onKeyDown={handleClickOpen}
         disabled={disabled ? disabled : false}
@@ -436,7 +440,7 @@ export const LanguagePicker = (props: IProps) => {
               endAdornment: (
                 <InputAdornment
                   position="end"
-                  className={clsx({ [classes.hide]: response === "" })}
+                  className={clsx({ [classes.hide]: response === '' })}
                 >
                   <IconButton
                     edge="end"
@@ -465,22 +469,16 @@ export const LanguagePicker = (props: IProps) => {
                     className: classes.menu,
                   },
                 }}
-                helperText={""}
+                helperText={''}
                 margin="normal"
                 variant="filled"
                 required={true}
               >
-                {scriptList(tag)
-                  .map((s: string) => (
-                    <MenuItem key={s} value={s}>
-                      {scriptName[s] + " - " + s}
-                    </MenuItem>
-                  ))
-                  .concat(
-                    <MenuItem key={IpaTag} value={IpaTag}>
-                      {`${t.phonetic} - ${IpaTag}`}
-                    </MenuItem>
-                  )}
+                {scriptList(tag).map((s: string) => (
+                  <MenuItem key={s} value={s}>
+                    {scriptName[s] + ' - ' + s}
+                  </MenuItem>
+                ))}
               </TextField>
             }
             label=""
@@ -499,7 +497,7 @@ export const LanguagePicker = (props: IProps) => {
                     className: classes.menu,
                   },
                 }}
-                helperText={""}
+                helperText={''}
                 margin="normal"
                 variant="filled"
                 required={true}
@@ -522,7 +520,7 @@ export const LanguagePicker = (props: IProps) => {
           >
             <Typography>{t.codeExplained}</Typography>
           </a>
-          <div className={classes.grow}>{"\u00A0"}</div>
+          <div className={classes.grow}>{'\u00A0'}</div>
           <Button onClick={handleCancel} color="primary">
             <Typography>{t.cancel}</Typography>
           </Button>
