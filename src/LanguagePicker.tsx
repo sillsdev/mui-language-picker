@@ -190,6 +190,13 @@ export const LanguagePicker = (props: IProps) => {
     { value: 'SimSun', label: 'SimSun (Chinese)', rtl: false },
   ];
 
+  const selectDefaultFont = (code: string) => {
+    const fonts = fontMap[code];
+    setDefaultFont(fonts[0]);
+    setCurFont(fonts[0]);
+    setFontOpts(fonts);
+  };
+
   const selectFont = (tagP: LangTag | undefined) => {
     if (!tagP || tagP.tag === 'und') return;
     const parse = bcp47Parse(tagP.tag);
@@ -206,12 +213,7 @@ export const LanguagePicker = (props: IProps) => {
       setDefaultFont(safeFonts[0].value);
       setCurFont(safeFonts[0].value);
       setFontOpts(safeFonts.map((f) => f.value));
-    } else {
-      const fonts = fontMap[code];
-      setDefaultFont(fonts[0]);
-      setCurFont(fonts[0]);
-      setFontOpts(fonts);
-    }
+    } else selectDefaultFont(code);
   };
 
   React.useEffect(() => {
@@ -240,13 +242,15 @@ export const LanguagePicker = (props: IProps) => {
         setTag(firstFind);
         let myTag = firstFind.tag;
         if (val === IpaTag) myTag += `-${IpaTag}`;
-        else if (parse.variant !== IpaTag) myTag += '-' + parse.variant;
+        else if (parse.variant && parse.variant !== IpaTag)
+          myTag += '-' + parse.variant;
         if (parse.extension) myTag += '-' + parse.extension;
         parse.privateUse.forEach((i) => {
           myTag += '-x-' + i;
         });
         displayTag({ ...firstFind, tag: myTag });
-        selectFont(firstFind);
+        if (val === IpaTag) selectDefaultFont(IpaTag);
+        else selectFont(firstFind);
       }
     }
   };
@@ -474,11 +478,21 @@ export const LanguagePicker = (props: IProps) => {
                 variant="filled"
                 required={true}
               >
-                {scriptList(tag).map((s: string) => (
-                  <MenuItem key={s} value={s}>
-                    {scriptName[s] + ' - ' + s}
-                  </MenuItem>
-                ))}
+                {scriptList(tag)
+                  .map((s: string) => (
+                    <MenuItem key={s} value={s}>
+                      {scriptName[s] + ' - ' + s}
+                    </MenuItem>
+                  ))
+                  .concat(
+                    scriptList(tag).includes(defaultScript)
+                      ? []
+                      : [
+                          <MenuItem key={defaultScript} value={defaultScript}>
+                            {defaultScript}
+                          </MenuItem>,
+                        ]
+                  )}
               </TextField>
             }
             label=""
