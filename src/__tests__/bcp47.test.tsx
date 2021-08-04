@@ -395,3 +395,29 @@ test('parse es-419-fonipa', async () => {
     irregular: null,
   });
 });
+
+test('parse zh-CN-x-pyn', async () => {
+  expect(bcp47Parse('zh-CN-x-pyn')).toEqual({
+    language: 'zh',
+    extlang: null,
+    script: null,
+    region: 'CN',
+    variant: null,
+    extension: null,
+    privateUse: ['pyn'],
+    irregular: null,
+  });
+});
+
+test('parse zhn-fonipa', async () => {
+  expect(bcp47Parse('zhn-fonipa')).toEqual({
+    language: 'zhn',
+    extlang: null,
+    script: null,
+    region: null,
+    variant: 'fonipa',
+    extension: null,
+    privateUse: [],
+    irregular: null,
+  });
+});

@@ -275,7 +275,7 @@ export const LanguagePicker = (props: IProps) => {
     let newTag = tagP;
     const found = bcp47Find(response);
     let maxMatch = '';
-    let tagList = [tagP.full];
+    let tagList = [tagP.full, tagP.tag];
     if (tagP.iso639_3) {
       tagList.push(tagP.iso639_3);
       tagList.push(tagP.iso639_3 + '-' + tagP.script);

@@ -425,3 +425,58 @@ exports[`enter en contains en-001 entry 1`] = `
   />
 </div>
 `;
+
+exports[`enter zh-CN-x-pyn contains zh-CN entry 1`] = `
+<div
+  aria-disabled="false"
+  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-button"
+  role="button"
+  tabindex="0"
+>
+  <div
+    class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline"
+  >
+    <span
+      class="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+    >
+      <div
+        class="makeStyles-firstLine-67"
+      >
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+        >
+          Chinese
+        </p>
+        <div
+          class="makeStyles-grow-68"
+        >
+           
+        </div>
+        <p
+          class="MuiTypography-root MuiTypography-body1"
+        >
+          zh-CN
+        </p>
+      </div>
+    </span>
+    <p
+      class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+    >
+      <span
+        class="MuiTypography-root MuiTypography-body1"
+      >
+        A Language of China.
+      </span>
+      <br />
+      <span
+        class="MuiTypography-root MuiTypography-body1"
+      >
+        Beifang Fangyan, Beijinghua, Chinese, Mandarin, Hoton, Hui, Hui-Zu, Hytad, Khoton, Mandarin, Northern Chinese, Qotong, Standard Chinese, Tayok, Xui, Zhongguohua
+      </span>
+    </p>
+  </div>
+  <span
+    class="MuiTouchRipple-root"
+  />
+</div>
+`;
