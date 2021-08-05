@@ -66,7 +66,7 @@ test('enter en contains en-001 entry', async () => {
   ).toMatchSnapshot();
 });
 
-test('enter zh-CN-x-pyn contains zh-CN entry', async () => {
+test('enter zh-CN-x-pyn looks up correct result', async () => {
   const dom = render(<MyComponent />);
   const { getByText, getAllByText, container } = dom;
   await waitForElement(() => getByText(/^Language$/i));
@@ -88,4 +88,27 @@ test('enter zh-CN-x-pyn contains zh-CN entry', async () => {
   // when the Script choice appears - the calculation is complete
   await waitForElement(() => getByText(/^Script$/));
   expect(codeEl).toHaveAttribute('value', 'Chinese (zh-CN-x-pyn)');
+});
+
+test('enter zhn-fonapi looks up correct result', async () => {
+  const dom = render(<MyComponent />);
+  const { getByText, getAllByText, container } = dom;
+  await waitForElement(() => getByText(/^Language$/i));
+  const langEl = getByText(/^Language/i).nextSibling?.firstChild as HTMLElement;
+  // typing in this box opens the chooser
+  fireEvent.keyDown(langEl, { key: 'z', code: 'KeyZ' });
+  await waitForElement(() => getByText(/^Choose Language Details$/i));
+  const codeEl = getAllByText(/Find a language by name, code, or country/i)[0]
+    .nextSibling?.firstChild as any;
+  // We enter the code we want to test
+  fireEvent.change(codeEl, { target: { value: 'zhn-fonapi' } });
+  await waitForElement(() => getByText(/^zhn-Latn$/i));
+  const lgEl =
+    getByText(/^zhn-Latn$/i).parentElement?.parentElement?.parentElement
+      ?.parentElement;
+  // making a language choice should update the code value
+  lgEl && fireEvent.click(lgEl);
+  // when the Script choice appears - the calculation is complete
+  await waitForElement(() => getByText(/^Script$/));
+  expect(codeEl).toHaveAttribute('value', 'Zhuang, Nong (zhn-fonapi)');
 });

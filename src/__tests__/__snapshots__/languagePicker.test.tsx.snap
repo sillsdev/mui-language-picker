@@ -426,7 +426,7 @@ exports[`enter en contains en-001 entry 1`] = `
 </div>
 `;
 
-exports[`enter zh-CN-x-pyn contains zh-CN entry 1`] = `
+exports[`enter zh-CN-x-pyn looks up correct result 1`] = `
 <div
   aria-disabled="false"
   class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-button"
