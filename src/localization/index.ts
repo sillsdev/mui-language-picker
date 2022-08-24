@@ -12,6 +12,10 @@ export interface ILanguagePickerStrings {
   select: string;
   cancel: string;
   phonetic: string;
+  changeName?: string;
+  nameInstruction?: string;
+  newName?: string;
+  change?: string;
 }
 
 /* tslint:disable-next-line variable-name */
@@ -28,5 +32,10 @@ export const languagePickerStrings_en = {
   inScript: ' in the $1 script',
   select: 'Save',
   cancel: 'Cancel',
-  phonetic: 'Phonetic'
+  phonetic: 'Phonetic',
+  changeName: 'Change Name',
+  nameInstruction:
+    'If you would like to change the language name enter the new name here.',
+  newName: 'New Language Name',
+  change: 'Change',
 } as ILanguagePickerStrings;

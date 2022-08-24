@@ -1,10 +1,10 @@
 import React from 'react';
 import { ILanguagePickerStrings } from './model';
 import { LangTag } from './langPicker/types';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import {
   Button,
   Dialog,
+  DialogProps,
   DialogActions,
   DialogContent,
   DialogTitle,
@@ -16,11 +16,14 @@ import {
   MenuItem,
   InputAdornment,
   IconButton,
-} from '@material-ui/core';
-import ClearIcon from '@material-ui/icons/Clear';
+  styled,
+  SxProps,
+  Tooltip,
+} from '@mui/material';
+import ClearIcon from '@mui/icons-material/Clear';
+import ChangeNameIcon from '@mui/icons-material/BorderColor';
 import { woBadChar } from './util';
 import LanguageChoice from './LanguageChoice';
-import clsx from 'clsx';
 import { hasExact, getExact, hasPart, getPart } from './index/LgExact';
 import { getScripts } from './index/LgScripts';
 import { scriptName } from './index/LgScriptName';
@@ -28,48 +31,19 @@ import { fontMap } from './index/LgFontMap';
 import { bcp47Find, bcp47Index, bcp47Parse } from './bcp47';
 import { langTags } from './langTags';
 import useDebounce from './useDebounce';
+import { GrowingSpacer } from './GrowingSpacer';
+import ChangeName from './ChangeName';
 
 const MAXOPTIONS = 50;
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      '& .MuiDialog-paperScrollPaper': {
-        marginBottom: 'auto',
-        width: '90%',
-      },
-    },
-    check: {
-      justifyContent: 'flex-end',
-    },
-    label: {
-      flexDirection: 'row-reverse',
-    },
-    label2: {
-      flexDirection: 'row-reverse',
-      marginRight: 0,
-    },
-    textField: {
-      width: 150,
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-    },
-    fontField: {
-      width: 300,
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-    },
-    menu: {
-      width: 200,
-    },
-    hide: {
-      display: 'none',
-    },
-    grow: {
-      flexGrow: 1,
-    },
-  })
-);
+const menuWidth = { width: 200 } as SxProps;
+
+const StyledDialog = styled(Dialog)<DialogProps>(() => ({
+  '& .MuiDialog-paperScrollPaper': {
+    marginBottom: 'auto',
+    width: '90%',
+  },
+}));
 
 interface IStateProps {
   t: ILanguagePickerStrings;
@@ -82,13 +56,13 @@ interface IProps extends IStateProps {
   setCode?: (code: string) => void;
   setName?: (name: string) => void;
   setFont?: (font: string) => void;
+  setInfo?: (tag: LangTag) => void;
   disabled?: boolean;
 }
 
 export const LanguagePicker = (props: IProps) => {
   const { disabled } = props;
-  const { value, name, font, setCode, setName, setFont, t } = props;
-  const classes = useStyles();
+  const { value, name, font, setCode, setName, setFont, setInfo, t } = props;
   const [open, setOpen] = React.useState(false);
   const [curValue, setCurValue] = React.useState(value);
   const [curName, setCurName] = React.useState(name);
@@ -99,6 +73,7 @@ export const LanguagePicker = (props: IProps) => {
   const [defaultScript, setDefaultScript] = React.useState('');
   const [defaultFont, setDefaultFont] = React.useState('');
   const [fontOpts, setFontOpts] = React.useState(Array<string>());
+  const [newName, setNewName] = React.useState(false);
   const langEl = React.useRef<any>();
 
   const debouncedResponse = useDebounce(response, 500);
@@ -116,7 +91,9 @@ export const LanguagePicker = (props: IProps) => {
     const found = bcp47Find(curValue);
     if (curValue !== 'und') {
       if (found && !Array.isArray(found)) {
-        setResponse(curName + ' (' + curValue + ')');
+        let tagName = curName;
+        if (found.localname) tagName = `${found.localname} / ${curName}`;
+        setResponse(tagName + ' (' + curValue + ')');
         setTag(found);
         selectFont(found);
         setDefaultScript(found.script);
@@ -156,7 +133,9 @@ export const LanguagePicker = (props: IProps) => {
 
   const displayTag = (tagP: LangTag, val?: string) => {
     if (tagP && tagP.name) {
-      setResponse(tagP.name + ' (' + tagP.tag + ')');
+      let tagName = tagP.name;
+      if (tagP.localname) tagName = `${tagP.localname} / ${tagP.name}`;
+      setResponse(tagName + ' (' + tagP.tag + ')');
       setCurValue(val ? val : tagP.tag);
       setCurName(tagP.name);
     }
@@ -166,6 +145,7 @@ export const LanguagePicker = (props: IProps) => {
     if (setCode) setCode(curValue);
     if (setName) setName(curName);
     if (setFont) setFont(curFont);
+    if (setInfo && tag) setInfo(tag);
     if (tag) {
       displayTag(tag, curValue);
     } else {
@@ -214,6 +194,21 @@ export const LanguagePicker = (props: IProps) => {
       setCurFont(safeFonts[0].value);
       setFontOpts(safeFonts.map((f) => f.value));
     } else selectDefaultFont(code);
+  };
+
+  const handleNewName = () => {
+    setNewName(true);
+  };
+
+  const handleCloseName = () => {
+    setNewName(false);
+  };
+
+  const handleSetName = (name: string) => {
+    setCurName(name);
+    let tagName = name;
+    if (tag?.localname) tagName = `${tag.localname} / ${name}`;
+    setResponse(tagName);
   };
 
   React.useEffect(() => {
@@ -376,9 +371,9 @@ export const LanguagePicker = (props: IProps) => {
       if (list.length > 0) {
         return (
           <>
-            <FormGroup row className={classes.check}>
+            <FormGroup row sx={{ justifyContent: 'flex-end' }}>
               <FormControlLabel
-                className={classes.label2}
+                sx={{ flexDirection: 'row-reverse', mr: 0 }}
                 control={
                   <Checkbox
                     checked={secondary}
@@ -418,12 +413,11 @@ export const LanguagePicker = (props: IProps) => {
         onKeyDown={handleClickOpen}
         disabled={disabled ? disabled : false}
       />
-      <Dialog
+      <StyledDialog
         id="LanguagePicker"
         open={open}
         onClose={handleCancel}
         aria-labelledby="form-dialog-title"
-        className={classes.root}
       >
         <DialogTitle id="form-dialog-title">{t.selectLanguage}</DialogTitle>
         <DialogContent dividers>
@@ -440,16 +434,13 @@ export const LanguagePicker = (props: IProps) => {
             InputProps={{
               ref: langEl,
               endAdornment: (
-                <InputAdornment
-                  position="end"
-                  className={clsx({ [classes.hide]: response === '' })}
-                >
+                <InputAdornment position="end">
                   <IconButton
                     edge="end"
                     aria-label="clear language"
                     onClick={handleClear}
                   >
-                    <ClearIcon />
+                    <ClearIcon color="primary" />
                   </IconButton>
                 </InputAdornment>
               ),
@@ -461,15 +452,13 @@ export const LanguagePicker = (props: IProps) => {
               <TextField
                 id="select-script"
                 select
-                className={classes.textField}
+                sx={{ width: 150, mx: 1 }}
                 label={t.script}
                 value={defaultScript}
                 onChange={handleScriptChange(tag)}
                 style={{ width: 400 }}
                 SelectProps={{
-                  MenuProps: {
-                    className: classes.menu,
-                  },
+                  MenuProps: { ...{ sx: menuWidth } },
                 }}
                 helperText={''}
                 margin="normal"
@@ -500,14 +489,12 @@ export const LanguagePicker = (props: IProps) => {
               <TextField
                 id="select-font"
                 select
-                className={classes.fontField}
+                sx={{ width: 300, mx: 1 }}
                 label={t.font}
                 value={defaultFont}
                 onChange={addFontInfo}
                 SelectProps={{
-                  MenuProps: {
-                    className: classes.menu,
-                  },
+                  MenuProps: { ...{ sx: menuWidth } },
                 }}
                 helperText={''}
                 margin="normal"
@@ -532,7 +519,14 @@ export const LanguagePicker = (props: IProps) => {
           >
             <Typography>{t.codeExplained}</Typography>
           </a>
-          <div className={classes.grow}>{'\u00A0'}</div>
+          {curName !== '' && (
+            <Tooltip title={t.changeName ?? 'Change name'}>
+              <IconButton color="primary" size="small" onClick={handleNewName}>
+                <ChangeNameIcon fontSize="small" />
+              </IconButton>
+            </Tooltip>
+          )}
+          <GrowingSpacer />
           <Button onClick={handleCancel} color="primary">
             <Typography>{t.cancel}</Typography>
           </Button>
@@ -544,7 +538,16 @@ export const LanguagePicker = (props: IProps) => {
             <Typography>{t.select}</Typography>
           </Button>
         </DialogActions>
-      </Dialog>
+      </StyledDialog>
+      {newName && (
+        <ChangeName
+          isOpen={newName}
+          onClose={handleCloseName}
+          curName={curName}
+          onNewName={handleSetName}
+          t={t}
+        />
+      )}
     </div>
   );
 };

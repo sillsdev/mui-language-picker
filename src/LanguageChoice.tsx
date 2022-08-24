@@ -1,33 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { ILanguagePickerStrings } from './model';
 import { LangTag, ScriptName } from './langPicker/types';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
-import { List, ListItem, ListItemText, Typography } from '@material-ui/core';
+import { List, ListItem, ListItemText, Typography, Box } from '@mui/material';
 import { debounce } from 'lodash';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      flexGrow: 1,
-      maxWidth: 752,
-    },
-    paper: {
-      backgroundColor: theme.palette.background.paper,
-    },
-    list: {
-      overflowY: 'scroll',
-    },
-    title: {
-      margin: theme.spacing(4, 0, 2),
-    },
-    firstLine: {
-      display: 'flex',
-    },
-    grow: {
-      flexGrow: 1,
-    },
-  })
-);
+import { GrowingSpacer } from './GrowingSpacer';
 
 interface IProps {
   list: number[];
@@ -40,9 +16,8 @@ interface IProps {
 
 export function LanguageChoice(props: IProps) {
   const { list, langTags, scriptName, secondary, t, choose } = props;
-  const classes = useStyles();
-  const [dense] = React.useState(true);
-  const [height, setHeight] = React.useState(window.innerHeight);
+  const [dense] = useState(true);
+  const [height, setHeight] = useState(window.innerHeight);
 
   const handleChoose = (tag: LangTag) => () => {
     choose(tag);
@@ -54,7 +29,7 @@ export function LanguageChoice(props: IProps) {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleResize = debounce(() => setHeight(window.innerHeight), 100);
 
     window.addEventListener('resize', handleResize);
@@ -99,11 +74,13 @@ export function LanguageChoice(props: IProps) {
         >
           <ListItemText
             primary={
-              <div className={classes.firstLine}>
-                <Typography>{tag.name}</Typography>
-                <div className={classes.grow}>{'\u00A0'}</div>
+              <Box sx={{ display: 'flex' }}>
+                <Typography>
+                  {tag.localname ? `${tag.localname} / ${tag.name}` : tag.name}
+                </Typography>
+                <GrowingSpacer />
                 <Typography>{tag.tag}</Typography>
-              </div>
+              </Box>
             }
             secondary={secondary ? detail(tag) : null}
           />
@@ -113,17 +90,17 @@ export function LanguageChoice(props: IProps) {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.paper}>
+    <Box sx={{ flexGrow: 1, maxWidth: 752 }}>
+      <Box sx={{ backgroundColor: 'background.paper' }}>
         <List
           dense={dense}
-          className={classes.list}
+          sx={{ overflowY: 'scroll' }}
           style={{ maxHeight: Math.max(height - 450, 200) }}
         >
           {langElems(list, langTags)}
         </List>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

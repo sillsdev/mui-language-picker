@@ -6,11 +6,11 @@ exports[`can render Language Picker snapshot 1`] = `
     id="LangBcp47"
   >
     <div
-      class="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense"
+      class="MuiFormControl-root MuiFormControl-marginDense MuiTextField-root css-4mzek5-MuiFormControl-root-MuiTextField-root"
       style="width: 300px;"
     >
       <label
-        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-filled Mui-required Mui-required"
+        class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled MuiFormLabel-colorPrimary Mui-required css-e4w4as-MuiFormLabel-root-MuiInputLabel-root"
         data-shrink="false"
         for="lang-bcp47"
         id="lang-bcp47-label"
@@ -18,18 +18,18 @@ exports[`can render Language Picker snapshot 1`] = `
         Language
         <span
           aria-hidden="true"
-          class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+          class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
         >
            
           *
         </span>
       </label>
       <div
-        class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense"
+        class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-19mk8g1-MuiInputBase-root-MuiFilledInput-root"
       >
         <input
           aria-invalid="false"
-          class="MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+          class="MuiInputBase-input MuiFilledInput-input css-10botns-MuiInputBase-input-MuiFilledInput-input"
           id="lang-bcp47"
           required=""
           type="text"
@@ -43,7 +43,7 @@ exports[`can render Language Picker snapshot 1`] = `
 
 exports[`enter e 1`] = `
 <body
-  style="padding-right: 0px; overflow: hidden;"
+  style="padding-right: 1024px; overflow: hidden;"
 >
   <div
     aria-hidden="true"
@@ -52,11 +52,11 @@ exports[`enter e 1`] = `
       id="LangBcp47"
     >
       <div
-        class="MuiFormControl-root MuiTextField-root MuiFormControl-marginDense"
+        class="MuiFormControl-root MuiFormControl-marginDense MuiTextField-root css-4mzek5-MuiFormControl-root-MuiTextField-root"
         style="width: 300px;"
       >
         <label
-          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-filled Mui-required Mui-required"
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled MuiFormLabel-colorPrimary Mui-required css-e4w4as-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
           for="lang-bcp47"
           id="lang-bcp47-label"
@@ -64,18 +64,18 @@ exports[`enter e 1`] = `
           Language
           <span
             aria-hidden="true"
-            class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+            class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
           >
              
             *
           </span>
         </label>
         <div
-          class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense"
+          class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-19mk8g1-MuiInputBase-root-MuiFilledInput-root"
         >
           <input
             aria-invalid="false"
-            class="MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+            class="MuiInputBase-input MuiFilledInput-input css-10botns-MuiInputBase-input-MuiFilledInput-input"
             id="lang-bcp47"
             required=""
             type="text"
@@ -86,49 +86,44 @@ exports[`enter e 1`] = `
     </div>
   </div>
   <div
-    class="MuiDialog-root makeStyles-root-10"
+    class="MuiDialog-root MuiModal-root css-n0wq6e-MuiModal-root-MuiDialog-root"
     id="LanguagePicker"
     role="presentation"
-    style="position: fixed; z-index: 1300; right: 0px; bottom: 0px; top: 0px; left: 0px;"
   >
     <div
       aria-hidden="true"
-      class="MuiBackdrop-root"
+      class="MuiBackdrop-root css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop"
       style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
     />
     <div
-      data-test="sentinelStart"
+      data-testid="sentinelStart"
       tabindex="0"
     />
     <div
-      class="MuiDialog-container MuiDialog-scrollPaper"
-      role="none presentation"
+      class="MuiDialog-container MuiDialog-scrollPaper css-hz1bth-MuiDialog-container"
+      role="presentation"
       style="opacity: 1; webkit-transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms; transition: opacity 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;"
       tabindex="-1"
     >
       <div
         aria-labelledby="form-dialog-title"
-        class="MuiPaper-root MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm MuiPaper-elevation24 MuiPaper-rounded"
+        class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation24 MuiDialog-paper MuiDialog-paperScrollPaper MuiDialog-paperWidthSm css-1t1j96h-MuiPaper-root-MuiDialog-paper"
         role="dialog"
       >
-        <div
-          class="MuiDialogTitle-root"
+        <h2
+          class="MuiTypography-root MuiTypography-h6 MuiDialogTitle-root css-bdhsul-MuiTypography-root-MuiDialogTitle-root"
           id="form-dialog-title"
         >
-          <h2
-            class="MuiTypography-root MuiTypography-h6"
-          >
-            Choose Language Details
-          </h2>
-        </div>
+          Choose Language Details
+        </h2>
         <div
-          class="MuiDialogContent-root MuiDialogContent-dividers"
+          class="MuiDialogContent-root MuiDialogContent-dividers css-1t4vnk2-MuiDialogContent-root"
         >
           <div
-            class="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+            class="MuiFormControl-root MuiFormControl-marginNormal MuiFormControl-fullWidth MuiTextField-root css-17vbkzs-MuiFormControl-root-MuiTextField-root"
           >
             <label
-              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined Mui-focused Mui-focused"
+              class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-colorPrimary Mui-focused css-1sumxir-MuiFormLabel-root-MuiInputLabel-root"
               data-shrink="true"
               for="language"
               id="language-label"
@@ -136,49 +131,46 @@ exports[`enter e 1`] = `
               Find a language by name, code, or country
             </label>
             <div
-              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth Mui-focused Mui-focused MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+              class="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-fullWidth Mui-focused MuiInputBase-formControl MuiInputBase-adornedEnd css-154xyx0-MuiInputBase-root-MuiOutlinedInput-root"
             >
               <input
                 aria-invalid="false"
-                class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+                class="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd css-nxo287-MuiInputBase-input-MuiOutlinedInput-input"
                 id="language"
                 type="text"
                 value=""
               />
               <div
-                class="MuiInputAdornment-root makeStyles-hide-17 MuiInputAdornment-positionEnd"
+                class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-outlined MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
               >
                 <button
                   aria-label="clear language"
-                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd"
+                  class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
                   tabindex="0"
                   type="button"
                 >
-                  <span
-                    class="MuiIconButton-label"
+                  <svg
+                    aria-hidden="true"
+                    class="MuiSvgIcon-root MuiSvgIcon-colorPrimary MuiSvgIcon-fontSizeMedium css-ci5apu-MuiSvgIcon-root"
+                    data-testid="ClearIcon"
+                    focusable="false"
+                    viewBox="0 0 24 24"
                   >
-                    <svg
-                      aria-hidden="true"
-                      class="MuiSvgIcon-root"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                      />
-                    </svg>
-                  </span>
+                    <path
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
                   <span
-                    class="MuiTouchRipple-root"
+                    class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
                 </button>
               </div>
               <fieldset
                 aria-hidden="true"
-                class="PrivateNotchedOutline-root-19 MuiOutlinedInput-notchedOutline"
+                class="MuiOutlinedInput-notchedOutline css-1d3z3hw-MuiOutlinedInput-notchedOutline"
               >
                 <legend
-                  class="PrivateNotchedOutline-legendLabelled-21 PrivateNotchedOutline-legendNotched-22"
+                  class="css-1in441m"
                 >
                   <span>
                     Find a language by name, code, or country
@@ -188,14 +180,14 @@ exports[`enter e 1`] = `
             </div>
           </div>
           <label
-            class="MuiFormControlLabel-root"
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
           >
             <div
-              class="MuiFormControl-root MuiTextField-root makeStyles-textField-14 MuiFormControl-marginNormal"
+              class="MuiFormControl-root MuiFormControl-marginNormal MuiTextField-root css-aqt2sz-MuiFormControl-root-MuiTextField-root"
               style="width: 400px;"
             >
               <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled Mui-required Mui-required"
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled MuiFormLabel-colorPrimary Mui-required css-e4w4as-MuiFormLabel-root-MuiInputLabel-root"
                 data-shrink="false"
                 for="select-script"
                 id="select-script-label"
@@ -203,37 +195,42 @@ exports[`enter e 1`] = `
                 Script
                 <span
                   aria-hidden="true"
-                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
                 >
                    
                   *
                 </span>
               </label>
               <div
-                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl"
+                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-19mk8g1-MuiInputBase-root-MuiFilledInput-root"
+                variant="filled"
               >
                 <div
+                  aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-labelledby="select-script-label select-script"
-                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                  class="MuiSelect-select MuiSelect-filled MuiInputBase-input MuiFilledInput-input css-d9oaum-MuiSelect-select-MuiInputBase-input-MuiFilledInput-input"
                   id="select-script"
                   role="button"
                   tabindex="0"
                 >
-                  <span>
+                  <span
+                    class="notranslate"
+                  >
                     ​
                   </span>
                 </div>
                 <input
                   aria-hidden="true"
-                  class="MuiSelect-nativeInput"
+                  class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                   required=""
                   tabindex="-1"
                   value=""
                 />
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconFilled css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                  data-testid="ArrowDropDownIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -242,20 +239,19 @@ exports[`enter e 1`] = `
                   />
                 </svg>
               </div>
-              
             </div>
             <span
-              class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
             />
           </label>
           <label
-            class="MuiFormControlLabel-root"
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
           >
             <div
-              class="MuiFormControl-root MuiTextField-root makeStyles-fontField-15 MuiFormControl-marginNormal"
+              class="MuiFormControl-root MuiFormControl-marginNormal MuiTextField-root css-82ea61-MuiFormControl-root-MuiTextField-root"
             >
               <label
-                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled Mui-required Mui-required"
+                class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-filled MuiFormLabel-colorPrimary Mui-required css-e4w4as-MuiFormLabel-root-MuiInputLabel-root"
                 data-shrink="false"
                 for="select-font"
                 id="select-font-label"
@@ -263,37 +259,42 @@ exports[`enter e 1`] = `
                 Font
                 <span
                   aria-hidden="true"
-                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+                  class="MuiFormLabel-asterisk MuiInputLabel-asterisk css-wgai2y-MuiFormLabel-asterisk"
                 >
                    
                   *
                 </span>
               </label>
               <div
-                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl"
+                class="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl css-19mk8g1-MuiInputBase-root-MuiFilledInput-root"
+                variant="filled"
               >
                 <div
+                  aria-expanded="false"
                   aria-haspopup="listbox"
                   aria-labelledby="select-font-label select-font"
-                  class="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input"
+                  class="MuiSelect-select MuiSelect-filled MuiInputBase-input MuiFilledInput-input css-d9oaum-MuiSelect-select-MuiInputBase-input-MuiFilledInput-input"
                   id="select-font"
                   role="button"
                   tabindex="0"
                 >
-                  <span>
+                  <span
+                    class="notranslate"
+                  >
                     ​
                   </span>
                 </div>
                 <input
                   aria-hidden="true"
-                  class="MuiSelect-nativeInput"
+                  class="MuiSelect-nativeInput css-yf8vq0-MuiSelect-nativeInput"
                   required=""
                   tabindex="-1"
                   value=""
                 />
                 <svg
                   aria-hidden="true"
-                  class="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+                  class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconFilled css-hfutr2-MuiSvgIcon-root-MuiSelect-icon"
+                  data-testid="ArrowDropDownIcon"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -302,15 +303,14 @@ exports[`enter e 1`] = `
                   />
                 </svg>
               </div>
-              
             </div>
             <span
-              class="MuiTypography-root MuiFormControlLabel-label MuiTypography-body1"
+              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
             />
           </label>
         </div>
         <div
-          class="MuiDialogActions-root MuiDialogActions-spacing"
+          class="MuiDialogActions-root MuiDialogActions-spacing css-hlj6pa-MuiDialogActions-root"
         >
           <a
             href="https://www.w3.org/International/questions/qa-choosing-language-tags"
@@ -318,55 +318,47 @@ exports[`enter e 1`] = `
             target="_blank"
           >
             <p
-              class="MuiTypography-root MuiTypography-body1"
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
               Code Explained
             </p>
           </a>
           <div
-            class="makeStyles-grow-18"
+            class="MuiBox-root css-i9gxme"
           >
              
           </div>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary"
+            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
             tabindex="0"
             type="button"
           >
-            <span
-              class="MuiButton-label"
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1"
-              >
-                Cancel
-              </p>
-            </span>
+              Cancel
+            </p>
             <span
-              class="MuiTouchRipple-root"
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             />
           </button>
           <button
-            class="MuiButtonBase-root MuiButton-root MuiButton-text MuiButton-textPrimary Mui-disabled Mui-disabled"
+            class="MuiButtonBase-root Mui-disabled MuiButton-root MuiButton-text MuiButton-textPrimary MuiButton-sizeMedium MuiButton-textSizeMedium css-1e6y48t-MuiButtonBase-root-MuiButton-root"
             disabled=""
             tabindex="-1"
             type="button"
           >
-            <span
-              class="MuiButton-label"
+            <p
+              class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
             >
-              <p
-                class="MuiTypography-root MuiTypography-body1"
-              >
-                Save
-              </p>
-            </span>
+              Save
+            </p>
           </button>
         </div>
       </div>
     </div>
     <div
-      data-test="sentinelEnd"
+      data-testid="sentinelEnd"
       tabindex="0"
     />
   </div>
@@ -375,108 +367,100 @@ exports[`enter e 1`] = `
 
 exports[`enter en contains en-001 entry 1`] = `
 <div
-  aria-disabled="false"
-  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-button"
+  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
   role="button"
   tabindex="0"
 >
   <div
-    class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline"
+    class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-konndc-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+      class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-et1ao3-MuiTypography-root"
     >
       <div
-        class="makeStyles-firstLine-44"
+        class="MuiBox-root css-k008qs"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
         >
-          English
+          English / English
         </p>
         <div
-          class="makeStyles-grow-45"
+          class="MuiBox-root css-i9gxme"
         >
            
         </div>
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
         >
           en-001
         </p>
       </div>
     </span>
     <p
-      class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+      class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
     >
       <span
-        class="MuiTypography-root MuiTypography-body1"
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
       >
         A Language of World.
       </span>
       <br />
       <span
-        class="MuiTypography-root MuiTypography-body1"
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
       />
     </p>
   </div>
-  <span
-    class="MuiTouchRipple-root"
-  />
 </div>
 `;
 
 exports[`enter zh-CN-x-pyn looks up correct result 1`] = `
 <div
-  aria-disabled="false"
-  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-button"
+  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
   role="button"
   tabindex="0"
 >
   <div
-    class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline"
+    class="MuiListItemText-root MuiListItemText-dense MuiListItemText-multiline css-konndc-MuiListItemText-root"
   >
     <span
-      class="MuiTypography-root MuiListItemText-primary MuiTypography-body2 MuiTypography-displayBlock"
+      class="MuiTypography-root MuiTypography-body2 MuiListItemText-primary css-et1ao3-MuiTypography-root"
     >
       <div
-        class="makeStyles-firstLine-67"
+        class="MuiBox-root css-k008qs"
       >
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
         >
-          Chinese
+          中文 / Chinese
         </p>
         <div
-          class="makeStyles-grow-68"
+          class="MuiBox-root css-i9gxme"
         >
            
         </div>
         <p
-          class="MuiTypography-root MuiTypography-body1"
+          class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
         >
           zh-CN
         </p>
       </div>
     </span>
     <p
-      class="MuiTypography-root MuiListItemText-secondary MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+      class="MuiTypography-root MuiTypography-body2 MuiListItemText-secondary css-83ijpv-MuiTypography-root"
     >
       <span
-        class="MuiTypography-root MuiTypography-body1"
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
       >
         A Language of China.
       </span>
       <br />
       <span
-        class="MuiTypography-root MuiTypography-body1"
+        class="MuiTypography-root MuiTypography-body1 css-ahj2mt-MuiTypography-root"
       >
         Beifang Fangyan, Beijinghua, Chinese, Mandarin, Hoton, Hui, Hui-Zu, Hytad, Khoton, Mandarin, Northern Chinese, Qotong, Standard Chinese, Tayok, Xui, Zhongguohua
       </span>
     </p>
   </div>
-  <span
-    class="MuiTouchRipple-root"
-  />
 </div>
 `;

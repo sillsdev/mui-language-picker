@@ -1,6 +1,5 @@
 import '@testing-library/jest-dom/extend-expect';
-import { langTags } from '../langTags';
-import { bcp47Match, bcp47Parse, bcp47Find, bcp47Index } from '../bcp47';
+import { bcp47Match, bcp47Parse, bcp47Find } from '../bcp47';
 import { LangTag } from '../model';
 
 test('test zh-yue', async () => {
