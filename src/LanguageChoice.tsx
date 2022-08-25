@@ -4,6 +4,7 @@ import { LangTag, ScriptName } from './langPicker/types';
 import { List, ListItem, ListItemText, Typography, Box } from '@mui/material';
 import { debounce } from 'lodash';
 import { GrowingSpacer } from './GrowingSpacer';
+import { getDisplayName, DisplayName } from './getDisplayName';
 
 interface IProps {
   list: number[];
@@ -11,11 +12,13 @@ interface IProps {
   secondary?: boolean;
   langTags: LangTag[];
   scriptName: ScriptName;
+  displayName?: DisplayName;
   t: ILanguagePickerStrings;
 }
 
 export function LanguageChoice(props: IProps) {
   const { list, langTags, scriptName, secondary, t, choose } = props;
+  const { displayName } = props;
   const [dense] = useState(true);
   const [height, setHeight] = useState(window.innerHeight);
 
@@ -76,7 +79,7 @@ export function LanguageChoice(props: IProps) {
             primary={
               <Box sx={{ display: 'flex' }}>
                 <Typography>
-                  {tag.localname ? `${tag.localname} / ${tag.name}` : tag.name}
+                  {getDisplayName(tag.name, tag, displayName)}
                 </Typography>
                 <GrowingSpacer />
                 <Typography>{tag.tag}</Typography>

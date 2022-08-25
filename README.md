@@ -20,6 +20,7 @@ import {
   ILanguagePickerStrings,
   languagePickerStrings_en,
   LangTag,
+  DisplayName,
 } from "mui-language-picker";
 
 const MyComponent = (props: any) => {
@@ -27,6 +28,10 @@ const MyComponent = (props: any) => {
   const [lgName, setLgName] = React.useState("");
   const [fontName, setFontName] = React.useState("");
   const [tag, setTag] = React.useState<LangTag>()
+
+  const displayName = (name: string, tag?:LangTag) => {
+    return tag.localname || tag.name
+  }
 
   return (
     <LanguagePicker
@@ -36,6 +41,7 @@ const MyComponent = (props: any) => {
       setName={setLgName}
       font={fontName}
       setFont={setFontName}
+      displayName={displayName}
       setInfo={setTag}
       t={languagePickerStrings_en}
     />
@@ -57,6 +63,7 @@ Output should be a Language Picker when entered opens a dialog
 | setName\*  | (name: string) => void  | callback to change language name    |
 | font       | string                  | font family name                    |
 | setFont\*  | (font: string) => void  | callback to change font family name |
+| displayName\* | DisplayName          | function to control display of name |
 | setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
 | disabled\* | boolean                 | true if control disabled            |
 | t          | ILanguagePickerStrings  | localization strings (see below)    |
@@ -86,6 +93,30 @@ export const languagePickerStrings_en = {
   newName: 'New Language Name',
   change: 'Change',
 } as ILanguagePickerStrings;
+```
+
+### Information returned by setInfo
+
+```typescript
+export interface LangTag {
+  full: string;
+  iana?: string;
+  iso639_3?: string;
+  localname?: string;
+  name: string;
+  names?: string[];
+  nophonvars?: boolean;
+  region?: string;
+  regionname?: string;
+  regions?: string[];
+  script: string;
+  sldr: boolean;
+  tag: string;
+  tags?: string[];
+  variants?: string[];
+  defaultFont?: string;
+  fonts?: string[];
+}
 ```
 
 ### Change control background

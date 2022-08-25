@@ -33,6 +33,7 @@ import { langTags } from './langTags';
 import useDebounce from './useDebounce';
 import { GrowingSpacer } from './GrowingSpacer';
 import ChangeName from './ChangeName';
+import { getDisplayName, DisplayName } from './getDisplayName';
 
 const MAXOPTIONS = 50;
 
@@ -53,6 +54,7 @@ interface IProps extends IStateProps {
   value: string;
   name: string;
   font: string;
+  displayName?: DisplayName;
   setCode?: (code: string) => void;
   setName?: (name: string) => void;
   setFont?: (font: string) => void;
@@ -63,6 +65,7 @@ interface IProps extends IStateProps {
 export const LanguagePicker = (props: IProps) => {
   const { disabled } = props;
   const { value, name, font, setCode, setName, setFont, setInfo, t } = props;
+  const { displayName } = props;
   const [open, setOpen] = React.useState(false);
   const [curValue, setCurValue] = React.useState(value);
   const [curName, setCurName] = React.useState(name);
@@ -91,8 +94,7 @@ export const LanguagePicker = (props: IProps) => {
     const found = bcp47Find(curValue);
     if (curValue !== 'und') {
       if (found && !Array.isArray(found)) {
-        let tagName = curName;
-        if (found.localname) tagName = `${found.localname} / ${curName}`;
+        const tagName = getDisplayName(curName, found, displayName);
         setResponse(tagName + ' (' + curValue + ')');
         setTag(found);
         selectFont(found);
@@ -133,8 +135,7 @@ export const LanguagePicker = (props: IProps) => {
 
   const displayTag = (tagP: LangTag, val?: string) => {
     if (tagP && tagP.name) {
-      let tagName = tagP.name;
-      if (tagP.localname) tagName = `${tagP.localname} / ${tagP.name}`;
+      const tagName = getDisplayName(tagP.name, tagP, displayName);
       setResponse(tagName + ' (' + tagP.tag + ')');
       setCurValue(val ? val : tagP.tag);
       setCurName(tagP.name);
@@ -206,8 +207,7 @@ export const LanguagePicker = (props: IProps) => {
 
   const handleSetName = (name: string) => {
     setCurName(name);
-    let tagName = name;
-    if (tag?.localname) tagName = `${tag.localname} / ${name}`;
+    const tagName = getDisplayName(name, tag, displayName);
     setResponse(tagName);
   };
 
@@ -390,6 +390,7 @@ export const LanguagePicker = (props: IProps) => {
               choose={handleChoose}
               langTags={langTags}
               scriptName={scriptName}
+              displayName={displayName}
               t={t}
             />
           </>
