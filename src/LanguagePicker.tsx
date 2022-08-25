@@ -88,6 +88,8 @@ export const LanguagePicker = (props: IProps) => {
   const IpaTag = 'fonipa';
   if (!scriptName.hasOwnProperty(IpaTag)) scriptName[IpaTag] = t.phonetic;
 
+  const respFormat = (name: string, tagVal: string) => `${name} (${tagVal})`;
+
   const handleClickOpen = (e: any) => {
     if (disabled) return;
     if (e.keyCode && [TAB, SHIFT, CTRL].indexOf(e.keyCode) !== -1) return;
@@ -95,7 +97,7 @@ export const LanguagePicker = (props: IProps) => {
     if (curValue !== 'und') {
       if (found && !Array.isArray(found)) {
         const tagName = getDisplayName(curName, found, displayName);
-        setResponse(tagName + ' (' + curValue + ')');
+        setResponse(respFormat(tagName, curValue));
         setTag(found);
         selectFont(found);
         setDefaultScript(found.script);
@@ -103,7 +105,7 @@ export const LanguagePicker = (props: IProps) => {
       } else {
         const key = curValue.toLocaleLowerCase();
         if (hasExact(key)) {
-          setResponse(curName + ' (' + curValue + ')');
+          setResponse(respFormat(curName, curValue));
           const langTag = langTags[getExact(key)[0]];
           setTag(langTag);
           selectFont(langTag);
@@ -136,7 +138,7 @@ export const LanguagePicker = (props: IProps) => {
   const displayTag = (tagP: LangTag, val?: string) => {
     if (tagP && tagP.name) {
       const tagName = getDisplayName(tagP.name, tagP, displayName);
-      setResponse(tagName + ' (' + tagP.tag + ')');
+      setResponse(respFormat(tagName, tagP.tag));
       setCurValue(val ? val : tagP.tag);
       setCurName(tagP.name);
     }
@@ -208,7 +210,7 @@ export const LanguagePicker = (props: IProps) => {
   const handleSetName = (name: string) => {
     setCurName(name);
     const tagName = getDisplayName(name, tag, displayName);
-    setResponse(tagName);
+    if (tag) setResponse(respFormat(tagName, tag.tag));
   };
 
   React.useEffect(() => {
