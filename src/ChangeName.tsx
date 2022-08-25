@@ -7,6 +7,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { ILanguagePickerStrings } from './model';
+import { languagePickerStrings_en as eng } from './localization';
 
 interface IProps {
   isOpen: boolean;
@@ -26,8 +27,8 @@ export default function ChangeName({
   const [open, setOpen] = React.useState(isOpen);
   const [name, setName] = React.useState(curName || '');
 
-  const handleClose = () => {
-    onNewName && onNewName(name);
+  const handleClose = (save?: boolean) => () => {
+    if (save && name) onNewName && onNewName(name);
     onClose && onClose();
     setOpen(false);
   };
@@ -41,26 +42,25 @@ export default function ChangeName({
   }, [isOpen]);
 
   return (
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>{t?.changeName || 'Change Name'}</DialogTitle>
+    <Dialog open={open} onClose={handleClose()}>
+      <DialogTitle>{t?.changeName || eng.changeName}</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          {t?.nameInstruction ||
-            'If you would like to change the language name enter the new name here.'}
+          {t?.nameInstruction || eng.nameInstruction}
         </DialogContentText>
         <TextField
           autoFocus
           margin="dense"
           id="name"
-          label={t?.newName || 'New Language Name'}
+          label={t?.newName || eng.newName}
           fullWidth
           value={name}
           onChange={handleNameChange}
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>{t?.cancel}</Button>
-        <Button onClick={handleClose}>{t?.change || 'Change'}</Button>
+        <Button onClick={handleClose()}>{t?.cancel || eng.cancel}</Button>
+        <Button onClick={handleClose(true)}>{t?.change || eng.change}</Button>
       </DialogActions>
     </Dialog>
   );
