@@ -12,7 +12,7 @@ npm install mui-language-picker --save
 
 ## Demo
 
-![Demo of mui-language-picker](https://giphy.com/embed/5OkWd7aMlxOClWuF0J)
+[Demo of mui-language-picker](https://giphy.com/embed/5OkWd7aMlxOClWuF0J) / [Same demo as a video](https://youtu.be/aviV8aEaNOo)
 
 see also: [demo repo](https://github.com/sillsdev/mui-language-picker-demo)
 
