@@ -10,6 +10,12 @@ Complete information for [material-ui](https://mui.com/material-ui/).
 npm install mui-language-picker --save
 ```
 
+## Demo
+
+![Demo of mui-language-picker](https://giphy.com/embed/5OkWd7aMlxOClWuF0J)
+
+see also: [demo repo](https://github.com/sillsdev/mui-language-picker-demo)
+
 ## Usage
 
 ### TypeScript React 18 code
@@ -120,7 +126,9 @@ export interface LangTag {
 ```
 
 ### Change control background
+
 If the theme involves using a dark background, the control background can be changed with css. See also [material-ui](https://mui.com/) documentation.
+
 ```css
 #LangBcp47 .MuiFilledInput-root {
   background-color: rgba(255, 255, 255, 0.9);

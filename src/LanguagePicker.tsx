@@ -129,6 +129,9 @@ export const LanguagePicker = (props: IProps) => {
     setCurValue(value);
     setCurName(name);
     setCurFont(font);
+    if (setCode) setCode(value);
+    if (setName) setName(name);
+    if (setFont) setFont(font);
     setTag(undefined);
     setDefaultScript('');
     setResponse('');
@@ -154,7 +157,7 @@ export const LanguagePicker = (props: IProps) => {
     } else {
       setResponse('');
     }
-    setOpen(false);
+    setTimeout(() => setOpen(false), 200);
   };
 
   const handleChange = (e: any) => {

@@ -1,11 +1,11 @@
 const badChar = " (),.:/!?_'`0123456789";
-const hasBadChar = s => {
+const hasBadChar = (s) => {
   for (let i = 0; i < s.length; i += 1) {
     if (badChar.indexOf(s[i]) !== -1) return true;
   }
   return false;
 };
-const woBadChar = s => {
+const woBadChar = (s) => {
   if (!s) return '';
   let result = '';
   for (let i = 0; i < s.length; i += 1) {
@@ -23,9 +23,9 @@ const addToMap = (map, tag, index, rankBase, full) => {
       map[token] = [{ index, rank }];
     }
     if (token.indexOf(' ') !== -1) {
-      token.split(' ').forEach(t => {
+      token.split(' ').forEach((t) => {
         const key = woBadChar(t);
-        if (!map.hasOwnProperty(key)) {
+        if (key && !map.hasOwnProperty(key)) {
           map[key] = [{ index, rank }];
         }
         rank = rankBase * 10;
@@ -75,13 +75,13 @@ const limitSortInsert = (list, value) => {
 
 const mapMerge = (current, composite, full) => {
   var keys = Object.keys(current);
-  keys.forEach(v => {
+  keys.forEach((v) => {
     if (composite.hasOwnProperty(v)) {
       composite[v] = full
         ? sortInsert(composite[v], current[v][0])
         : limitSortInsert(composite[v], current[v][0]);
     } else {
-      composite[v] = current[v].map(v => v);
+      composite[v] = current[v].map((v) => v);
     }
   });
 };
@@ -94,7 +94,7 @@ const makeMap = (langTags, full, subtag) => {
       // Calls to addToMap should be ordered highes to lowest priority
       addToMap(thisTag, lt.name, i, 6, full);
       addToMap(thisTag, lt.localname, i, 5, full);
-      if (lt.names) lt.names.map(n => addToMap(thisTag, n, i, 4, full));
+      if (lt.names) lt.names.map((n) => addToMap(thisTag, n, i, 4, full));
       addToMap(thisTag, lt.region, i, 2, full);
       addToMap(thisTag, lt.regionname, i, 1, full);
       mapMerge(thisTag, partial, full);
@@ -103,9 +103,9 @@ const makeMap = (langTags, full, subtag) => {
   return partial;
 };
 
-const collectScripts = langTags => {
+const collectScripts = (langTags) => {
   let lists = {};
-  langTags.forEach(lt => {
+  langTags.forEach((lt) => {
     if (lt.tag) {
       const lgTag = lt.tag.split('-')[0];
       if (lists.hasOwnProperty(lgTag)) {
@@ -122,7 +122,7 @@ const addFontToList = (list, s) => {
   if (s.trim() !== '') list.push(s);
 };
 
-const makeFontMap = data => {
+const makeFontMap = (data) => {
   let fontMap = {};
   data.split('\n').forEach((line, i) => {
     if (i !== 0) {
@@ -131,7 +131,7 @@ const makeFontMap = data => {
       const regions = fields[8]
         .trim()
         .split(',')
-        .map(v => v.trim());
+        .map((v) => v.trim());
       const fonts = [];
       addFontToList(fonts, fields[11]);
       addFontToList(fonts, fields[12]);
@@ -151,7 +151,7 @@ const makeFontMap = data => {
           }
           fontMap[code] = fonts;
         } else {
-          regions.forEach(r => {
+          regions.forEach((r) => {
             const key = r.trim().length > 0 ? code + '-' + r : code;
             if (fontMap.hasOwnProperty(key)) {
               console.log(
@@ -171,7 +171,7 @@ const makeFontMap = data => {
   return fontMap;
 };
 
-const getNames = data => {
+const getNames = (data) => {
   let names = {};
   data.split('\n').forEach((line, i) => {
     if (i !== 0) {
@@ -194,15 +194,15 @@ const makeFolder = (name, typeName, data) => {
   if (!fs.existsSync(folder)) fs.mkdirSync(folder);
   var firstChar = {};
   var keys = Object.keys(data);
-  keys.forEach(k => {
+  keys.forEach((k) => {
     const letter = k.slice(0, 1);
     if (!firstChar.hasOwnProperty(letter)) firstChar[letter] = true;
   });
-  Object.keys(firstChar).forEach(letter => {
+  Object.keys(firstChar).forEach((letter) => {
     var letPart = {};
-    keys.forEach(key => {
+    keys.forEach((key) => {
       if (key.slice(0, 1) === letter) {
-        if (name !== 'Scripts') letPart[key] = data[key].map(i => i.index);
+        if (name !== 'Scripts') letPart[key] = data[key].map((i) => i.index);
         else letPart[key] = data[key];
       }
     });
@@ -218,7 +218,7 @@ export const f${firstCode}: ${typeName} =  `;
   });
   let code =
     '// This file is auto-generated. Modify the script that creates it.\n';
-  Object.keys(firstChar).forEach(letter => {
+  Object.keys(firstChar).forEach((letter) => {
     const firstCode = letter.charCodeAt(0).toString();
     code =
       code +
@@ -236,7 +236,7 @@ export const f${firstCode}: ${typeName} =  `;
   if (!key || key.length === 0) return false;
   switch (key.slice(0,1).charCodeAt(0)) {
 `;
-  Object.keys(firstChar).forEach(letter => {
+  Object.keys(firstChar).forEach((letter) => {
     const firstCode = letter.charCodeAt(0).toString();
     code =
       code +
@@ -256,7 +256,7 @@ export const get${name} = (key: string) => {
   if (!key || key.length === 0) return [];
   switch (key.slice(0,1).charCodeAt(0)) {
 `;
-  Object.keys(firstChar).forEach(letter => {
+  Object.keys(firstChar).forEach((letter) => {
     const firstCode = letter.charCodeAt(0).toString();
     code =
       code + '    case ' + firstCode + ': return f' + firstCode + '[key];\n';
@@ -273,7 +273,7 @@ export const get${name} = (key: string) => {
 if (!key || key.length === 0) return false;
 switch (key.slice(0,1).charCodeAt(0)) {
 `;
-  Object.keys(firstChar).forEach(letter => {
+  Object.keys(firstChar).forEach((letter) => {
     const firstCode = letter.charCodeAt(0).toString();
     code = code + '    case ' + firstCode + ': return true;\n';
   });
@@ -287,7 +287,7 @@ export const getPart = (key: string) => {
 if (!key || key.length === 0) return [];
 switch (key.slice(0,1).charCodeAt(0)) {
 `;
-  Object.keys(firstChar).forEach(letter => {
+  Object.keys(firstChar).forEach((letter) => {
     const firstCode = letter.charCodeAt(0).toString();
     code = code + '    case ' + firstCode + ': return f' + firstCode + ';\n';
   });
