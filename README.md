@@ -26,7 +26,6 @@ import {
   ILanguagePickerStrings,
   languagePickerStrings_en,
   LangTag,
-  DisplayName,
 } from "mui-language-picker";
 
 const MyComponent = (props: any) => {
@@ -36,7 +35,7 @@ const MyComponent = (props: any) => {
   const [tag, setTag] = React.useState<LangTag>()
 
   const displayName = (name: string, tag?:LangTag) => {
-    return tag.localname || tag.name
+    return tag?.localname? `${tag?.localname} / ${name}`: tag?.name || name;
   }
 
   return (
