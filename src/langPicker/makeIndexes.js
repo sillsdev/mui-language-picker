@@ -25,7 +25,7 @@ const addToMap = (map, tag, index, rankBase, full) => {
     if (token.indexOf(' ') !== -1) {
       token.split(' ').forEach((t) => {
         const key = woBadChar(t);
-        if (key && !map.hasOwnProperty(key)) {
+        if (key !== '' && !map.hasOwnProperty(key)) {
           map[key] = [{ index, rank }];
         }
         rank = rankBase * 10;
@@ -92,9 +92,13 @@ const makeMap = (langTags, full, subtag) => {
     if (subtag || (lt.tag && lt.tag.indexOf('-') === -1)) {
       let thisTag = {};
       // Calls to addToMap should be ordered highes to lowest priority
+      if (lt?.tags) lt.tags.forEach((t) => addToMap(thisTag, t, i, 7, full));
       addToMap(thisTag, lt.name, i, 6, full);
       addToMap(thisTag, lt.localname, i, 5, full);
-      if (lt.names) lt.names.map((n) => addToMap(thisTag, n, i, 4, full));
+      if (lt.names) lt.names.forEach((n) => addToMap(thisTag, n, i, 4, full));
+      if (lt?.localnames) {
+        lt.localnames.forEach((n) => addToMap(thisTag, n, i, 4, full));
+      }
       addToMap(thisTag, lt.region, i, 2, full);
       addToMap(thisTag, lt.regionname, i, 1, full);
       mapMerge(thisTag, partial, full);

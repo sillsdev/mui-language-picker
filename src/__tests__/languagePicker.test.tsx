@@ -99,9 +99,9 @@ test('enter zhn-fonapi looks up correct result', async () => {
     .nextSibling?.firstChild as any;
   // We enter the code we want to test
   fireEvent.change(codeEl, { target: { value: 'zhn-fonapi' } });
-  await waitFor(() => getByText(/^zhn-Latn$/i));
+  await waitFor(() => getByText(/^zhn$/i));
   const lgEl =
-    getByText(/^zhn-Latn$/i).parentElement?.parentElement?.parentElement
+    getByText(/^zhn$/i).parentElement?.parentElement?.parentElement
       ?.parentElement;
   // making a language choice should update the code value
   lgEl && fireEvent.click(lgEl);
