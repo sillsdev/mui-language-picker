@@ -110,7 +110,7 @@ const makeMap = (langTags, full, subtag) => {
 const collectScripts = (langTags) => {
   let lists = {};
   langTags.forEach((lt) => {
-    if (lt.tag) {
+    if (lt.tag && !/^_/.test(lt.tag)) {
       const lgTag = lt.tag.split('-')[0];
       if (lists.hasOwnProperty(lgTag)) {
         if (!lists[lgTag].includes(lt.script)) lists[lgTag].push(lt.script);

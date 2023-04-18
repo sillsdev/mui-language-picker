@@ -148,3 +148,9 @@ npm run clean
 npm run index
 npm test
 ```
+
+### Updaate snapshots
+
+```sh
+npm test -- -u
+```
