@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ILanguagePickerStrings } from './model';
 import { LangTag, ScriptName } from './langPicker/types';
-import { List, ListItem, ListItemText, Typography, Box } from '@mui/material';
+import { List, ListItemText, Typography, Box, ListItemButton } from '@mui/material';
 import { debounce } from 'lodash';
 import { GrowingSpacer } from './GrowingSpacer';
 import { getDisplayName, DisplayName } from './getDisplayName';
@@ -69,9 +69,8 @@ export function LanguageChoice(props: IProps) {
     return refList.map((r, i) => {
       const tag = refTags[r];
       return (
-        <ListItem
+        <ListItemButton
           key={`${tag.tag} ${i}`}
-          button
           onClick={handleChoose(tag)}
           onKeyDown={handleKeydown(tag)}
         >
@@ -87,7 +86,7 @@ export function LanguageChoice(props: IProps) {
             }
             secondary={secondary ? detail(tag) : null}
           />
-        </ListItem>
+        </ListItemButton>
       );
     });
   };

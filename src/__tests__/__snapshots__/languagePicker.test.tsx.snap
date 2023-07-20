@@ -381,7 +381,7 @@ exports[`enter e 1`] = `
 
 exports[`enter en contains en-001 entry 1`] = `
 <div
-  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
+  class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-dense MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-dense MuiListItemButton-gutters css-178cqt3-MuiButtonBase-root-MuiListItemButton-root"
   role="button"
   tabindex="0"
 >
@@ -430,7 +430,7 @@ exports[`enter en contains en-001 entry 1`] = `
 
 exports[`enter zh-CN-x-pyn looks up correct result 1`] = `
 <div
-  class="MuiButtonBase-root MuiListItem-root MuiListItem-dense MuiListItem-gutters MuiListItem-padding MuiListItem-button css-qyxyi3-MuiButtonBase-root-MuiListItem-root"
+  class="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-dense MuiListItemButton-gutters MuiListItemButton-root MuiListItemButton-dense MuiListItemButton-gutters css-178cqt3-MuiButtonBase-root-MuiListItemButton-root"
   role="button"
   tabindex="0"
 >
