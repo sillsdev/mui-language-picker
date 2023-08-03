@@ -1,9 +1,10 @@
 // Describing the shape of the book names's slice of state
 export interface LangTag {
   full: string;
-  iana?: string;
+  iana?: string[];
   iso639_3?: string;
   localname?: string;
+  localnames?: string[];
   name: string;
   names?: string[];
   nophonvars?: boolean;
@@ -12,11 +13,13 @@ export interface LangTag {
   regions?: string[];
   script: string;
   sldr: boolean;
+  suppress?: boolean;
   tag: string;
   tags?: string[];
   variants?: string[];
   defaultFont?: string;
   fonts?: string[];
+  windows?: string;
 }
 
 export interface IRanked {

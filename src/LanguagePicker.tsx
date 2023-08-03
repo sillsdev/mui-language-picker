@@ -34,6 +34,7 @@ import useDebounce from './useDebounce';
 import { GrowingSpacer } from './GrowingSpacer';
 import ChangeName from './ChangeName';
 import { getDisplayName, DisplayName } from './getDisplayName';
+import rtlScripts from './data/rtlScripts'
 
 const MAXOPTIONS = 50;
 
@@ -59,12 +60,13 @@ interface IProps extends IStateProps {
   setName?: (name: string) => void;
   setFont?: (font: string) => void;
   setInfo?: (tag: LangTag) => void;
+  setDir?: (rtl: boolean) => void;
   disabled?: boolean;
 }
 
 export const LanguagePicker = (props: IProps) => {
   const { disabled } = props;
-  const { value, name, font, setCode, setName, setFont, setInfo, t } = props;
+  const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } = props;
   const { displayName } = props;
   const [open, setOpen] = React.useState(false);
   const [curValue, setCurValue] = React.useState(value);
@@ -148,6 +150,7 @@ export const LanguagePicker = (props: IProps) => {
     if (setCode) setCode(curValue);
     if (setName) setName(curName);
     if (setFont) setFont(curFont);
+    if (setDir) setDir(rtlScripts.includes(defaultScript));
     if (setInfo && tag) setInfo(tag);
     if (tag) {
       displayTag(tag, curValue);
@@ -453,17 +456,15 @@ export const LanguagePicker = (props: IProps) => {
                 id="select-script"
                 select
                 sx={{ width: 150, mx: 1 }}
-                label={t.script}
+                label={`${t.script} *`}
                 value={defaultScript}
                 onChange={handleScriptChange(tag)}
                 style={{ width: 400 }}
                 SelectProps={{
                   MenuProps: { ...{ sx: menuWidth } },
                 }}
-                helperText={''}
                 margin="normal"
                 variant="filled"
-                required={true}
               >
                 {scriptList(tag)
                   .map((s: string) => (
@@ -490,16 +491,14 @@ export const LanguagePicker = (props: IProps) => {
                 id="select-font"
                 select
                 sx={{ width: 300, mx: 1 }}
-                label={t.font}
-                value={curFont}
+                label={`${t.font} *`}
+                value={fontOpts.includes(curFont)? curFont: ''}
                 onChange={addFontInfo}
                 SelectProps={{
                   MenuProps: { ...{ sx: menuWidth } },
                 }}
-                helperText={''}
                 margin="normal"
                 variant="filled"
-                required={true}
               >
                 {fontOpts.map((s) => (
                   <MenuItem key={s} value={s}>

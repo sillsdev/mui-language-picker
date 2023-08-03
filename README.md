@@ -32,6 +32,7 @@ const MyComponent = (props: any) => {
   const [bcp47, setBcp47] = React.useState("und");
   const [lgName, setLgName] = React.useState("");
   const [fontName, setFontName] = React.useState("");
+  const [rtl,setRtl] = React.useState(false);
   const [tag, setTag] = React.useState<LangTag>()
 
   const displayName = (name: string, tag?:LangTag) => {
@@ -46,6 +47,7 @@ const MyComponent = (props: any) => {
       setName={setLgName}
       font={fontName}
       setFont={setFontName}
+      setDir={setRtl}
       displayName={displayName}
       setInfo={setTag}
       t={languagePickerStrings_en}
@@ -68,6 +70,7 @@ Output should be a Language Picker when entered opens a dialog
 | setName\*  | (name: string) => void  | callback to change language name    |
 | font       | string                  | font family name                    |
 | setFont\*  | (font: string) => void  | callback to change font family name |
+| setDir\*   | (rtl: boolean) => void  | callback to change script direction |
 | displayName\* | DisplayName          | function to control display of name |
 | setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
 | disabled\* | boolean                 | true if control disabled            |
@@ -105,9 +108,10 @@ export const languagePickerStrings_en = {
 ```typescript
 export interface LangTag {
   full: string;
-  iana?: string;
+  iana?: string[];
   iso639_3?: string;
   localname?: string;
+  localnames?: string[];
   name: string;
   names?: string[];
   nophonvars?: boolean;
@@ -116,11 +120,13 @@ export interface LangTag {
   regions?: string[];
   script: string;
   sldr: boolean;
+  suppress?: boolean;
   tag: string;
   tags?: string[];
   variants?: string[];
   defaultFont?: string;
   fonts?: string[];
+  windows?: string;
 }
 ```
 
@@ -149,8 +155,10 @@ npm run index
 npm test
 ```
 
-### Updaate snapshots
+### Testing Individual Suites
+
+Here is an example for Language Picker tests:
 
 ```sh
-npm test -- -u
+npm test -- --watch LanguagePicker
 ```

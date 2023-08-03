@@ -1,0 +1,1 @@
+export default ['Arab', 'Hebr', 'Thaa', 'Syrc', 'Samr', 'Mend', 'Nkoo', 'Aran', 'Adlm', 'Mand', 'Mong', 'Phnx', 'Rohg', 'Syrn', 'Syre', 'Thai', 'Tibt', 'Yezi', 'Cprt', 'Phnx', 'Armi', 'Palm', 'Sarb', 'Narb', 'Prti', 'Phli', 'Phlp', 'Phlv', 'Avst', 'Hatr', 'Sogd', 'Sogo', 'Mani', 'Nbat', 'Ethi', 'Khar', 'Orkh', 'Hung', 'Hung', 'Ital']

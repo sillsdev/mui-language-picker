@@ -1,111 +1,237 @@
-/**
- * @jest-environment jsdom
- */
 import React from 'react';
-import { render, fireEvent, cleanup, waitFor } from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import { LanguagePicker, languagePickerStrings_en } from '..';
+import {
+  cleanup,
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from '@testing-library/react';
+import LanguagePicker from '../LanguagePicker';
+import { languagePickerStrings_en } from '../localization';
 
-afterEach(cleanup);
+describe('LanguagePicker', () => {
+  beforeEach(cleanup);
 
-const MyComponent: React.FC = (props: any) => {
-  const [bcp47, setBcp47] = React.useState('und');
-  const [lgName, setLgName] = React.useState('');
-  const [fontName, setFontName] = React.useState('');
-
-  return (
-    <LanguagePicker
-      value={bcp47}
-      setCode={setBcp47}
-      name={lgName}
-      setName={setLgName}
-      font={fontName}
-      setFont={setFontName}
-      t={languagePickerStrings_en}
-    />
-  );
-};
-
-test('can render Language Picker snapshot', async () => {
-  const { getByText, container } = render(<MyComponent />);
-  await waitFor(() => getByText(/^Language$/i));
-  expect(container).toMatchSnapshot();
-});
-
-test('enter e', async () => {
-  const { getByText, container } = render(<MyComponent />);
-  await waitFor(() => getByText(/^Language$/i));
-  fireEvent.keyDown(getByText(/^Language/i).nextSibling?.firstChild as any, {
-    key: 'E',
-    code: 'KeyE',
+  it('renders without crashing', () => {
+    const props = {
+      value: '',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    expect(container).not.toBe(null);
+    expect(container.querySelector('label')).not.toBe(null);
+    expect(container.querySelector('label')?.firstChild?.textContent).toEqual(
+      'Language'
+    );
+    expect(container.querySelector('input')).not.toBe(null);
   });
-  await waitFor(() => getByText(/^Choose Language Details$/i));
-  expect(container.parentElement).toMatchSnapshot();
-});
 
-test('enter en contains en-001 entry', async () => {
-  const { getByText, getAllByText, container } = render(<MyComponent />);
-  await waitFor(() => getByText(/^Language$/i));
-  fireEvent.keyDown(getByText(/^Language/i).nextSibling?.firstChild as any, {
-    key: 'E',
-    code: 'KeyE',
+  it('renders with a value und', () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    expect(container.querySelector('input')?.hasAttribute('value')).toBe(true);
+    expect(container.querySelector('input')?.getAttribute('value')).toEqual('');
   });
-  await waitFor(() => getByText(/^Choose Language Details$/i));
-  fireEvent.change(
-    getAllByText(/Find a language by name, code, or country/i)[0].nextSibling
-      ?.firstChild as any,
-    { target: { value: 'en' } }
-  );
-  await waitFor(() => getByText(/^en-001$/i));
-  expect(
-    getByText(/^en-001$/i).parentElement?.parentElement?.parentElement
-      ?.parentElement
-  ).toMatchSnapshot();
-});
 
-test('enter zh-CN-x-pyn looks up correct result', async () => {
-  const dom = render(<MyComponent />);
-  const { getByText, getAllByText, container } = dom;
-  await waitFor(() => getByText(/^Language$/i));
-  const langEl = getByText(/^Language/i).nextSibling?.firstChild as HTMLElement;
-  // typing in this box opens the chooser
-  fireEvent.keyDown(langEl, { key: 'z', code: 'KeyZ' });
-  await waitFor(() => getByText(/^Choose Language Details$/i));
-  const codeEl = getAllByText(/Find a language by name, code, or country/i)[0]
-    .nextSibling?.firstChild as any;
-  // We enter the code we want to test
-  fireEvent.change(codeEl, { target: { value: 'zh-CN-x-pyn' } });
-  await waitFor(() => getByText(/^zh-CN$/i));
-  const lgEl =
-    getByText(/^zh-CN$/i).parentElement?.parentElement?.parentElement
-      ?.parentElement;
-  expect(lgEl).toMatchSnapshot();
-  // making a language choice should update the code value
-  lgEl && fireEvent.click(lgEl);
-  // when the Script choice appears - the calculation is complete
-  await waitFor(() => getByText(/^Script$/));
-  expect(codeEl).toHaveAttribute('value', '中文 / Chinese (zh-CN-x-pyn)');
-});
+  it('renders with a value', () => {
+    const props = {
+      value: 'en',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    expect(container.querySelector('input')?.hasAttribute('value')).toBe(true);
+    expect(container.querySelector('input')?.getAttribute('value')).toEqual(
+      ' (en)'
+    );
+  });
 
-test('enter zhn-fonapi looks up correct result', async () => {
-  const dom = render(<MyComponent />);
-  const { getByText, getAllByText, container } = dom;
-  await waitFor(() => getByText(/^Language$/i));
-  const langEl = getByText(/^Language/i).nextSibling?.firstChild as HTMLElement;
-  // typing in this box opens the chooser
-  fireEvent.keyDown(langEl, { key: 'z', code: 'KeyZ' });
-  await waitFor(() => getByText(/^Choose Language Details$/i));
-  const codeEl = getAllByText(/Find a language by name, code, or country/i)[0]
-    .nextSibling?.firstChild as any;
-  // We enter the code we want to test
-  fireEvent.change(codeEl, { target: { value: 'zhn-fonapi' } });
-  await waitFor(() => getByText(/^zhn$/i));
-  const lgEl =
-    getByText(/^zhn$/i).parentElement?.parentElement?.parentElement
-      ?.parentElement;
-  // making a language choice should update the code value
-  lgEl && fireEvent.click(lgEl);
-  // when the Script choice appears - the calculation is complete
-  await waitFor(() => getByText(/^Script$/));
-  expect(codeEl).toHaveAttribute('value', 'Zhuang, Nong (zhn-fonapi)');
+  it('renders with a value and name', () => {
+    const props = {
+      value: 'en',
+      name: 'English',
+      font: '',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    expect(container.querySelector('input')?.hasAttribute('value')).toBe(true);
+    expect(container.querySelector('input')?.getAttribute('value')).toEqual(
+      'English (en)'
+    );
+  });
+
+  it('renders with a value, name and font', () => {
+    const props = {
+      value: 'en',
+      name: 'English',
+      font: 'Charis SIL',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    expect(container.querySelector('input')?.hasAttribute('value')).toBe(true);
+    expect(container.querySelector('input')?.getAttribute('value')).toEqual(
+      'English (en)'
+    );
+  });
+
+  it('renders with a value, name when disabled', () => {
+    const props = {
+      value: 'en',
+      name: 'English',
+      font: '',
+      t: languagePickerStrings_en,
+      disabled: true,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    expect(container.querySelector('input')?.hasAttribute('value')).toBe(true);
+    expect(container.querySelector('input')?.getAttribute('value')).toEqual(
+      'English (en)'
+    );
+    expect(container.querySelector('input')?.hasAttribute('disabled')).toBe(
+      true
+    );
+  });
+
+  it('opens picker when clicked', () => {
+    const props = {
+      value: 'en',
+      name: 'English',
+      font: 'Charis SIL',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    expect(screen.getByText('Choose Language Details')).not.toBe(null);
+  });
+
+  it('opens picker when clicked and closes when clicked', async () => {
+    const props = {
+      value: 'en',
+      name: 'English',
+      font: 'Charis SIL',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    expect(screen.getByText('Choose Language Details')).not.toBe(null);
+    fireEvent.click(screen.getByText('Cancel') as Element);
+    await waitFor(() =>
+      expect(screen.queryByText('Choose Language Details')).toBe(null)
+    );
+  });
+
+  it('gives English in response to en code', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'en' } }
+    );
+    await waitFor(() => expect(screen.getByText(/^en-001$/i)).not.toBe(null));
+  });
+
+  it('choosing en-001 returns right values', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'en' } }
+    );
+    await waitFor(() => screen.getByText(/^en-001$/i));
+    fireEvent.click(screen.getByText(/^en-001$/i));
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('en-001');
+    expect(props.setName).toHaveBeenCalledWith('English');
+    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+  });
+
+  it('choosing zh-CN-x-pyn returns right values', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'zh-CN-x-pyn' } }
+    );
+    await waitFor(() => screen.getByText(/^zh-CN$/i));
+    fireEvent.click(screen.getByText(/^zh-CN$/i));
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('zh-CN-x-pyn');
+    expect(props.setName).toHaveBeenCalledWith('Chinese');
+    expect(props.setFont).toHaveBeenCalledWith('Noto Sans CJK SC');
+  });
+
+  it('choosing zhn-fonapi returns right values', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'zhn-fonapi' } }
+    );
+    await waitFor(() => screen.getByText(/^zhn$/i));
+    fireEvent.click(screen.getByText(/^zhn$/i));
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('zhn-fonapi');
+    expect(props.setName).toHaveBeenCalledWith('Zhuang, Nong');
+    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+  });
 });

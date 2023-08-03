@@ -1,6 +1,6 @@
 {
   "name": "mui-language-picker",
-  "version": "1.2.7",
+  "version": "1.2.8",
   "description": "Material UI language picker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -73,6 +73,7 @@
     "lodash": "^4.17.21"
   },
   "jest": {
+    "testEnvironment": "jsdom",
     "moduleFileExtensions": [
       "ts",
       "tsx",
