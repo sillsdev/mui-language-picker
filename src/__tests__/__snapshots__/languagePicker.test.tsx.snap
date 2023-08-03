@@ -240,16 +240,20 @@ exports[`enter e 1`] = `
                 </svg>
               </div>
             </div>
-            <span
-              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-            />
-            <span
-              aria-hidden="true"
-              class="MuiFormControlLabel-asterisk css-1x2jons-MuiFormControlLabel-asterisk"
+            <div
+              class="MuiStack-root css-1d9cypr-MuiStack-root"
             >
-               
-              *
-            </span>
+              <span
+                class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+              />
+              <span
+                aria-hidden="true"
+                class="MuiFormControlLabel-asterisk css-1x2jons-MuiFormControlLabel-asterisk"
+              >
+                 
+                *
+              </span>
+            </div>
           </label>
           <label
             class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Mui-required css-j204z7-MuiFormControlLabel-root"
@@ -311,16 +315,20 @@ exports[`enter e 1`] = `
                 </svg>
               </div>
             </div>
-            <span
-              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
-            />
-            <span
-              aria-hidden="true"
-              class="MuiFormControlLabel-asterisk css-1x2jons-MuiFormControlLabel-asterisk"
+            <div
+              class="MuiStack-root css-1d9cypr-MuiStack-root"
             >
-               
-              *
-            </span>
+              <span
+                class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+              />
+              <span
+                aria-hidden="true"
+                class="MuiFormControlLabel-asterisk css-1x2jons-MuiFormControlLabel-asterisk"
+              >
+                 
+                *
+              </span>
+            </div>
           </label>
         </div>
         <div

@@ -74,7 +74,6 @@ export const LanguagePicker = (props: IProps) => {
   const [response, setResponse] = React.useState('');
   const [tag, setTag] = React.useState<LangTag>();
   const [defaultScript, setDefaultScript] = React.useState('');
-  const [defaultFont, setDefaultFont] = React.useState('');
   const [fontOpts, setFontOpts] = React.useState(Array<string>());
   const [newName, setNewName] = React.useState(false);
   const langEl = React.useRef<any>();
@@ -101,7 +100,6 @@ export const LanguagePicker = (props: IProps) => {
         setTag(found);
         selectFont(found);
         setDefaultScript(found.script);
-        setDefaultFont(curFont);
       } else {
         const key = curValue.toLocaleLowerCase();
         if (hasExact(key)) {
@@ -110,7 +108,6 @@ export const LanguagePicker = (props: IProps) => {
           setTag(langTag);
           selectFont(langTag);
           setDefaultScript(langTag.script);
-          setDefaultFont(curFont);
         } else {
           handleClear();
         }
@@ -122,7 +119,7 @@ export const LanguagePicker = (props: IProps) => {
     setFontOpts([]);
     setResponse('');
     setTag(undefined);
-    setDefaultFont('');
+    setDefaultScript('');
     if (langEl.current) langEl.current.click();
   };
   const handleCancel = () => {
@@ -165,7 +162,6 @@ export const LanguagePicker = (props: IProps) => {
   };
 
   const addFontInfo = (e: any) => {
-    setDefaultFont(e.target.value);
     setCurFont(e.target.value);
   };
 
@@ -178,7 +174,6 @@ export const LanguagePicker = (props: IProps) => {
 
   const selectDefaultFont = (code: string) => {
     const fonts = fontMap[code];
-    setDefaultFont(fonts[0]);
     setCurFont(fonts[0]);
     setFontOpts(fonts);
   };
@@ -196,7 +191,6 @@ export const LanguagePicker = (props: IProps) => {
       }
     }
     if (!fontMap.hasOwnProperty(code)) {
-      setDefaultFont(safeFonts[0].value);
       setCurFont(safeFonts[0].value);
       setFontOpts(safeFonts.map((f) => f.value));
     } else selectDefaultFont(code);
@@ -497,7 +491,7 @@ export const LanguagePicker = (props: IProps) => {
                 select
                 sx={{ width: 300, mx: 1 }}
                 label={t.font}
-                value={defaultFont}
+                value={curFont}
                 onChange={addFontInfo}
                 SelectProps={{
                   MenuProps: { ...{ sx: menuWidth } },
