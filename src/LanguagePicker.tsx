@@ -34,7 +34,7 @@ import useDebounce from './useDebounce';
 import { GrowingSpacer } from './GrowingSpacer';
 import ChangeName from './ChangeName';
 import { getDisplayName, DisplayName } from './getDisplayName';
-import rtlScripts from './data/rtlScripts'
+import rtlScripts from './data/rtlScripts';
 
 const MAXOPTIONS = 50;
 
@@ -66,7 +66,8 @@ interface IProps extends IStateProps {
 
 export const LanguagePicker = (props: IProps) => {
   const { disabled } = props;
-  const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } = props;
+  const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } =
+    props;
   const { displayName } = props;
   const [open, setOpen] = React.useState(false);
   const [curValue, setCurValue] = React.useState(value);
@@ -454,6 +455,7 @@ export const LanguagePicker = (props: IProps) => {
             control={
               <TextField
                 id="select-script"
+                data-testid="select-script"
                 select
                 sx={{ width: 150, mx: 1 }}
                 label={`${t.script} *`}
@@ -489,10 +491,11 @@ export const LanguagePicker = (props: IProps) => {
             control={
               <TextField
                 id="select-font"
+                data-testid="select-font"
                 select
                 sx={{ width: 300, mx: 1 }}
                 label={`${t.font} *`}
-                value={fontOpts.includes(curFont)? curFont: ''}
+                value={fontOpts.includes(curFont) ? curFont : ''}
                 onChange={addFontInfo}
                 SelectProps={{
                   MenuProps: { ...{ sx: menuWidth } },
@@ -520,7 +523,12 @@ export const LanguagePicker = (props: IProps) => {
           </a>
           {curName !== '' && (
             <Tooltip title={t.changeName ?? 'Change name'}>
-              <IconButton color="primary" size="small" onClick={handleNewName}>
+              <IconButton
+                color="primary"
+                size="small"
+                data-testid="change-name"
+                onClick={handleNewName}
+              >
                 <ChangeNameIcon fontSize="small" />
               </IconButton>
             </Tooltip>

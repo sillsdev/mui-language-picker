@@ -157,6 +157,7 @@ describe('LanguagePicker', () => {
       setCode: jest.fn(),
       setName: jest.fn(),
       setFont: jest.fn(),
+      setDir: jest.fn(),
       setInfo: jest.fn(),
     };
     const { container } = render(<LanguagePicker {...props} />);
@@ -175,6 +176,7 @@ describe('LanguagePicker', () => {
     expect(props.setCode).toHaveBeenCalledWith('en-001');
     expect(props.setName).toHaveBeenCalledWith('English');
     expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+    expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
   it('choosing zh-CN-x-pyn returns right values', async () => {
@@ -233,5 +235,212 @@ describe('LanguagePicker', () => {
     expect(props.setCode).toHaveBeenCalledWith('zhn-fonapi');
     expect(props.setName).toHaveBeenCalledWith('Zhuang, Nong');
     expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+  });
+
+  it('choosing ar returns right values', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'ar' } }
+    );
+    await waitFor(() => screen.getAllByText(/Egypt/i));
+    fireEvent.click(screen.getAllByText(/Egypt/i)[0]);
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('ar');
+    expect(props.setName).toHaveBeenCalledWith('Arabic');
+    expect(props.setFont).toHaveBeenCalledWith('Scheherazade');
+    expect(props.setDir).toHaveBeenCalledWith(true);
+  });
+
+  it('name Cherokee returns right values', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'Cherokee' } }
+    );
+    await waitFor(() => screen.getByText(/^chr$/i));
+    fireEvent.click(screen.getByText(/^chr$/i));
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('chr');
+    expect(props.setName).toHaveBeenCalledWith('Cherokee');
+    expect(props.setFont).toHaveBeenCalledWith('NotoSansCherokee');
+    expect(props.setDir).toHaveBeenCalledWith(false);
+  });
+
+  it('country Senegal returns Wolof values', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'Senegal' } }
+    );
+    await waitFor(() => screen.getByText(/^wo$/i));
+    fireEvent.click(screen.getByText(/^wo$/i));
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('wo');
+    expect(props.setName).toHaveBeenCalledWith('Wolof');
+    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+    expect(props.setDir).toHaveBeenCalledWith(false);
+  });
+
+  it('Wolof Script can be changed to Arabic', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'Senegal' } }
+    );
+    await waitFor(() => screen.getByText(/^wo$/i));
+    fireEvent.click(screen.getByText(/^wo$/i));
+    fireEvent.change(
+      screen.getByTestId('select-script').querySelector('input') as HTMLElement,
+      {
+        target: { value: 'Arab' },
+      }
+    );
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('wo-Arab');
+    expect(props.setName).toHaveBeenCalledWith('Wolof');
+    expect(props.setFont).toHaveBeenCalledWith('Harmattan');
+    expect(props.setDir).toHaveBeenCalledWith(true);
+  });
+
+  it('Wolof Font can be changed to NotoSansLatin', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'Senegal' } }
+    );
+    await waitFor(() => screen.getByText(/^wo$/i));
+    fireEvent.click(screen.getByText(/^wo$/i));
+    fireEvent.change(
+      screen.getByTestId('select-font').querySelector('input') as HTMLElement,
+      {
+        target: { value: 'NotoSansLatin' },
+      }
+    );
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('wo');
+    expect(props.setName).toHaveBeenCalledWith('Wolof');
+    expect(props.setFont).toHaveBeenCalledWith('NotoSansLatin');
+    expect(props.setDir).toHaveBeenCalledWith(false);
+  });
+
+  it('Wolof can be changed to Senegal Wolof', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as any,
+      { target: { value: 'wo' } }
+    );
+    await waitFor(() => screen.getByText(/^wo$/i));
+    fireEvent.click(screen.getByText(/^wo$/i));
+    fireEvent.click(screen.getByTestId('change-name'));
+    await waitFor(() => screen.getByText('Change Name'));
+    fireEvent.change(
+      screen.getByTestId('name').querySelector('input') as HTMLElement,
+      {
+        target: { value: 'Senegal Wolof' },
+      }
+    );
+    fireEvent.click(screen.getByText('Change'));
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('wo');
+    expect(props.setName).toHaveBeenCalledWith('Senegal Wolof');
+    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+    expect(props.setDir).toHaveBeenCalledWith(false);
   });
 });

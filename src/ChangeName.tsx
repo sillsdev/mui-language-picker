@@ -52,6 +52,7 @@ export default function ChangeName({
           autoFocus
           margin="dense"
           id="name"
+          data-testid="name"
           label={t?.newName || eng.newName}
           fullWidth
           value={name}
