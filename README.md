@@ -32,12 +32,12 @@ const MyComponent = (props: any) => {
   const [bcp47, setBcp47] = React.useState("und");
   const [lgName, setLgName] = React.useState("");
   const [fontName, setFontName] = React.useState("");
-  const [rtl,setRtl] = React.useState(false);
-  const [tag, setTag] = React.useState<LangTag>()
+  const [rtl, setRtl] = React.useState(false);
+  const [tag, setTag] = React.useState<LangTag>();
 
-  const displayName = (name: string, tag?:LangTag) => {
-    return tag?.localname? `${tag?.localname} / ${name}`: tag?.name || name;
-  }
+  const displayName = (name: string, tag?: LangTag) => {
+    return tag?.localname ? `${tag?.localname} / ${name}` : tag?.name || name;
+  };
 
   return (
     <LanguagePicker
