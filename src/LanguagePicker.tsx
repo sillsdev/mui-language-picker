@@ -114,6 +114,17 @@ export const LanguagePicker = (props: IProps) => {
     }
     setOpen(true);
   };
+
+  React.useEffect(() => {
+    if (open && curValue === 'und') {
+      setTimeout(() => {
+        if (langEl.current) {
+          langEl.current.click();
+        }
+      }, 100);
+    }
+  }, [open, curValue]);
+
   const handleClear = () => {
     setFontOpts([]);
     setResponse('');
@@ -422,7 +433,6 @@ export const LanguagePicker = (props: IProps) => {
         <DialogTitle id="form-dialog-title">{t.selectLanguage}</DialogTitle>
         <DialogContent dividers>
           <TextField
-            autoFocus
             margin="normal"
             id="language"
             label={t.findALanguage}
