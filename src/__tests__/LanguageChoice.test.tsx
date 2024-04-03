@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React from 'react';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import LanguageChoice from '../LanguageChoice';
 import { LangTag, ScriptName, ILanguagePickerStrings } from '../model';
 import { languagePickerStrings_en } from '../model';
 
+// eslint-disable-next-line no-var
 var mockLangTags: LangTag[] = [
   {
     full: 'de-Latn-DE',
@@ -49,7 +52,7 @@ describe('LanguageChoice', () => {
   it('should render', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => {},
+      choose: (tag: LangTag) => { },
       langTags: [],
       scriptName: {} as ScriptName,
       t: {} as ILanguagePickerStrings,
@@ -61,7 +64,7 @@ describe('LanguageChoice', () => {
   it('should render with secondary', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => {},
+      choose: (tag: LangTag) => { },
       langTags: [],
       scriptName: {} as ScriptName,
       t: {} as ILanguagePickerStrings,
@@ -74,7 +77,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => {},
+      choose: (tag: LangTag) => { },
       langTags: [],
       scriptName: {} as ScriptName,
       t: {} as ILanguagePickerStrings,
@@ -87,7 +90,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName and secondary', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => {},
+      choose: (tag: LangTag) => { },
       langTags: [],
       scriptName: {} as ScriptName,
       t: {} as ILanguagePickerStrings,
@@ -101,7 +104,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName and secondary and langTags', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => {},
+      choose: (tag: LangTag) => { },
       langTags: mockLangTags,
       scriptName: {} as ScriptName,
       t: {} as ILanguagePickerStrings,
@@ -115,7 +118,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName and secondary and langTags and scriptName', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => {},
+      choose: (tag: LangTag) => { },
       langTags: mockLangTags,
       scriptName: { Latn: 'Latin' },
       t: {} as ILanguagePickerStrings,

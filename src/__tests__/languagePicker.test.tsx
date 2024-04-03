@@ -142,7 +142,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'en' } }
     );
     await waitFor(() => expect(screen.getByText(/^en-001$/i)).not.toBe(null));
@@ -167,7 +167,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'en' } }
     );
     await waitFor(() => screen.getByText(/^en-001$/i));
@@ -197,7 +197,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'zh-CN-x-pyn' } }
     );
     await waitFor(() => screen.getByText(/^zh-CN$/i));
@@ -226,7 +226,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'zhn-fonapi' } }
     );
     await waitFor(() => screen.getByText(/^zhn$/i));
@@ -256,7 +256,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'ar' } }
     );
     await waitFor(() => screen.getAllByText(/Egypt/i));
@@ -287,7 +287,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'Cherokee' } }
     );
     await waitFor(() => screen.getByText(/^chr$/i));
@@ -318,7 +318,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'Senegal' } }
     );
     await waitFor(() => screen.getByText(/^wo$/i));
@@ -349,7 +349,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'Senegal' } }
     );
     await waitFor(() => screen.getByText(/^wo$/i));
@@ -386,7 +386,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'Senegal' } }
     );
     await waitFor(() => screen.getByText(/^wo$/i));
@@ -423,7 +423,7 @@ describe('LanguagePicker', () => {
     );
     fireEvent.change(
       screen.getAllByText(/Find a language by name, code, or country/i)[0]
-        .nextSibling?.firstChild as any,
+        .nextSibling?.firstChild as Element,
       { target: { value: 'wo' } }
     );
     await waitFor(() => screen.getByText(/^wo$/i));

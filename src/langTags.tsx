@@ -1,7 +1,7 @@
 import jsonData from './data/langtags.json';
 import { LangTag } from './langPicker/types';
 
-export let langTags = jsonData as LangTag[];
+export const langTags = jsonData as LangTag[];
 langTags.push({
   full: 'qaa',
   iso639_3: 'qaa',

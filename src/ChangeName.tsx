@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { ChangeEvent } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
@@ -28,12 +28,12 @@ export default function ChangeName({
   const [name, setName] = React.useState(curName || '');
 
   const handleClose = (save?: boolean) => () => {
-    if (save && name) onNewName && onNewName(name);
-    onClose && onClose();
+    if (save && name && onNewName) onNewName(name);
+    if (onClose) onClose();
     setOpen(false);
   };
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
   };
 

@@ -165,7 +165,7 @@ const fontMap = {
   Yiii: ['Nuosu SIL', 'NotoSansYi'],
 };
 
-let fontList = [];
+const fontList = [];
 Object.keys(fontMap).forEach(script =>
   fontMap[script].forEach(name => {
     if (!fontList.includes(name)) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, KeyboardEvent } from 'react';
 import { ILanguagePickerStrings } from './model';
 import { LangTag, ScriptName } from './langPicker/types';
 import { List, ListItemText, Typography, Box, ListItemButton } from '@mui/material';
@@ -26,8 +26,8 @@ export function LanguageChoice(props: IProps) {
     choose(tag);
   };
 
-  const handleKeydown = (tag: LangTag) => (e: any) => {
-    if (e.keyCode === 32 || e.keyCode === 13) {
+  const handleKeydown = (tag: LangTag) => (e: KeyboardEvent) => {
+    if (e.key === " " || e.key === "Enter") {
       choose(tag);
     }
   };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
 import { ILanguagePickerStrings } from './model';
 import { LangTag } from './langPicker/types';
 import {
@@ -79,22 +79,18 @@ export const LanguagePicker = (props: IProps) => {
   const [defaultScript, setDefaultScript] = React.useState('');
   const [fontOpts, setFontOpts] = React.useState(Array<string>());
   const [newName, setNewName] = React.useState(false);
-  const langEl = React.useRef<any>();
+  const langEl = React.useRef<HTMLInputElement | null>(null);
 
-  const debouncedResponse = useDebounce(response, 500);
-
-  const TAB = 9;
-  const SHIFT = 16;
-  const CTRL = 17;
+  const debouncedResponse = useDebounce({ value: response, delay: 500 });
 
   const IpaTag = 'fonipa';
   if (!scriptName.hasOwnProperty(IpaTag)) scriptName[IpaTag] = t.phonetic;
 
-  const respFormat = (name: string, tagVal: string) => `${name} (${tagVal})`;
+  const respFormat = (iname: string, tagVal: string) => `${iname} (${tagVal})`;
 
-  const handleClickOpen = (e: any) => {
+  const handleClickOpen = (e: KeyboardEvent | MouseEvent) => {
     if (disabled) return;
-    if (e.keyCode && [TAB, SHIFT, CTRL].indexOf(e.keyCode) !== -1) return;
+    if ((e as KeyboardEvent)?.key && ["Tab", "Shift", "Control"].indexOf((e as KeyboardEvent).key) !== -1) return;
     const found = bcp47Find(curValue);
     if (curValue !== 'und') {
       if (found && !Array.isArray(found)) {
@@ -161,11 +157,11 @@ export const LanguagePicker = (props: IProps) => {
     setTimeout(() => setOpen(false), 200);
   };
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setResponse(e.target.value);
   };
 
-  const addFontInfo = (e: any) => {
+  const addFontInfo = (e: ChangeEvent<HTMLInputElement>) => {
     setCurFont(e.target.value);
   };
 
@@ -208,9 +204,9 @@ export const LanguagePicker = (props: IProps) => {
     setNewName(false);
   };
 
-  const handleSetName = (name: string) => {
-    setCurName(name);
-    const tagName = getDisplayName(name, tag, displayName);
+  const handleSetName = (iname: string) => {
+    setCurName(iname);
+    const tagName = getDisplayName(iname, tag, displayName);
     if (tag) setResponse(respFormat(tagName, tag.tag));
   };
 
@@ -225,7 +221,7 @@ export const LanguagePicker = (props: IProps) => {
     setResponse(value !== 'und' ? name + ' (' + value + ')' : '');
   }, [value, name, font]);
 
-  const handleScriptChange = (tagP: LangTag | undefined) => (e: any) => {
+  const handleScriptChange = (tagP: LangTag | undefined) => (e: ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
     setDefaultScript(val);
     const parse = bcp47Parse(curValue);
@@ -478,10 +474,10 @@ export const LanguagePicker = (props: IProps) => {
                     scriptList(tag).includes(defaultScript)
                       ? []
                       : [
-                          <MenuItem key={defaultScript} value={defaultScript}>
-                            {defaultScript}
-                          </MenuItem>,
-                        ]
+                        <MenuItem key={defaultScript} value={defaultScript}>
+                          {defaultScript}
+                        </MenuItem>,
+                      ]
                   )}
               </TextField>
             }

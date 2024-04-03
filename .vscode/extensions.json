@@ -4,7 +4,6 @@
 
   // List of extensions which should be recommended for users of this workspace.
   "recommendations": [
-    "msjsdiag.debugger-for-chrome",
     "jinsihou.diff-tool",
     "editorconfig.editorconfig",
     "dbaeumer.vscode-eslint",
@@ -12,7 +11,6 @@
     "yzhang.markdown-all-in-one",
     "ryu1kn.partial-diff",
     "esbenp.prettier-vscode",
-    "ms-vscode.vscode-typescript-tslint-plugin",
     "andyyaldoo.vscode-json",
     "richie5um2.vscode-sort-json",
     "earshinov.sort-lines-by-selection"
