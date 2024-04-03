@@ -443,4 +443,23 @@ describe('LanguagePicker', () => {
     expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
+
+  it('It does not crash when value empty', async () => {
+    const props = {
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const { container } = render(<LanguagePicker {...props} value={undefined as any} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+  });
 });

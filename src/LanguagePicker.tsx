@@ -100,7 +100,7 @@ export const LanguagePicker = (props: IProps) => {
         selectFont(found);
         setDefaultScript(found.script);
       } else {
-        const key = curValue.toLocaleLowerCase();
+        const key = (curValue ?? '').toLocaleLowerCase();
         if (hasExact(key)) {
           setResponse(respFormat(curName, curValue));
           const langTag = langTags[getExact(key)[0]];
