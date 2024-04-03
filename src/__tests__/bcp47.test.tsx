@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/require-await */
-import '@testing-library/jest-dom/extend-expect';
 import { langTags } from '../langTags';
 import { bcp47Match, bcp47Parse, bcp47Find, bcp47Index } from '../bcp47';
 
