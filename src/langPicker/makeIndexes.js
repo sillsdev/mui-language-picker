@@ -1,114 +1,14 @@
-const badChar = " (),.:/!?_'`0123456789";
-const hasBadChar = (s) => {
-  for (let i = 0; i < s.length; i += 1) {
-    if (badChar.indexOf(s[i]) !== -1) return true;
-  }
-  return false;
-};
-const woBadChar = (s) => {
-  if (!s) return '';
-  let result = '';
-  for (let i = 0; i < s.length; i += 1) {
-    if (badChar.indexOf(s[i]) === -1) result += s[i];
-  }
-  return result;
-};
-
-const addToMap = (map, tag, index, rankBase, full) => {
-  if (tag === undefined || tag.length === 0) return;
-  if (full) {
-    let rank = rankBase * 10 + 1;
-    const token = tag.toLocaleLowerCase();
-    if (!map.hasOwnProperty(token)) {
-      map[token] = [{ index, rank }];
-    }
-    if (token.indexOf(' ') !== -1) {
-      token.split(' ').forEach((t) => {
-        const key = woBadChar(t);
-        if (key !== '' && !map.hasOwnProperty(key)) {
-          map[key] = [{ index, rank }];
-        }
-        rank = rankBase * 10;
-      });
-    }
-    return;
-  }
-  tag = woBadChar(tag);
-  let rank = rankBase * 10 + 1;
-  for (let i = 0; i < tag.length; i += 1) {
-    const token = tag[i].toLocaleLowerCase();
-    if (hasBadChar(token)) continue;
-    if (!map.hasOwnProperty(token)) {
-      map[token] = [{ index, rank }];
-    }
-    rank = rankBase * 10;
-  }
-  rank = rankBase * 10 + 1;
-  for (let i = 0; i < tag.length - 1; i += 1) {
-    const token = (tag[i] + tag[i + 1]).toLocaleLowerCase();
-    if (hasBadChar(token)) continue;
-    if (!map.hasOwnProperty(token)) {
-      map[token] = [{ index, rank }];
-    }
-    rank = rankBase * 10;
-  }
-  rank = rankBase * 10 + 1;
-  for (let i = 0; i < tag.length - 2; i += 1) {
-    const token = (tag[i] + tag[i + 1] + tag[i + 2]).toLocaleLowerCase();
-    if (hasBadChar(token)) continue;
-    if (!map.hasOwnProperty(token)) {
-      map[token] = [{ index, rank }];
-    }
-    rank = rankBase * 10;
-  }
-};
-
-const iRankCompare = (a, b) => b.rank - a.rank;
-
-const sortInsert = (list, value) => {
-  return [...list, value].sort(iRankCompare);
-};
-
-const limitSortInsert = (list, value) => {
-  return [...list, value].sort(iRankCompare).filter((v, i) => i < 7);
-};
-
-const mapMerge = (current, composite, full) => {
-  var keys = Object.keys(current);
-  keys.forEach((v) => {
-    if (composite.hasOwnProperty(v)) {
-      composite[v] = full
-        ? sortInsert(composite[v], current[v][0])
-        : limitSortInsert(composite[v], current[v][0]);
-    } else {
-      composite[v] = current[v].map((v) => v);
-    }
-  });
-};
-
-const makeMap = (langTags, full, subtag) => {
-  let partial = {};
-  langTags.forEach((lt, i) => {
-    if (subtag || (lt.tag && lt.tag.indexOf('-') === -1)) {
-      let thisTag = {};
-      // Calls to addToMap should be ordered highes to lowest priority
-      if (lt?.tags) lt.tags.forEach((t) => addToMap(thisTag, t, i, 7, full));
-      addToMap(thisTag, lt.name, i, 6, full);
-      addToMap(thisTag, lt.localname, i, 5, full);
-      if (lt.names) lt.names.forEach((n) => addToMap(thisTag, n, i, 4, full));
-      if (lt?.localnames) {
-        lt.localnames.forEach((n) => addToMap(thisTag, n, i, 4, full));
-      }
-      addToMap(thisTag, lt.region, i, 2, full);
-      addToMap(thisTag, lt.regionname, i, 1, full);
-      mapMerge(thisTag, partial, full);
-    }
-  });
-  return partial;
-};
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 
 const collectScripts = (langTags) => {
-  let lists = {};
+  const lists = {};
   langTags.forEach((lt) => {
     if (lt.tag && !/^_/.test(lt.tag)) {
       const lgTag = lt.tag.split('-')[0];
@@ -127,7 +27,7 @@ const addFontToList = (list, s) => {
 };
 
 const makeFontMap = (data) => {
-  let fontMap = {};
+  const fontMap = {};
   data.split('\n').forEach((line, i) => {
     if (i !== 0) {
       const fields = line.split('\t');
@@ -176,7 +76,7 @@ const makeFontMap = (data) => {
 };
 
 const getNames = (data) => {
-  let names = {};
+  const names = {};
   data.split('\n').forEach((line, i) => {
     if (i !== 0) {
       const fields = line.split('\t');
@@ -188,22 +88,22 @@ const getNames = (data) => {
   return names;
 };
 
-var fs = require('fs');
-var writeFile = require('write');
+const fs = require('fs');
+const writeFile = require('write');
 const indexDir = __dirname + '/../index';
 if (!fs.existsSync(indexDir)) fs.mkdirSync(indexDir);
 
 const makeFolder = (name, typeName, data) => {
-  var folder = indexDir + '/' + name;
+  const folder = indexDir + '/' + name;
   if (!fs.existsSync(folder)) fs.mkdirSync(folder);
-  var firstChar = {};
-  var keys = Object.keys(data);
+  const firstChar = {};
+  const keys = Object.keys(data);
   keys.forEach((k) => {
     const letter = k.slice(0, 1);
     if (!firstChar.hasOwnProperty(letter)) firstChar[letter] = true;
   });
   Object.keys(firstChar).forEach((letter) => {
-    var letPart = {};
+    const letPart = {};
     keys.forEach((key) => {
       if (key.slice(0, 1) === letter) {
         if (name !== 'Scripts') letPart[key] = data[key].map((i) => i.index);
@@ -304,8 +204,8 @@ switch (key.slice(0,1).charCodeAt(0)) {
   writeFile.sync(indexDir + '/Lg' + name + '.tsx', code);
 };
 
-var json = fs.readFileSync(__dirname + '/../data/langtags.json', 'utf8');
-var jsonData = JSON.parse(json);
+const json = fs.readFileSync(__dirname + '/../data/langtags.json', 'utf8');
+const jsonData = JSON.parse(json);
 console.log('json data:', jsonData.length);
 jsonData.push({
   full: 'qaa',
@@ -317,15 +217,14 @@ jsonData.push({
   sldr: false,
   tag: 'qaa',
 });
-makeFolder('Exact', 'LangTagMap', makeMap(jsonData, true, true));
-var scripts = collectScripts(jsonData);
+const scripts = collectScripts(jsonData);
 // These three lines prevent null values from ending up in the lists
 scripts['_globalvar'] = [];
 scripts['_phonvar'] = [];
 scripts['_version'] = [];
 makeFolder('Scripts', 'ScriptList', scripts);
 
-var csvData = fs.readFileSync(__dirname + '/../data/scripts.csv', 'utf8');
+const csvData = fs.readFileSync(__dirname + '/../data/scripts.csv', 'utf8');
 const header1 = `// This file is auto-generated. Modify the script that creates it.
 import { FontMap } from '../langPicker/types';
 

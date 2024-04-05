@@ -6,7 +6,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist src/index coverage",
-    "index": "node src/langPicker/makeIndexes.js",
+    "index": "node src/langPicker/makeIndexes.js && node src/langPicker/makeIndex2.js",
     "build": "npm run index && npm test && tsc",
     "lint": "tslint -c tslint.json 'src/**/*.{ts.tsx}'",
     "pretest": "npm run lint",

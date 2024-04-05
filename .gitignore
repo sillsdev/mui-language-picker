@@ -19,6 +19,8 @@
 .env*.zip
 localization/.vscode
 localization/.vs
+langtagsIndex.ts
+tagIndex.ts
 
 npm-debug.log*
 yarn-debug.log*

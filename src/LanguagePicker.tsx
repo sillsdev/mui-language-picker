@@ -22,14 +22,12 @@ import {
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
 import ChangeNameIcon from '@mui/icons-material/BorderColor';
-import { woBadChar } from './util';
 import LanguageChoice from './LanguageChoice';
-import { hasExact, getExact, hasPart, getPart } from './index/LgExact';
 import { getScripts } from './index/LgScripts';
 import { scriptName } from './index/LgScriptName';
 import { fontMap } from './index/LgFontMap';
-import { bcp47Find, bcp47Index, bcp47Parse } from './bcp47';
-import { langTags } from './langTags';
+import { bcp47Find, bcp47Parse, bcp47Match } from './bcp47';
+import { hasExact, getExact, hasPart, getPart } from './langTags';
 import useDebounce from './useDebounce';
 import { GrowingSpacer } from './GrowingSpacer';
 import ChangeName from './ChangeName';
@@ -90,7 +88,11 @@ export const LanguagePicker = (props: IProps) => {
 
   const handleClickOpen = (e: KeyboardEvent | MouseEvent) => {
     if (disabled) return;
-    if ((e as KeyboardEvent)?.key && ["Tab", "Shift", "Control"].indexOf((e as KeyboardEvent).key) !== -1) return;
+    if (
+      (e as KeyboardEvent)?.key &&
+      ['Tab', 'Shift', 'Control'].indexOf((e as KeyboardEvent).key) !== -1
+    )
+      return;
     const found = bcp47Find(curValue);
     if (curValue !== 'und') {
       if (found && !Array.isArray(found)) {
@@ -100,13 +102,15 @@ export const LanguagePicker = (props: IProps) => {
         selectFont(found);
         setDefaultScript(found.script);
       } else {
-        const key = (curValue ?? '').toLocaleLowerCase();
+        const key = curValue ?? '';
         if (hasExact(key)) {
           setResponse(respFormat(curName, curValue));
-          const langTag = langTags[getExact(key)[0]];
-          setTag(langTag);
-          selectFont(langTag);
-          setDefaultScript(langTag.script);
+          const langTag = getExact(key);
+          if (langTag) {
+            setTag(langTag);
+            selectFont(langTag);
+            setDefaultScript(langTag.script);
+          }
         } else {
           handleClear();
         }
@@ -232,33 +236,34 @@ export const LanguagePicker = (props: IProps) => {
     setResponse(value !== 'und' ? name + ' (' + value + ')' : '');
   }, [value, name, font]);
 
-  const handleScriptChange = (tagP: LangTag | undefined) => (e: ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value;
-    setDefaultScript(val);
-    const parse = bcp47Parse(curValue);
-    const script = parse.script ? parse.script : tagP?.script;
-    if (script !== val) {
-      let newTag = parse.language || 'und';
-      if (val !== IpaTag) newTag += '-' + val;
-      if (parse.region) newTag += '-' + parse.region;
-      const found = bcp47Find(newTag);
-      if (found) {
-        const firstFind = Array.isArray(found) ? found[0] : found;
-        setTag(firstFind);
-        let myTag = firstFind.tag;
-        if (val === IpaTag) myTag += `-${IpaTag}`;
-        else if (parse.variant && parse.variant !== IpaTag)
-          myTag += '-' + parse.variant;
-        if (parse.extension) myTag += '-' + parse.extension;
-        parse.privateUse.forEach((i) => {
-          myTag += '-x-' + i;
-        });
-        displayTag({ ...firstFind, tag: myTag });
-        if (val === IpaTag) selectDefaultFont(IpaTag);
-        else selectFont(firstFind);
+  const handleScriptChange =
+    (tagP: LangTag | undefined) => (e: ChangeEvent<HTMLInputElement>) => {
+      const val = e.target.value;
+      setDefaultScript(val);
+      const parse = bcp47Parse(curValue);
+      const script = parse.script ? parse.script : tagP?.script;
+      if (script !== val) {
+        let newTag = parse.language || 'und';
+        if (val !== IpaTag) newTag += '-' + val;
+        if (parse.region) newTag += '-' + parse.region;
+        const found = bcp47Find(newTag);
+        if (found) {
+          const firstFind = Array.isArray(found) ? found[0] : found;
+          setTag(firstFind);
+          let myTag = firstFind.tag;
+          if (val === IpaTag) myTag += `-${IpaTag}`;
+          else if (parse.variant && parse.variant !== IpaTag)
+            myTag += '-' + parse.variant;
+          if (parse.extension) myTag += '-' + parse.extension;
+          parse.privateUse.forEach((i) => {
+            myTag += '-x-' + i;
+          });
+          displayTag({ ...firstFind, tag: myTag });
+          if (val === IpaTag) selectDefaultFont(IpaTag);
+          else selectFont(firstFind);
+        }
       }
-    }
-  };
+    };
 
   const selectScript = (tagP: LangTag) => {
     const tagParts = bcp47Parse(tagP.tag);
@@ -332,53 +337,53 @@ export const LanguagePicker = (props: IProps) => {
     selectFont(newTag);
   };
 
-  const mergeList = (list: number[], adds: number[]) => {
-    let result = list.filter((e) => adds.filter((f) => e === f).length > 0);
-    result = result.concat(
-      list.filter((e) => adds.filter((f) => e === f).length === 0)
-    );
-    return result.concat(
-      adds.filter((e) => list.filter((f) => e === f).length === 0)
-    );
-  };
-
   const optList = () => {
-    if (!tag && response) {
-      let list = Array<number>();
-      debouncedResponse.split(' ').forEach((w) => {
-        if (w.length > 1) {
-          const wLangTags = bcp47Index(w);
-          if (wLangTags) {
-            list = mergeList(list, wLangTags);
-          } else {
-            const token = woBadChar(w).toLocaleLowerCase();
-            if (hasExact(token)) {
-              list = mergeList(list, getExact(token));
+    if (!tag && debouncedResponse) {
+      const list: LangTag[] = [];
+      // put exact code match at the top of the list
+      if (hasExact(debouncedResponse)) {
+        const langTag = getExact(debouncedResponse);
+        if (langTag) list.push(langTag);
+      }
+      // check for a short tag match
+      if (list.length === 0 && bcp47Match(debouncedResponse)) {
+        let lastDash = debouncedResponse.lastIndexOf('-');
+        while (lastDash > 0) {
+          const shortTag = debouncedResponse.slice(0, lastDash);
+          if (hasExact(shortTag)) {
+            const langTag = getExact(shortTag);
+            if (langTag) {
+              list.push(langTag);
+              break;
             }
+          } else {
+            lastDash = shortTag.lastIndexOf('-');
           }
         }
-      });
-      debouncedResponse.split(' ').forEach((w) => {
-        if (w.length > 1) {
-          const lastDash = w.lastIndexOf('-');
-          if (lastDash !== -1) {
-            const wLangTags = bcp47Index(w.slice(0, lastDash));
-            if (wLangTags) list = mergeList(list, wLangTags);
-          } else {
-            const token = woBadChar(w).toLocaleLowerCase();
-            if (hasPart(token)) {
-              const tokLen = token.length;
-              Object.keys(getPart(token)).forEach((k) => {
-                if (list.length < MAXOPTIONS) {
-                  if (token === k.slice(0, tokLen))
-                    list = mergeList(list, getExact(k));
-                }
-              });
-            }
+      }
+      // check for a part match
+      const words = debouncedResponse.split(' ')
+      const firstWord = words[0];
+      if (hasPart(firstWord)) {
+        const matches = getPart(firstWord);
+        if (matches) {
+          let result = matches.result;
+          if (list.length > 0) {
+            const exact = list[0].tag;
+            result = result.filter((e) => e.tag !== exact);
           }
+          if (words.length > 1) {
+            words.slice(1).forEach((word) => {
+              const nextMatches = getPart(word);
+              if (nextMatches) {
+                result = result.filter((e) => nextMatches.result.includes(e));
+              }
+            });
+          }
+          list.push(...result);
         }
-      });
-      if (list.length > 0) {
+      }
+      if (list.slice(0, MAXOPTIONS).length > 0) {
         return (
           <>
             <FormGroup row sx={{ justifyContent: 'flex-end' }}>
@@ -398,7 +403,6 @@ export const LanguagePicker = (props: IProps) => {
               list={list}
               secondary={secondary}
               choose={handleChoose}
-              langTags={langTags}
               scriptName={scriptName}
               displayName={displayName}
               t={t}

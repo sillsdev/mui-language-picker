@@ -7,17 +7,16 @@ import { GrowingSpacer } from './GrowingSpacer';
 import { getDisplayName, DisplayName } from './getDisplayName';
 
 interface IProps {
-  list: number[];
+  list: LangTag[];
   choose: (tag: LangTag) => void;
   secondary?: boolean;
-  langTags: LangTag[];
   scriptName: ScriptName;
   displayName?: DisplayName;
   t: ILanguagePickerStrings;
 }
 
 export function LanguageChoice(props: IProps) {
-  const { list, langTags, scriptName, secondary, t, choose } = props;
+  const { list, scriptName, secondary, t, choose } = props;
   const { displayName } = props;
   const [dense] = useState(true);
   const [height, setHeight] = useState(window.innerHeight);
@@ -65,9 +64,9 @@ export function LanguageChoice(props: IProps) {
     );
   };
 
-  const langElems = (refList: number[], refTags: LangTag[]) => {
-    return refList.map((r, i) => {
-      const tag = refTags[r];
+  const langElems = (refList: LangTag[]) => {
+    const filteredList = refList.filter(tag => Boolean(tag?.tag));
+    return filteredList.map((tag, i) => {
       return (
         <ListItemButton
           key={`${tag.tag} ${i}`}
@@ -99,7 +98,7 @@ export function LanguageChoice(props: IProps) {
           sx={{ overflowY: 'scroll' }}
           style={{ maxHeight: Math.max(height - 450, 200) }}
         >
-          {langElems(list, langTags)}
+          {langElems(list)}
         </List>
       </Box>
     </Box>
