@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
 import { ILanguagePickerStrings } from './model';
-import { LangTag } from './langPicker/types';
+import { LangTag, ICodeFamily } from './langPicker/types';
 import {
   Button,
   Dialog,
@@ -23,11 +23,17 @@ import {
 import ClearIcon from '@mui/icons-material/Clear';
 import ChangeNameIcon from '@mui/icons-material/BorderColor';
 import LanguageChoice from './LanguageChoice';
-import { getScripts } from './index/LgScripts';
-import { scriptName } from './index/LgScriptName';
-import { fontMap } from './index/LgFontMap';
 import { bcp47Find, bcp47Parse, bcp47Match } from './bcp47';
-import { hasExact, getExact, hasPart, getPart } from './langTags';
+import {
+  hasExact,
+  getExact,
+  hasPart,
+  getPart,
+  fontMap,
+  getScripts,
+  scriptName,
+  displayFamily,
+} from './langTags';
 import useDebounce from './useDebounce';
 import { GrowingSpacer } from './GrowingSpacer';
 import ChangeName from './ChangeName';
@@ -82,7 +88,7 @@ export const LanguagePicker = (props: IProps) => {
   const debouncedResponse = useDebounce({ value: response, delay: 500 });
 
   const IpaTag = 'fonipa';
-  if (!scriptName.hasOwnProperty(IpaTag)) scriptName[IpaTag] = t.phonetic;
+  if (!scriptName.has(IpaTag)) scriptName.set(IpaTag, t.phonetic);
 
   const respFormat = (iname: string, tagVal: string) => `${iname} (${tagVal})`;
 
@@ -181,16 +187,24 @@ export const LanguagePicker = (props: IProps) => {
   };
 
   const safeFonts = [
-    { value: 'NotoSansLatn', label: 'Noto Sans (Recommended)', rtl: false },
-    { value: 'AnnapurnaSIL', label: 'Annapurna SIL (Indic)', rtl: false },
-    { value: 'Scheherazade', label: 'Scheherazade (Arabic)', rtl: true },
-    { value: 'SimSun', label: 'SimSun (Chinese)', rtl: false },
+    { value: 'charissil', label: 'Charis SIL (Recommended)', rtl: false },
+    { value: 'annapurnasil', label: 'Annapurna SIL (Indic)', rtl: false },
+    { value: 'scheherazadenew', label: 'Scheherazade New (Arabic)', rtl: true },
+    { value: 'notosanstc', label: 'Noto Sans TC (Chinese)', rtl: false },
   ];
 
   const selectDefaultFont = (code: string) => {
-    const fonts = fontMap[code];
-    setCurFont(fonts[0]);
-    setFontOpts(fonts);
+    const fontFamilyText = fontMap.get(code);
+    if (fontFamilyText) {
+      const fontFamily = JSON.parse(fontFamilyText) as ICodeFamily;
+      const familyId = fontFamily.defaultfamily[0];
+      setCurFont(fontFamily.families[familyId].familyid);
+      setFontOpts(
+        Object.keys(fontFamily.families).map(
+          (f) => fontFamily.families[f].familyid
+        )
+      );
+    }
   };
 
   const selectFont = (tagP: LangTag | undefined) => {
@@ -201,11 +215,11 @@ export const LanguagePicker = (props: IProps) => {
     let code = script;
     if (region) {
       code = script + '-' + region;
-      if (!fontMap.hasOwnProperty(code)) {
+      if (!fontMap.has(code)) {
         code = script;
       }
     }
-    if (!fontMap.hasOwnProperty(code)) {
+    if (!fontMap.has(code)) {
       setCurFont(safeFonts[0].value);
       setFontOpts(safeFonts.map((f) => f.value));
     } else selectDefaultFont(code);
@@ -241,7 +255,12 @@ export const LanguagePicker = (props: IProps) => {
       const val = e.target.value;
       setDefaultScript(val);
       const parse = bcp47Parse(curValue);
-      const script = parse.script ? parse.script : tagP?.script;
+      const script =
+        parse.variant === IpaTag
+          ? IpaTag
+          : parse.script
+          ? parse.script
+          : tagP?.script;
       if (script !== val) {
         let newTag = parse.language || 'und';
         if (val !== IpaTag) newTag += '-' + val;
@@ -259,7 +278,7 @@ export const LanguagePicker = (props: IProps) => {
             myTag += '-x-' + i;
           });
           displayTag({ ...firstFind, tag: myTag });
-          if (val === IpaTag) selectDefaultFont(IpaTag);
+          if (val === IpaTag) selectDefaultFont('Latn');
           else selectFont(firstFind);
         }
       }
@@ -362,7 +381,7 @@ export const LanguagePicker = (props: IProps) => {
         }
       }
       // check for a part match
-      const words = debouncedResponse.split(' ')
+      const words = debouncedResponse.split(' ');
       const firstWord = words[0];
       if (hasPart(firstWord)) {
         const matches = getPart(firstWord);
@@ -403,7 +422,6 @@ export const LanguagePicker = (props: IProps) => {
               list={list}
               secondary={secondary}
               choose={handleChoose}
-              scriptName={scriptName}
               displayName={displayName}
               t={t}
             />
@@ -481,17 +499,17 @@ export const LanguagePicker = (props: IProps) => {
                 {scriptList(tag)
                   .map((s: string) => (
                     <MenuItem key={s} value={s}>
-                      {scriptName[s] + ' - ' + s}
+                      {scriptName.get(s) + ' - ' + s}
                     </MenuItem>
                   ))
                   .concat(
                     scriptList(tag).includes(defaultScript)
                       ? []
                       : [
-                        <MenuItem key={defaultScript} value={defaultScript}>
-                          {defaultScript}
-                        </MenuItem>,
-                      ]
+                          <MenuItem key={defaultScript} value={defaultScript}>
+                            {defaultScript}
+                          </MenuItem>,
+                        ]
                   )}
               </TextField>
             }
@@ -515,7 +533,7 @@ export const LanguagePicker = (props: IProps) => {
               >
                 {fontOpts.map((s) => (
                   <MenuItem key={s} value={s}>
-                    {s}
+                    {displayFamily(s)}
                   </MenuItem>
                 ))}
               </TextField>

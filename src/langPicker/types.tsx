@@ -31,27 +31,52 @@ export interface LangTagMap {
   [code: string]: number[];
 }
 
-export interface ScriptList {
-  [code: string]: string[];
-}
-
 export interface ScriptName {
   [code: string]: string;
 }
 
-export interface FontMap {
-  [code: string]: string[];
+export interface IFamily {
+  defaults?: {
+    ttf: string;
+    woff?: string;
+    woff2?: string;
+  };
+  distributable: boolean;
+  fallback?: string;
+  family: string;
+  familyid: string;
+  files?: {
+    [fileid: string]: {
+      axes: {
+        ital?: number;
+        wght: number;
+      };
+      flourl?: string;
+      packagepath: string;
+      url?: string;
+      zippath?: string;
+    };
+  };
+  license?: 'OFL' | 'GPL3';
+  packageurl?: string;
+  siteurl?: string;
+  source?: 'SIL';
+  status?: 'current';
+  version?: string;
+  ziproot?: string;
 }
 
-export interface ILangTagData {
-  loaded: boolean;
-  partial: LangTagMap;
-  noSubtag: LangTagMap;
-  exact: LangTagMap;
-  scripts: ScriptList;
-  fontMap: FontMap;
-  scriptNames: ScriptName;
-  langTags: LangTag[];
+export interface IFamilies {
+  [key: string]: IFamily;
+}
+
+export interface ICodeFamily {
+  defaultfamily: string;
+  apiversion: number;
+  families: IFamilies;
+}
+export interface FontMap {
+  [code: string]: string;
 }
 
 // Describing the different ACTION NAMES available

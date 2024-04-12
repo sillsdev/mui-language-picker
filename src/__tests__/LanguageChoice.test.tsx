@@ -52,8 +52,7 @@ describe('LanguageChoice', () => {
   it('should render', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => { },
-      scriptName: {} as ScriptName,
+      choose: (tag: LangTag) => {},
       t: {} as ILanguagePickerStrings,
     };
     const { container } = render(<LanguageChoice {...props} />);
@@ -63,8 +62,7 @@ describe('LanguageChoice', () => {
   it('should render with secondary', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => { },
-      scriptName: {} as ScriptName,
+      choose: (tag: LangTag) => {},
       t: {} as ILanguagePickerStrings,
       secondary: true,
     };
@@ -75,8 +73,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => { },
-      scriptName: {} as ScriptName,
+      choose: (tag: LangTag) => {},
       t: {} as ILanguagePickerStrings,
       displayName: (curName: string, tag: LangTag | undefined) => '',
     };
@@ -87,8 +84,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName and secondary', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => { },
-      scriptName: {} as ScriptName,
+      choose: (tag: LangTag) => {},
       t: {} as ILanguagePickerStrings,
       displayName: (curName: string, tag: LangTag | undefined) => '',
       secondary: true,
@@ -100,8 +96,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName and secondary and langTags', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => { },
-      scriptName: {} as ScriptName,
+      choose: (tag: LangTag) => {},
       t: {} as ILanguagePickerStrings,
       displayName: (curName: string, tag: LangTag | undefined) => '',
       secondary: true,
@@ -113,8 +108,7 @@ describe('LanguageChoice', () => {
   it('should render with displayName and secondary and langTags and scriptName', () => {
     const props = {
       list: [],
-      choose: (tag: LangTag) => { },
-      scriptName: { Latn: 'Latin' },
+      choose: (tag: LangTag) => {},
       t: {} as ILanguagePickerStrings,
       displayName: (curName: string, tag: LangTag | undefined) => '',
       secondary: true,
@@ -127,7 +121,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
       displayName: (curName: string, tag: LangTag | undefined) => curName,
       secondary: true,
@@ -151,7 +144,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [1].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: {},
       t: languagePickerStrings_en,
     };
     render(<LanguageChoice {...props} />);
@@ -162,7 +154,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: {},
       t: languagePickerStrings_en,
       displayName: (curName: string) => curName.slice(0, 4),
     };
@@ -174,7 +165,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [1, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
       displayName: (curName: string, tag: LangTag | undefined) => curName,
       secondary: false,
@@ -198,20 +188,21 @@ describe('LanguageChoice', () => {
 
   it('should render script when present', () => {
     const props = {
-      list: [0, 4].map((i) => mockLangTags[i]).concat([
-        {
-          full: 'de-Brai-DE',
-          name: 'German, Standard',
-          nophonvars: true,
-          region: 'DE',
-          regionname: 'Germany',
-          script: 'Brai',
-          sldr: false,
-          tag: 'de-Brai',
-        },
-      ]),
+      list: [0, 4]
+        .map((i) => mockLangTags[i])
+        .concat([
+          {
+            full: 'de-Brai-DE',
+            name: 'German, Standard',
+            nophonvars: true,
+            region: 'DE',
+            regionname: 'Germany',
+            script: 'Brai',
+            sldr: false,
+            tag: 'de-Brai',
+          },
+        ]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin', Brai: 'Braille' },
       t: languagePickerStrings_en,
       displayName: (curName: string, tag: LangTag | undefined) => curName,
       secondary: true,
@@ -228,24 +219,25 @@ describe('LanguageChoice', () => {
 
   it('should render alternate names when present', () => {
     const props = {
-      list: [0, 4].map((i) => mockLangTags[i]).concat([
-        {
-          full: 'de-Brai-DE',
-          iana: ['German'],
-          iso639_3: 'deu',
-          name: 'German, Standard',
-          names: ['Alemán', 'Allemand', 'Deutsch'],
-          nophonvars: true,
-          region: 'DE',
-          regionname: 'Germany',
-          script: 'Brai',
-          sldr: false,
-          tag: 'de-Brai',
-          windows: 'de-Brai-DE',
-        },
-      ]),
+      list: [0, 4]
+        .map((i) => mockLangTags[i])
+        .concat([
+          {
+            full: 'de-Brai-DE',
+            iana: ['German'],
+            iso639_3: 'deu',
+            name: 'German, Standard',
+            names: ['Alemán', 'Allemand', 'Deutsch'],
+            nophonvars: true,
+            region: 'DE',
+            regionname: 'Germany',
+            script: 'Brai',
+            sldr: false,
+            tag: 'de-Brai',
+            windows: 'de-Brai-DE',
+          },
+        ]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin', Brai: 'Braille' },
       t: languagePickerStrings_en,
       displayName: (curName: string, tag: LangTag | undefined) => curName,
       secondary: true,
@@ -265,7 +257,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
     };
     render(<LanguageChoice {...props} />);
@@ -278,7 +269,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
     };
     render(<LanguageChoice {...props} />);
@@ -291,7 +281,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
     };
     render(<LanguageChoice {...props} />);
@@ -304,7 +293,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
     };
     render(<LanguageChoice {...props} />);
@@ -316,7 +304,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
       displayName: (curName: string) => curName,
     };
@@ -330,7 +317,6 @@ describe('LanguageChoice', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
       choose: jest.fn(),
-      scriptName: { Latn: 'Latin' },
       t: languagePickerStrings_en,
       displayName: (curName: string) => curName.slice(0, 4),
     };

@@ -1,7 +1,14 @@
 import React, { useState, useEffect, KeyboardEvent } from 'react';
 import { ILanguagePickerStrings } from './model';
-import { LangTag, ScriptName } from './langPicker/types';
-import { List, ListItemText, Typography, Box, ListItemButton } from '@mui/material';
+import { LangTag } from './langPicker/types';
+import {
+  List,
+  ListItemText,
+  Typography,
+  Box,
+  ListItemButton,
+} from '@mui/material';
+import { scriptName } from './langTags';
 import { debounce } from 'lodash';
 import { GrowingSpacer } from './GrowingSpacer';
 import { getDisplayName, DisplayName } from './getDisplayName';
@@ -10,13 +17,12 @@ interface IProps {
   list: LangTag[];
   choose: (tag: LangTag) => void;
   secondary?: boolean;
-  scriptName: ScriptName;
   displayName?: DisplayName;
   t: ILanguagePickerStrings;
 }
 
 export function LanguageChoice(props: IProps) {
-  const { list, scriptName, secondary, t, choose } = props;
+  const { list, secondary, t, choose } = props;
   const { displayName } = props;
   const [dense] = useState(true);
   const [height, setHeight] = useState(window.innerHeight);
@@ -26,7 +32,7 @@ export function LanguageChoice(props: IProps) {
   };
 
   const handleKeydown = (tag: LangTag) => (e: KeyboardEvent) => {
-    if (e.key === " " || e.key === "Enter") {
+    if (e.key === ' ' || e.key === 'Enter') {
       choose(tag);
     }
   };
@@ -44,7 +50,7 @@ export function LanguageChoice(props: IProps) {
   const scriptDetail = (tag: LangTag) => {
     const tagParts = tag.tag.split('-');
     return tagParts.length > 1 && tagParts[1].length === 4
-      ? t.inScript.replace('$1', scriptName[tagParts[1]])
+      ? t.inScript.replace('$1', scriptName.get(tagParts[1]) ?? tagParts[1])
       : '';
   };
 
@@ -65,7 +71,7 @@ export function LanguageChoice(props: IProps) {
   };
 
   const langElems = (refList: LangTag[]) => {
-    const filteredList = refList.filter(tag => Boolean(tag?.tag));
+    const filteredList = refList.filter((tag) => Boolean(tag?.tag));
     return filteredList.map((tag, i) => {
       return (
         <ListItemButton

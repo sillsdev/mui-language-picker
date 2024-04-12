@@ -72,7 +72,7 @@ describe('LanguagePicker', () => {
     const props = {
       value: 'en',
       name: 'English',
-      font: 'Charis SIL',
+      font: 'charissil',
       t: languagePickerStrings_en,
     };
     const { container } = render(<LanguagePicker {...props} />);
@@ -104,7 +104,7 @@ describe('LanguagePicker', () => {
     const props = {
       value: 'en',
       name: 'English',
-      font: 'Charis SIL',
+      font: 'charissil',
       t: languagePickerStrings_en,
     };
     const { container } = render(<LanguagePicker {...props} />);
@@ -116,7 +116,7 @@ describe('LanguagePicker', () => {
     const props = {
       value: 'en',
       name: 'English',
-      font: 'Charis SIL',
+      font: 'charissil',
       t: languagePickerStrings_en,
     };
     const { container } = render(<LanguagePicker {...props} />);
@@ -175,7 +175,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('en-001');
     expect(props.setName).toHaveBeenCalledWith('English');
-    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+    expect(props.setFont).toHaveBeenCalledWith('charissil');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -205,7 +205,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('zh-CN-x-pyn');
     expect(props.setName).toHaveBeenCalledWith('Chinese');
-    expect(props.setFont).toHaveBeenCalledWith('Noto Sans CJK SC');
+    expect(props.setFont).toHaveBeenCalledWith('notoserifsc');
   });
 
   it('choosing zhn-fonapi returns right values', async () => {
@@ -234,7 +234,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('zhn-fonapi');
     expect(props.setName).toHaveBeenCalledWith('Zhuang, Nong');
-    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+    expect(props.setFont).toHaveBeenCalledWith('charissil');
   });
 
   it('choosing ar returns right values', async () => {
@@ -264,7 +264,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('ar');
     expect(props.setName).toHaveBeenCalledWith('Arabic');
-    expect(props.setFont).toHaveBeenCalledWith('Scheherazade');
+    expect(props.setFont).toHaveBeenCalledWith('scheherazadenew');
     expect(props.setDir).toHaveBeenCalledWith(true);
   });
 
@@ -295,7 +295,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('chr');
     expect(props.setName).toHaveBeenCalledWith('Cherokee');
-    expect(props.setFont).toHaveBeenCalledWith('NotoSansCherokee');
+    expect(props.setFont).toHaveBeenCalledWith('notosanscherokee');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -326,7 +326,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+    expect(props.setFont).toHaveBeenCalledWith('charissil');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -363,7 +363,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo-Arab');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('Harmattan');
+    expect(props.setFont).toHaveBeenCalledWith('scheherazadenew');
     expect(props.setDir).toHaveBeenCalledWith(true);
   });
 
@@ -400,7 +400,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('NotoSansLatin');
+    expect(props.setFont).toHaveBeenCalledWith('charissil');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -440,7 +440,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Senegal Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('Charis SIL');
+    expect(props.setFont).toHaveBeenCalledWith('charissil');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -456,7 +456,9 @@ describe('LanguagePicker', () => {
       setInfo: jest.fn(),
     };
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const { container } = render(<LanguagePicker {...props} value={undefined as any} />);
+    const { container } = render(
+      <LanguagePicker {...props} value={undefined as any} />
+    );
     fireEvent.click(container.querySelector('input') as Element);
     await waitFor(() =>
       expect(screen.getByText('Choose Language Details')).not.toBe(null)

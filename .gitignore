@@ -21,6 +21,11 @@ localization/.vscode
 localization/.vs
 langtagsIndex.ts
 tagIndex.ts
+src/data/langtags.json
+src/data/families.json
+src/data/scriptFontIndex.ts
+src/data/scriptName.ts
+src/data/codeScripts.ts
 
 npm-debug.log*
 yarn-debug.log*

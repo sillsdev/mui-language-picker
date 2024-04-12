@@ -89,7 +89,8 @@ result.forEach((r) => {
 });
 const maxes = Array.from(maxSet).sort((a, b) => a - b);
 console.log('maxes:', maxes.slice(-40));
-const header = `export default `;
+const header = `// This file is auto-generated. Modify the script that creates it.
+export default `;
 writeFile.sync(
   __dirname + '/../data/langtagsIndex.ts',
   header + JSON.stringify(result)
@@ -125,3 +126,96 @@ writeFile.sync(
   header + JSON.stringify(tagResult)
 );
 console.log('tag map:', tagResult.length);
+
+// scriptMap
+const scriptMap = new Map();
+const codeScripts = new Map();
+jsonData.forEach((element, i) => {
+  const code = element.tag.split('-')[0];
+  const curScript = element.script;
+  if (!codeScripts.has(code)) {
+    codeScripts.set(code, [curScript]);
+  } else {
+    const scripts = codeScripts.get(code);
+    if (!scripts?.includes(curScript)) {
+      scripts.push(curScript);
+    }
+  }
+  if (curScript) {
+    if (!scriptMap.has(curScript)) {
+      scriptMap.set(curScript, i);
+    }
+  }
+});
+const codeScriptResult = Array.from(codeScripts).sort((a, b) =>
+  a[0].localeCompare(b[0])
+);
+writeFile.sync(
+  __dirname + '/../data/codeScripts.ts',
+  header + JSON.stringify(codeScriptResult)
+);
+const scriptResult = Array.from(scriptMap).sort((a, b) =>
+  a[0].localeCompare(b[0])
+);
+
+const scriptName = new Map();
+const getNames = (data) => {
+  data.split('\n').forEach((line, i) => {
+    if (i !== 0) {
+      const fields = line.split('\t');
+      const code = fields[0].trim();
+      const name = fields[2].trim();
+      if (name !== '') scriptName.set(code, name);
+    }
+  });
+};
+
+const csvData = readFileSync(__dirname + '/../data/scripts.csv', 'utf8');
+getNames(csvData);
+writeFile.sync(
+  __dirname + '/../data/scriptName.ts',
+  header + JSON.stringify(Array.from(scriptName), '', 2)
+);
+
+// collect font for each script
+const scriptFontMap = new Map();
+
+const finishScriptFont = () => {
+  const scriptFontResult = Array.from(scriptFontMap).sort((a, b) =>
+    a[0].localeCompare(b[0])
+  );
+  writeFile.sync(
+    __dirname + '/../data/scriptFontIndex.ts',
+    header + JSON.stringify(scriptFontResult)
+  );
+  console.log('script map:', scriptFontResult.length);
+};
+
+const axios = require('axios');
+
+const nextScriptFont = (n) => {
+  if (n >= scriptResult.length) {
+    finishScriptFont();
+    return;
+  }
+  const [s, i] = scriptResult[n];
+  if (!scriptName.has(s)) {
+    console.error(`script name missing: ${s}`);
+  }
+  const langTag = jsonData[i];
+  const tag = langTag?.tag;
+  if (tag)
+    axios
+      .get(`https://lff.api.languagetechnology.org/lang/${tag}`)
+      .then((response) => {
+        console.log('has result', tag);
+        scriptFontMap.set(s, JSON.stringify(response.data));
+        setTimeout(() => nextScriptFont(n + 1), 1000);
+      })
+      .catch((error) => {
+        console.log(error.message);
+        if (error.code === 'ECONNRESET') nextScriptFont(n);
+      });
+};
+
+nextScriptFont(0);

@@ -1,7 +1,11 @@
 import jsonData from './data/langtags.json';
-import { LangTag } from './langPicker/types';
+import { IFamilies, LangTag } from './langPicker/types';
 import tagIndexData from './data/tagIndex';
 import tokenData from './data/langtagsIndex';
+import fontData from './data/scriptFontIndex';
+import codeScriptsData from './data/codeScripts';
+import scriptNameData from './data/scriptName';
+import familiesData from './data/families.json';
 
 export const langTags = jsonData as LangTag[];
 langTags.push({
@@ -18,7 +22,7 @@ langTags.push({
 const tagIndex = new Map<string, number>(tagIndexData as [string, number][]);
 export const hasExact = (tag: string) => tagIndex.has(tag.toLowerCase());
 export const getExact = (tag: string) => {
-  const index = tagIndex.get(tag.toLowerCase())
+  const index = tagIndex.get(tag.toLowerCase());
   if (!index) return undefined;
   return langTags[index];
 };
@@ -47,4 +51,19 @@ export const getPart = (tag: string, limit?: number, start?: number) => {
     }
   }
   return { result, index: -1 };
-}
+};
+
+const scriptMap = new Map<string, string[]>(
+  codeScriptsData as [string, string[]][]
+);
+export const getScripts = (code: string) => scriptMap.get(code) ?? [];
+
+export const scriptName = new Map<string, string>(
+  scriptNameData as [string, string][]
+);
+
+export const fontMap = new Map(fontData as [string, string][]);
+
+const families = familiesData as IFamilies;
+export const displayFamily = (familyId: string) =>
+  families[familyId]?.family ?? familyId;
