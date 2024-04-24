@@ -78,6 +78,22 @@ Output should be a Language Picker when entered opens a dialog
 
 \* parameters marked with an asterisk are optional
 
+### Helper functions
+
+```typescript
+import {
+  getLangTag,
+  getRtl,
+  getFamily
+} from "mui-language-picker";
+
+console.log(getLangTag(tag)) // Return langTag object (see below)
+console.log(getRtl(tag)) // returns true if rtl script
+console.log(getFamily(familyId)) // Returns fontFamily object (see below)
+```
+
+The `fontName` returned by the Language Picker is the `familyId`. Refer to [fonts.languagetechnology.org](https://fonts.languagetechnology.org/) for more information.
+
 ### Localization Strings
 
 ```typescript
@@ -127,6 +143,48 @@ export interface LangTag {
   defaultFont?: string;
   fonts?: string[];
   windows?: string;
+}
+```
+
+### Information returned by getFamily
+
+```typescript
+export interface IFamily {
+  defaults?: {
+    ttf: string;
+    woff?: string;
+    woff2?: string;
+  };
+  distributable: boolean;
+  fallback?: string;
+  family: string;
+  familyid: string;
+  files?: {
+    [fileid: string]: {
+      axes: {
+        ital?: number;
+        wght: number;
+      };
+      flourl?: string;
+      packagepath: string;
+      url?: string;
+      zippath?: string;
+    };
+  };
+  license?: 'OFL' | 'GPL3' | 'GPL' | 'Freeware' | 'proprietary' | 'shareware';
+  packageurl?: string;
+  siteurl?: string;
+  source?:
+    | 'SIL'
+    | 'Google'
+    | 'Microsoft'
+    | 'NLCI'
+    | 'STAR'
+    | 'Evertype'
+    | 'Lao Script';
+  status?: 'current' | 'archived' | 'deprecated';
+  version?: string;
+  ziproot?: string;
 }
 ```
 

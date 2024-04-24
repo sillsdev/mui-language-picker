@@ -1,3 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import {
   cleanup,
@@ -455,8 +460,8 @@ describe('LanguagePicker', () => {
       setDir: jest.fn(),
       setInfo: jest.fn(),
     };
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { container } = render(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       <LanguagePicker {...props} value={undefined as any} />
     );
     fireEvent.click(container.querySelector('input') as Element);

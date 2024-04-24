@@ -1,4 +1,2 @@
 src
 dist/__tests__
-dist/langPicker/makeIndexes.*
-dist/langPicker/fontList.*

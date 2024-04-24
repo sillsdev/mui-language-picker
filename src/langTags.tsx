@@ -6,6 +6,8 @@ import fontData from './data/scriptFontIndex';
 import codeScriptsData from './data/codeScripts';
 import scriptNameData from './data/scriptName';
 import familiesData from './data/families.json';
+import { bcp47Match } from './bcp47';
+import rtlScripts from './data/rtlScripts';
 
 export const langTags = jsonData as LangTag[];
 langTags.push({
@@ -67,3 +69,34 @@ export const fontMap = new Map(fontData as [string, string][]);
 const families = familiesData as IFamilies;
 export const displayFamily = (familyId: string) =>
   families[familyId]?.family ?? familyId;
+
+export const getFamily = (familyId: string) => families[familyId];
+
+export const getLangTag = (tag: string) => {
+  // put exact code match at the top of the list
+  if (hasExact(tag)) {
+    const langTag = getExact(tag);
+    if (langTag) return langTag;
+  }
+  // check for a short tag match
+  if (bcp47Match(tag)) {
+    let lastDash = tag.lastIndexOf('-');
+    while (lastDash > 0) {
+      const shortTag = tag.slice(0, lastDash);
+      if (hasExact(shortTag)) {
+        const langTag = getExact(shortTag);
+        if (langTag) {
+          return langTag;
+        }
+      } else {
+        lastDash = shortTag.lastIndexOf('-');
+      }
+    }
+  }
+};
+
+export const getRtl = (tag: string) => {
+  const langTag = getLangTag(tag);
+  if (langTag) return rtlScripts.includes(langTag.script);
+  return false;
+};

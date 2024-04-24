@@ -57,11 +57,18 @@ export interface IFamily {
       zippath?: string;
     };
   };
-  license?: 'OFL' | 'GPL3';
+  license?: 'OFL' | 'GPL3' | 'GPL' | 'Freeware' | 'proprietary' | 'shareware';
   packageurl?: string;
   siteurl?: string;
-  source?: 'SIL';
-  status?: 'current';
+  source?:
+    | 'SIL'
+    | 'Google'
+    | 'Microsoft'
+    | 'NLCI'
+    | 'STAR'
+    | 'Evertype'
+    | 'Lao Script';
+  status?: 'current' | 'archived' | 'deprecated';
   version?: string;
   ziproot?: string;
 }

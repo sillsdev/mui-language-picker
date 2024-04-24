@@ -23,7 +23,7 @@ import {
 import ClearIcon from '@mui/icons-material/Clear';
 import ChangeNameIcon from '@mui/icons-material/BorderColor';
 import LanguageChoice from './LanguageChoice';
-import { bcp47Find, bcp47Parse, bcp47Match } from './bcp47';
+import { bcp47Find, bcp47Parse } from './bcp47';
 import {
   hasExact,
   getExact,
@@ -33,6 +33,7 @@ import {
   getScripts,
   scriptName,
   displayFamily,
+  getLangTag,
 } from './langTags';
 import useDebounce from './useDebounce';
 import { GrowingSpacer } from './GrowingSpacer';
@@ -359,26 +360,9 @@ export const LanguagePicker = (props: IProps) => {
   const optList = () => {
     if (!tag && debouncedResponse) {
       const list: LangTag[] = [];
-      // put exact code match at the top of the list
-      if (hasExact(debouncedResponse)) {
-        const langTag = getExact(debouncedResponse);
-        if (langTag) list.push(langTag);
-      }
-      // check for a short tag match
-      if (list.length === 0 && bcp47Match(debouncedResponse)) {
-        let lastDash = debouncedResponse.lastIndexOf('-');
-        while (lastDash > 0) {
-          const shortTag = debouncedResponse.slice(0, lastDash);
-          if (hasExact(shortTag)) {
-            const langTag = getExact(shortTag);
-            if (langTag) {
-              list.push(langTag);
-              break;
-            }
-          } else {
-            lastDash = shortTag.lastIndexOf('-');
-          }
-        }
+      const tagLookup = getLangTag(debouncedResponse);
+      if (tagLookup) {
+        list.push(tagLookup);
       }
       // check for a part match
       const words = debouncedResponse.split(' ');
