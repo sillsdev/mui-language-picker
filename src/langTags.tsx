@@ -96,6 +96,7 @@ export const getLangTag = (tag: string) => {
 };
 
 export const getRtl = (tag: string) => {
+  if (tag.indexOf('fonipa') !== -1) return false;
   const langTag = getLangTag(tag);
   if (langTag) return rtlScripts.includes(langTag.script);
   return false;

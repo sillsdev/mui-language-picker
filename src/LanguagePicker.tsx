@@ -93,6 +93,9 @@ export const LanguagePicker = (props: IProps) => {
 
   const respFormat = (iname: string, tagVal: string) => `${iname} (${tagVal})`;
 
+  const getDefScript = (val: string, script: string) =>
+    val.indexOf(IpaTag) > 0 ? IpaTag : script;
+
   const handleClickOpen = (e: KeyboardEvent | MouseEvent) => {
     if (disabled) return;
     if (
@@ -100,14 +103,15 @@ export const LanguagePicker = (props: IProps) => {
       ['Tab', 'Shift', 'Control'].indexOf((e as KeyboardEvent).key) !== -1
     )
       return;
-    const found = bcp47Find(curValue);
+    let found = bcp47Find(curValue);
     if (curValue !== 'und') {
       if (found && !Array.isArray(found)) {
+        found = { ...found, tag: curValue };
         const tagName = getDisplayName(curName, found, displayName);
         setResponse(respFormat(tagName, curValue));
         setTag(found);
         selectFont(found);
-        setDefaultScript(found.script);
+        setDefaultScript(getDefScript(curValue, found.script));
       } else {
         const key = curValue ?? '';
         if (hasExact(key)) {
@@ -116,7 +120,7 @@ export const LanguagePicker = (props: IProps) => {
           if (langTag) {
             setTag(langTag);
             selectFont(langTag);
-            setDefaultScript(langTag.script);
+            setDefaultScript(getDefScript(key, langTag.script));
           }
         } else {
           handleClear();
@@ -194,8 +198,8 @@ export const LanguagePicker = (props: IProps) => {
     { value: 'notosanstc', label: 'Noto Sans TC (Chinese)', rtl: false },
   ];
 
-  const selectDefaultFont = (code: string) => {
-    const fontFamilyText = fontMap.get(code);
+  const selectDefaultFont = (scriptKey: string) => {
+    const fontFamilyText = fontMap.get(scriptKey);
     if (fontFamilyText) {
       const fontFamily = JSON.parse(fontFamilyText) as ICodeFamily;
       const familyId = fontFamily.defaultfamily[0];
@@ -211,19 +215,22 @@ export const LanguagePicker = (props: IProps) => {
   const selectFont = (tagP: LangTag | undefined) => {
     if (!tagP || tagP.tag === 'und') return;
     const parse = bcp47Parse(tagP.tag);
-    const script = parse.script ? parse.script : tagP.script;
+    const script = getDefScript(
+      tagP.tag,
+      parse.script ? parse.script : tagP.script
+    );
     const region = parse.region ? parse.region : tagP.region;
-    let code = script;
+    let key = script;
     if (region) {
-      code = script + '-' + region;
-      if (!fontMap.has(code)) {
-        code = script;
+      key = script + '-' + region;
+      if (!fontMap.has(key)) {
+        key = script;
       }
     }
-    if (!fontMap.has(code)) {
+    if (!fontMap.has(key)) {
       setCurFont(safeFonts[0].value);
       setFontOpts(safeFonts.map((f) => f.value));
-    } else selectDefaultFont(code);
+    } else selectDefaultFont(key);
   };
 
   const handleNewName = () => {
@@ -288,7 +295,9 @@ export const LanguagePicker = (props: IProps) => {
   const selectScript = (tagP: LangTag) => {
     const tagParts = bcp47Parse(tagP.tag);
     selectFont(tagP);
-    setDefaultScript(tagParts.script ? tagParts.script : tagP.script);
+    setDefaultScript(
+      getDefScript(tagP.tag, tagParts.script ? tagParts.script : tagP.script)
+    );
   };
 
   const scriptList = (tagP: LangTag | undefined) => {
