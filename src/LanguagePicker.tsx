@@ -43,8 +43,6 @@ import rtlScripts from './data/rtlScripts';
 
 const MAXOPTIONS = 50;
 
-const menuWidth = { width: 200 } as SxProps;
-
 const StyledDialog = styled(Dialog)<DialogProps>(() => ({
   '& .MuiDialog-paperScrollPaper': {
     marginBottom: 'auto',
@@ -478,14 +476,11 @@ export const LanguagePicker = (props: IProps) => {
                 id="select-script"
                 data-testid="select-script"
                 select
-                sx={{ width: 150, mx: 1 }}
+                sx={{ mx: 1 }}
+                fullWidth
                 label={`${t.script} *`}
                 value={defaultScript}
                 onChange={handleScriptChange(tag)}
-                style={{ width: 400 }}
-                SelectProps={{
-                  MenuProps: { ...{ sx: menuWidth } },
-                }}
                 margin="normal"
                 variant="filled"
               >
@@ -507,6 +502,7 @@ export const LanguagePicker = (props: IProps) => {
               </TextField>
             }
             label=""
+            sx={{ width: '100%' }}
           />
           <FormControlLabel
             control={
@@ -514,13 +510,11 @@ export const LanguagePicker = (props: IProps) => {
                 id="select-font"
                 data-testid="select-font"
                 select
-                sx={{ width: 300, mx: 1 }}
+                sx={{ mx: 1 }}
+                fullWidth
                 label={`${t.font} *`}
                 value={fontOpts.includes(curFont) ? curFont : ''}
                 onChange={addFontInfo}
-                SelectProps={{
-                  MenuProps: { ...{ sx: menuWidth } },
-                }}
                 margin="normal"
                 variant="filled"
               >
@@ -532,6 +526,7 @@ export const LanguagePicker = (props: IProps) => {
               </TextField>
             }
             label=""
+            sx={{ width: '100%' }}
           />
         </DialogContent>
         <DialogActions>
