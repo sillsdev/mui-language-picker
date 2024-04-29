@@ -73,6 +73,7 @@ export const displayFamily = (familyId: string) =>
 export const getFamily = (familyId: string) => families[familyId];
 
 export const getLangTag = (tag: string) => {
+  if (!tag) return undefined;
   // put exact code match at the top of the list
   if (hasExact(tag)) {
     const langTag = getExact(tag);
@@ -96,7 +97,7 @@ export const getLangTag = (tag: string) => {
 };
 
 export const getRtl = (tag: string) => {
-  if (tag.indexOf('fonipa') !== -1) return false;
+  if (!tag || tag.indexOf('fonipa') !== -1) return false;
   const langTag = getLangTag(tag);
   if (langTag) return rtlScripts.includes(langTag.script);
   return false;

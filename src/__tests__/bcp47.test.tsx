@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await */
-import { langTags } from '../langTags';
+import { langTags, getRtl, getLangTag } from '../langTags';
 import { bcp47Match, bcp47Parse, bcp47Find, bcp47Index } from '../bcp47';
 
 test('test en', async () => {
@@ -420,4 +420,40 @@ test('parse zhn-fonipa', async () => {
     privateUse: [],
     irregular: null,
   });
+});
+
+test('getRtl with empty tag', async () => {
+  expect(getRtl('')).toBeFalsy();
+});
+
+test('getRtl with en', async () => {
+  expect(getRtl('en')).toBeFalsy();
+});
+
+test('getRtl with ar', async () => {
+  expect(getRtl('ar')).toBeTruthy();
+});
+
+test('getRtl with undefined', async () => {
+  expect(getRtl(undefined as unknown as string)).toBeFalsy();
+});
+
+test('getLangTag with empty tag', async () => {
+  expect(getLangTag('')).toBeUndefined();
+});
+
+test('getLangTag with en', async () => {
+  expect(getLangTag('en')).toBeDefined();
+});
+
+test('getLangTag with en-fonipa', async () => {
+  expect(getLangTag('en-fonipa')).toBeDefined();
+});
+
+test('getLangTag with en-x-phonipa', async () => {
+  expect(getLangTag('en-x-phonipa')).toBeDefined();
+});
+
+test('getLangTag with undefined', async () => {
+  expect(getLangTag(undefined as unknown as string)).toBeUndefined();
 });
