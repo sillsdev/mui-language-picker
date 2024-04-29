@@ -75,14 +75,11 @@ jsonData.forEach((element, i) => {
 const result = Array.from(elementTokens).sort((a, b) =>
   a[0].localeCompare(b[0])
 );
-// sorts the matches in order by what field they are in and just keepts the index
+// sorts the matches in order by what field they are in and just keeps the index
 result.forEach((r) => {
   r[1].sort((a, b) => a.kn - b.kn);
   r[1] = r[1].map((e) => e.i);
 });
-// for (const idx of Array.from(Array(20)).map((_, i) => i)) {
-//   console.log(result[idx]);
-// }
 const maxSet = new Set();
 result.forEach((r) => {
   maxSet.add(r[1].length);
