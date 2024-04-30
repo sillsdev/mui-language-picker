@@ -74,6 +74,7 @@ Output should be a Language Picker when entered opens a dialog
 | displayName\* | DisplayName          | function to control display of name |
 | setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
 | disabled\* | boolean                 | true if control disabled            |
+| offline\*  | boolean                 | true if picker in offline setting   |
 | t          | ILanguagePickerStrings  | localization strings (see below)    |
 
 \* parameters marked with an asterisk are optional
