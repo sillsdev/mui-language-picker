@@ -75,6 +75,7 @@ Output should be a Language Picker when entered opens a dialog
 | setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
 | disabled\* | boolean                 | true if control disabled            |
 | t          | ILanguagePickerStrings  | localization strings (see below)    |
+| hideLink\* | boolean                 | true if Code Explained link hidden  |
 
 \* parameters marked with an asterisk are optional
 

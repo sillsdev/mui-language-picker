@@ -67,10 +67,11 @@ interface IProps extends IStateProps {
   setInfo?: (tag: LangTag) => void;
   setDir?: (rtl: boolean) => void;
   disabled?: boolean;
+  hideLink?: boolean;
 }
 
 export const LanguagePicker = (props: IProps) => {
-  const { disabled } = props;
+  const { disabled, hideLink } = props;
   const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } =
     props;
   const { displayName } = props;
@@ -535,13 +536,15 @@ export const LanguagePicker = (props: IProps) => {
           />
         </DialogContent>
         <DialogActions>
-          <a
-            href="https://www.w3.org/International/questions/qa-choosing-language-tags"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Typography>{t.codeExplained}</Typography>
-          </a>
+          {!hideLink && (
+            <a
+              href="https://www.w3.org/International/questions/qa-choosing-language-tags"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Typography>{t.codeExplained}</Typography>
+            </a>
+          )}
           {curName !== '' && (
             <Tooltip title={t.changeName ?? 'Change name'}>
               <IconButton
