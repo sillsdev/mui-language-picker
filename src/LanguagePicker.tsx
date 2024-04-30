@@ -395,7 +395,19 @@ export const LanguagePicker = (props: IProps) => {
               }
             });
           }
-          list.push(...result);
+          // put canonical name matches first
+          const canonical: LangTag[] = [];
+          const nonCanonical: LangTag[] = [];
+          const lcFirst = firstWord.toLowerCase();
+          result.forEach((e) => {
+            if (e?.name.toLowerCase() === lcFirst) {
+              canonical.push(e);
+            } else {
+              nonCanonical.push(e);
+            }
+          });
+
+          list.push(...canonical, ...nonCanonical);
         }
       }
       if (list.slice(0, MAXOPTIONS).length > 0) {
