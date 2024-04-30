@@ -118,6 +118,7 @@ export const languagePickerStrings_en = {
     'If you would like to change the language name enter the new name here.',
   newName: 'New Language Name',
   change: 'Change',
+  noFonts: 'No recommended fonts',
 } as ILanguagePickerStrings;
 ```
 

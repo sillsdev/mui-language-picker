@@ -1,4 +1,4 @@
-import React, { KeyboardEvent, ChangeEvent, MouseEvent } from 'react';
+import React, { KeyboardEvent, ChangeEvent, MouseEvent, useMemo } from 'react';
 import { ILanguagePickerStrings } from './model';
 import { LangTag, ICodeFamily } from './langPicker/types';
 import {
@@ -202,12 +202,14 @@ export const LanguagePicker = (props: IProps) => {
     if (fontFamilyText) {
       const fontFamily = JSON.parse(fontFamilyText) as ICodeFamily;
       const familyId = fontFamily.defaultfamily[0];
-      setCurFont(fontFamily.families[familyId].familyid);
-      setFontOpts(
-        Object.keys(fontFamily.families).map(
-          (f) => fontFamily.families[f].familyid
-        )
-      );
+      if (familyId && fontFamily.families[familyId]) {
+        setCurFont(fontFamily.families[familyId].familyid);
+        setFontOpts(
+          Object.keys(fontFamily.families).map(
+            (f) => fontFamily.families[f].familyid
+          )
+        );
+      }
     }
   };
 
@@ -231,6 +233,8 @@ export const LanguagePicker = (props: IProps) => {
       setFontOpts(safeFonts.map((f) => f.value));
     } else selectDefaultFont(key);
   };
+
+  const hasFonts = useMemo(() => fontOpts && fontOpts.length > 0, [fontOpts]);
 
   const handleNewName = () => {
     setNewName(true);
@@ -510,10 +514,11 @@ export const LanguagePicker = (props: IProps) => {
               <TextField
                 id="select-font"
                 data-testid="select-font"
-                select
+                select={hasFonts}
+                helperText={!hasFonts ? t.noFonts : undefined}
                 sx={{ mx: 1 }}
                 fullWidth
-                label={`${t.font} *`}
+                label={`${t.font}${hasFonts ? ' *' : ''}`}
                 value={fontOpts.includes(curFont) ? curFont : ''}
                 onChange={addFontInfo}
                 margin="normal"
@@ -559,7 +564,10 @@ export const LanguagePicker = (props: IProps) => {
           <Button
             onClick={handleSelect}
             color="primary"
-            disabled={tag === undefined}
+            disabled={
+              required &&
+              (tag === undefined || tag?.tag === 'und' || defaultScript === '')
+            }
           >
             <Typography>{t.select}</Typography>
           </Button>
