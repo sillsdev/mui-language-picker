@@ -75,6 +75,7 @@ Output should be a Language Picker when entered opens a dialog
 | setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
 | disabled\* | boolean                 | true if control disabled            |
 | offline\*  | boolean                 | true if picker in offline setting   |
+| required\* | boolean                 | true if language required (show *)  |
 | t          | ILanguagePickerStrings  | localization strings (see below)    |
 
 \* parameters marked with an asterisk are optional

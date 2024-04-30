@@ -17,7 +17,6 @@ import {
   InputAdornment,
   IconButton,
   styled,
-  SxProps,
   Tooltip,
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -66,10 +65,11 @@ interface IProps extends IStateProps {
   setDir?: (rtl: boolean) => void;
   disabled?: boolean;
   offline?: boolean;
+  required?: boolean;
 }
 
 export const LanguagePicker = (props: IProps) => {
-  const { disabled, offline } = props;
+  const { disabled, offline, required } = props;
   const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } =
     props;
   const { displayName } = props;
@@ -431,7 +431,7 @@ export const LanguagePicker = (props: IProps) => {
         margin="dense"
         id="lang-bcp47"
         label={t.language}
-        required={true}
+        required={required}
         style={{ width: 300 }}
         value={value !== 'und' ? name + ' (' + value + ')' : ''}
         onClick={handleClickOpen}
