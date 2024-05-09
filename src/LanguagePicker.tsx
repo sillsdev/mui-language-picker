@@ -519,7 +519,7 @@ export const LanguagePicker = (props: IProps) => {
               </TextField>
             }
             label=""
-            sx={{ width: '100%' }}
+            sx={{ width: '95%' }}
           />
           <FormControlLabel
             control={
@@ -544,7 +544,7 @@ export const LanguagePicker = (props: IProps) => {
               </TextField>
             }
             label=""
-            sx={{ width: '100%' }}
+            sx={{ width: '95%' }}
           />
         </DialogContent>
         <DialogActions>
