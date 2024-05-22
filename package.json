@@ -1,11 +1,12 @@
 {
   "name": "mui-language-picker",
-  "version": "2.1.6",
+  "version": "2.2.0",
   "description": "Material UI language picker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "clean": "rimraf dist coverage",
+    "data": "node src/langPicker/getJsonData.js",
     "index": "node src/langPicker/makeIndex2.js",
     "build": "npm test && tsc",
     "lint": "eslint src",

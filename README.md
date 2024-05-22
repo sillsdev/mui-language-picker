@@ -205,6 +205,8 @@ If the theme involves using a dark background, the control background can be cha
 
 ```sh
 npm install
+npm run data
+npm run index
 npm run build
 ```
 
@@ -212,7 +214,6 @@ npm run build
 
 ```sh
 npm run clean
-npm run index
 npm test
 ```
 

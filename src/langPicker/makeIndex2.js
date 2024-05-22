@@ -160,6 +160,7 @@ const getNames = (data) => {
   data.split('\n').forEach((line, i) => {
     if (i !== 0) {
       const fields = line.split('\t');
+      if (fields.length < 3) return;
       const code = fields[0].trim();
       const name = fields[2].trim();
       if (name !== '') scriptName.set(code, name);
@@ -175,6 +176,8 @@ writeFile.sync(
 );
 
 // collect font for each script
+const missingFamilies = new Set();
+
 const scriptFontMap = new Map();
 
 const finishScriptFont = () => {
@@ -186,6 +189,12 @@ const finishScriptFont = () => {
     header + JSON.stringify(scriptFontResult)
   );
   console.log('script map:', scriptFontResult.length);
+  if (missingFamilies.size > 0) {
+    console.warn(
+      'Tags missing at lff.api.languagetechnology.org/lang:',
+      JSON.stringify(Array.from(missingFamilies).sort())
+    );
+  }
 };
 
 const axios = require('axios');
@@ -207,11 +216,15 @@ const nextScriptFont = (n) => {
       .then((response) => {
         console.log('has result', tag);
         scriptFontMap.set(s, JSON.stringify(response.data));
-        setTimeout(() => nextScriptFont(n + 1), 1000);
+        setTimeout(() => nextScriptFont(n + 1), 500);
       })
       .catch((error) => {
-        console.log(error.message);
+        console.log(`${error.message}: ${tag}`);
         if (error.code === 'ECONNRESET') nextScriptFont(n);
+        else {
+          missingFamilies.add(tag);
+          nextScriptFont(n + 1);
+        }
       });
 };
 
