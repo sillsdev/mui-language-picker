@@ -400,10 +400,13 @@ export const LanguagePicker = (props: IProps) => {
           const nonCanonical: LangTag[] = [];
           const lcFirst = firstWord.toLowerCase();
           result.forEach((e) => {
-            if (e?.name.toLowerCase() === lcFirst) {
-              canonical.push(e);
-            } else {
-              nonCanonical.push(e);
+            if (e?.name) {
+              // all valid entries have a name
+              if (e.name.toLowerCase() === lcFirst) {
+                canonical.push(e);
+              } else {
+                nonCanonical.push(e);
+              }
             }
           });
 

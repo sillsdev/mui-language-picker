@@ -469,4 +469,26 @@ describe('LanguagePicker', () => {
       expect(screen.getByText('Choose Language Details')).not.toBe(null)
     );
   });
+
+  it('It does not crash with aa value', async () => {
+    const props = {
+      value: 'aa',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      <LanguagePicker {...props} value={undefined as any} />
+    );
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+  });
 });
