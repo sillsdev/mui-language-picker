@@ -73,6 +73,7 @@ Output should be a Language Picker when entered opens a dialog
 | setDir\*   | (rtl: boolean) => void  | callback to change script direction |
 | displayName\* | DisplayName          | function to control display of name |
 | setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
+| filter\*   | (tag: LangTag) => boolean  | allows filtering languages found by tag |
 | disabled\* | boolean                 | true if control disabled            |
 | offline\*  | boolean                 | true if picker in offline setting   |
 | required\* | boolean                 | true if language required (show *)  |

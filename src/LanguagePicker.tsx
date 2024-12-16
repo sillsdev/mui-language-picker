@@ -63,13 +63,14 @@ interface IProps extends IStateProps {
   setFont?: (font: string) => void;
   setInfo?: (tag: LangTag) => void;
   setDir?: (rtl: boolean) => void;
+  filter?: (code: string) => boolean;
   disabled?: boolean;
   offline?: boolean;
   required?: boolean;
 }
 
 export const LanguagePicker = (props: IProps) => {
-  const { disabled, offline, required } = props;
+  const { disabled, offline, required, filter } = props;
   const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } =
     props;
   const { displayName } = props;
@@ -413,7 +414,10 @@ export const LanguagePicker = (props: IProps) => {
           list.push(...canonical, ...nonCanonical);
         }
       }
-      if (list.slice(0, MAXOPTIONS).length > 0) {
+      if (
+        list.filter((i) => !filter || filter(i.tag)).slice(0, MAXOPTIONS)
+          .length > 0
+      ) {
         return (
           <>
             <FormGroup row sx={{ justifyContent: 'flex-end' }}>
