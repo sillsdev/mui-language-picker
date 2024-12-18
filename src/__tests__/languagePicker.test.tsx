@@ -491,4 +491,36 @@ describe('LanguagePicker', () => {
       expect(screen.getByText('Choose Language Details')).not.toBe(null)
     );
   });
+
+  it('filters our ise from country Italy', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const filter = (code: string) => code !== 'ise';
+    const { container } = render(<LanguagePicker {...props} filter={filter} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as Element,
+      { target: { value: 'Italy' } }
+    );
+    await waitFor(() => screen.getByText(/^Italian$/i));
+    try {
+      screen.getByText(/^ise$/i);
+      expect(Promise.reject(new Error('ise should not be here'))).toThrow();
+    } catch (e) {
+      expect(e).toBeDefined();
+    }
+  });
 });

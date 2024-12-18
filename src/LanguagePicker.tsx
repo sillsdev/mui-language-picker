@@ -40,7 +40,7 @@ import ChangeName from './ChangeName';
 import { getDisplayName, DisplayName } from './getDisplayName';
 import rtlScripts from './data/rtlScripts';
 
-const MAXOPTIONS = 50;
+// const MAXOPTIONS = 50;
 
 const StyledDialog = styled(Dialog)<DialogProps>(() => ({
   '& .MuiDialog-paperScrollPaper': {
@@ -414,10 +414,8 @@ export const LanguagePicker = (props: IProps) => {
           list.push(...canonical, ...nonCanonical);
         }
       }
-      if (
-        list.filter((i) => !filter || filter(i.tag)).slice(0, MAXOPTIONS)
-          .length > 0
-      ) {
+      const filtered = list.filter((i) => !filter || filter(i.tag));
+      if (filtered.length > 0) {
         return (
           <>
             <FormGroup row sx={{ justifyContent: 'flex-end' }}>
@@ -434,7 +432,7 @@ export const LanguagePicker = (props: IProps) => {
               />
             </FormGroup>
             <LanguageChoice
-              list={list}
+              list={filtered}
               secondary={secondary}
               choose={handleChoose}
               displayName={displayName}
