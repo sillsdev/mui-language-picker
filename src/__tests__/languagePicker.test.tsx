@@ -523,4 +523,58 @@ describe('LanguagePicker', () => {
       expect(e).toBeDefined();
     }
   });
+
+  it('removes select script when noScript is true', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} noScript={true} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    try {
+      screen.getByTestId(/^select-script$/i);
+      expect(
+        Promise.reject(new Error('select script should not be here'))
+      ).toThrow();
+    } catch (e) {
+      expect(e).toBeDefined();
+    }
+  });
+
+  it('removes select font when noFont is true', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} noFont={true} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    try {
+      screen.getByTestId(/^select-font$/i);
+      expect(
+        Promise.reject(new Error('select font should not be here'))
+      ).toThrow();
+    } catch (e) {
+      expect(e).toBeDefined();
+    }
+  });
 });

@@ -67,10 +67,12 @@ interface IProps extends IStateProps {
   disabled?: boolean;
   offline?: boolean;
   required?: boolean;
+  noScript?: boolean;
+  noFont?: boolean;
 }
 
 export const LanguagePicker = (props: IProps) => {
-  const { disabled, offline, required, filter } = props;
+  const { disabled, offline, required, filter, noScript, noFont } = props;
   const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } =
     props;
   const { displayName } = props;
@@ -492,65 +494,69 @@ export const LanguagePicker = (props: IProps) => {
             }}
           />
           {optList()}
-          <FormControlLabel
-            control={
-              <TextField
-                id="select-script"
-                data-testid="select-script"
-                select
-                sx={{ mx: 1 }}
-                fullWidth
-                label={`${t.script} *`}
-                value={defaultScript}
-                onChange={handleScriptChange(tag)}
-                margin="normal"
-                variant="filled"
-              >
-                {scriptList(tag)
-                  .map((s: string) => (
+          {!noScript && (
+            <FormControlLabel
+              control={
+                <TextField
+                  id="select-script"
+                  data-testid="select-script"
+                  select
+                  sx={{ mx: 1 }}
+                  fullWidth
+                  label={`${t.script} *`}
+                  value={defaultScript}
+                  onChange={handleScriptChange(tag)}
+                  margin="normal"
+                  variant="filled"
+                >
+                  {scriptList(tag)
+                    .map((s: string) => (
+                      <MenuItem key={s} value={s}>
+                        {scriptName.get(s) + ' - ' + s}
+                      </MenuItem>
+                    ))
+                    .concat(
+                      scriptList(tag).includes(defaultScript)
+                        ? []
+                        : [
+                            <MenuItem key={defaultScript} value={defaultScript}>
+                              {defaultScript}
+                            </MenuItem>,
+                          ]
+                    )}
+                </TextField>
+              }
+              label=""
+              sx={{ width: '95%' }}
+            />
+          )}
+          {!noFont && (
+            <FormControlLabel
+              control={
+                <TextField
+                  id="select-font"
+                  data-testid="select-font"
+                  select={hasFonts}
+                  helperText={!hasFonts ? t.noFonts : undefined}
+                  sx={{ mx: 1 }}
+                  fullWidth
+                  label={`${t.font}${hasFonts ? ' *' : ''}`}
+                  value={fontOpts.includes(curFont) ? curFont : ''}
+                  onChange={addFontInfo}
+                  margin="normal"
+                  variant="filled"
+                >
+                  {fontOpts.map((s) => (
                     <MenuItem key={s} value={s}>
-                      {scriptName.get(s) + ' - ' + s}
+                      {displayFamily(s)}
                     </MenuItem>
-                  ))
-                  .concat(
-                    scriptList(tag).includes(defaultScript)
-                      ? []
-                      : [
-                          <MenuItem key={defaultScript} value={defaultScript}>
-                            {defaultScript}
-                          </MenuItem>,
-                        ]
-                  )}
-              </TextField>
-            }
-            label=""
-            sx={{ width: '95%' }}
-          />
-          <FormControlLabel
-            control={
-              <TextField
-                id="select-font"
-                data-testid="select-font"
-                select={hasFonts}
-                helperText={!hasFonts ? t.noFonts : undefined}
-                sx={{ mx: 1 }}
-                fullWidth
-                label={`${t.font}${hasFonts ? ' *' : ''}`}
-                value={fontOpts.includes(curFont) ? curFont : ''}
-                onChange={addFontInfo}
-                margin="normal"
-                variant="filled"
-              >
-                {fontOpts.map((s) => (
-                  <MenuItem key={s} value={s}>
-                    {displayFamily(s)}
-                  </MenuItem>
-                ))}
-              </TextField>
-            }
-            label=""
-            sx={{ width: '95%' }}
-          />
+                  ))}
+                </TextField>
+              }
+              label=""
+              sx={{ width: '95%' }}
+            />
+          )}
         </DialogContent>
         <DialogActions>
           {!offline && (
