@@ -375,7 +375,10 @@ export const LanguagePicker = (props: IProps) => {
   const optList = () => {
     if (!tag && debouncedResponse) {
       const list: LangTag[] = [];
-      const tagLookup = getLangTag(debouncedResponse);
+      // special case for zh macro language (zh-CN)
+      const search =
+        debouncedResponse.toLowerCase() === 'zh' ? 'zh-CN' : debouncedResponse;
+      const tagLookup = getLangTag(search);
       if (tagLookup) {
         list.push(tagLookup);
       }
