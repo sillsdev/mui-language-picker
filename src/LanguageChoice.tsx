@@ -55,6 +55,7 @@ export function LanguageChoice(props: IProps) {
   };
 
   const detail = (tag: LangTag) => {
+    const namesSet = new Set([...tag.localnames ?? [], ...tag.names ?? []]);
     return (
       <>
         <Typography component={'span'}>
@@ -64,7 +65,7 @@ export function LanguageChoice(props: IProps) {
         </Typography>
         <br />
         <Typography component={'span'}>
-          {tag.names ? tag.names.join(', ') : ''}
+          {Array.from(namesSet).join(', ')}
         </Typography>
       </>
     );

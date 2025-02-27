@@ -13,7 +13,10 @@ export const getDisplayName = (
   if (displayName) return displayName(curName, tag);
   // By default show the local name if present and the name
   let tagName = curName;
-  if (tag?.localname && tag.localname.toLowerCase() !== curName.toLowerCase())
-    tagName = `${tag.localname} / ${curName}`;
+  const localName = tag
+    ? tag.localname || (tag.localnames?.length ? tag.localnames[0] : undefined)
+    : undefined;
+  if (localName && localName.toLowerCase() !== curName.toLowerCase())
+    tagName = `${localName} / ${curName}`;
   return tagName;
 };

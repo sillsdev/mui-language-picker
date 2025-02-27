@@ -257,6 +257,34 @@ describe('LanguageChoice', () => {
     expect(screen.getAllByText('Alemán, Allemand, Deutsch')).toHaveLength(1);
   });
 
+  it('should also consider alternate localnames without duplicates', () => {
+    const props = {
+      list: [0, 4]
+        .map((i) => mockLangTags[i])
+        .concat([
+          {
+            full: 'abt-Latn-PG-x-woserak',
+            localnames: ['Abulas'],
+            name: 'Ambulas',
+            names: ['Abelam', 'Abulas', 'Ambulas - Wosera Kamu'],
+            region: 'PG',
+            regionname: 'Papua New Guinea',
+            script: 'Latn',
+            sldr: false,
+            tag: 'abt-x-woserak',
+          },
+        ]),
+      choose: jest.fn(),
+      t: languagePickerStrings_en,
+      displayName: (curName: string, tag: LangTag | undefined) => curName,
+      secondary: true,
+    };
+    render(<LanguageChoice {...props} />);
+    expect(
+      screen.getAllByText('Abulas, Abelam, Ambulas - Wosera Kamu')
+    ).toHaveLength(1);
+  });
+
   it('should choose when clicked', () => {
     const props = {
       list: [0, 1, 2, 3].map((i) => mockLangTags[i]),
