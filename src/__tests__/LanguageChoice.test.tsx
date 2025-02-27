@@ -263,15 +263,15 @@ describe('LanguageChoice', () => {
         .map((i) => mockLangTags[i])
         .concat([
           {
-            full: 'abt-Latn-PG-x-woserak',
-            localnames: ['Abulas'],
-            name: 'Ambulas',
-            names: ['Abelam', 'Abulas', 'Ambulas - Wosera Kamu'],
+            full: 'ago-Latn-PG',
+            localnames: ['Anka Panide', 'Tainae'],
+            name: 'Tainae',
+            names: ['Anka Panide', 'Ivori'],
             region: 'PG',
             regionname: 'Papua New Guinea',
             script: 'Latn',
-            sldr: false,
-            tag: 'abt-x-woserak',
+            sldr: true,
+            tag: 'ago',
           },
         ]),
       choose: jest.fn(),
@@ -280,9 +280,7 @@ describe('LanguageChoice', () => {
       secondary: true,
     };
     render(<LanguageChoice {...props} />);
-    expect(
-      screen.getAllByText('Abelam, Abulas, Ambulas - Wosera Kamu')
-    ).toHaveLength(1);
+    expect(screen.getAllByText('Anka Panide, Ivori, Tainae')).toHaveLength(1);
   });
 
   it('should choose when clicked', () => {
