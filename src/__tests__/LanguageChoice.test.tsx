@@ -206,8 +206,6 @@ describe('LanguageChoice', () => {
       ],
       choose: jest.fn(),
       t: languagePickerStrings_en,
-      displayName: (curName: string, tag: LangTag | undefined) => curName,
-      secondary: true,
     };
     render(<LanguageChoice {...props} />);
     expect(screen.getAllByText("Qa'yol / Awakateko")).toHaveLength(1);
@@ -229,8 +227,6 @@ describe('LanguageChoice', () => {
       ],
       choose: jest.fn(),
       t: languagePickerStrings_en,
-      displayName: (curName: string, tag: LangTag | undefined) => curName,
-      secondary: true,
     };
     render(<LanguageChoice {...props} />);
     expect(
@@ -322,7 +318,6 @@ describe('LanguageChoice', () => {
       ],
       choose: jest.fn(),
       t: languagePickerStrings_en,
-      displayName: (curName: string, tag: LangTag | undefined) => curName,
       secondary: true,
     };
     render(<LanguageChoice {...props} />);
