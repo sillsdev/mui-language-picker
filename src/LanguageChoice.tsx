@@ -65,7 +65,7 @@ export function LanguageChoice(props: IProps) {
         </Typography>
         <br />
         <Typography component={'span'}>
-          {Array.from(namesSet).join(', ')}
+          {Array.from(namesSet).sort().join(', ')}
         </Typography>
       </>
     );

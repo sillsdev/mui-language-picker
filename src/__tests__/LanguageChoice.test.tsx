@@ -281,7 +281,7 @@ describe('LanguageChoice', () => {
     };
     render(<LanguageChoice {...props} />);
     expect(
-      screen.getAllByText('Abulas, Abelam, Ambulas - Wosera Kamu')
+      screen.getAllByText('Abelam, Abulas, Ambulas - Wosera Kamu')
     ).toHaveLength(1);
   });
 
