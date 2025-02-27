@@ -8,7 +8,7 @@ const writeFile = require('write');
 
 const getJsonData = (name, url) => {
   axios
-    .get(`https://raw.githubusercontent.com/silnrsi/${url}/${name}.json`)
+    .get(`https://${url}/${name}.json`)
     .then((response) => {
       const jsonData = JSON.stringify(response.data, null, 2);
       writeFile.sync(__dirname + `/../data/${name}.json`, jsonData);
@@ -19,5 +19,5 @@ const getJsonData = (name, url) => {
     });
 };
 
-getJsonData('langtags', 'langtags/master/pub');
-getJsonData('families', 'fonts/main');
+getJsonData('langtags', 'ldml.api.sil.org');
+getJsonData('families', 'raw.githubusercontent.com/silnrsi/fonts/main');
