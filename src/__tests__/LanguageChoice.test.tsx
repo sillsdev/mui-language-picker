@@ -190,6 +190,50 @@ describe('LanguageChoice', () => {
     expect(screen.queryAllByText('A Language of Mozambique.')).toHaveLength(0);
   });
 
+  it('should render local name (when present) with name', () => {
+    const props = {
+      list: [
+        {
+          full: 'agu-Latn-GT',
+          localname: "Qa'yol",
+          name: 'Awakateko',
+          region: 'GT',
+          regionname: 'Guatemala',
+          script: 'Latn',
+          sldr: true,
+          tag: 'agu',
+        },
+      ],
+      choose: jest.fn(),
+      t: languagePickerStrings_en,
+    };
+    render(<LanguageChoice {...props} />);
+    expect(screen.getAllByText("Qa'yol / Awakateko")).toHaveLength(1);
+  });
+
+  it('should fall back to localnames if localname not present', () => {
+    const props = {
+      list: [
+        {
+          full: 'crh-Cyrl-UA',
+          localnames: ['Къырымтатар тили', 'Къырымтатарджа', 'къырым тили'],
+          name: 'Crimean Tatar',
+          region: 'UA',
+          regionname: 'Ukraine',
+          script: 'Cyrl',
+          sldr: false,
+          tag: 'crh',
+        },
+      ],
+      choose: jest.fn(),
+      t: languagePickerStrings_en,
+    };
+    render(<LanguageChoice {...props} />);
+    expect(
+      screen.getAllByText('Къырымтатар тили / Crimean Tatar')
+    ).toHaveLength(1);
+  });
+
   it('should render script when present', () => {
     const props = {
       list: [0, 4]
@@ -255,6 +299,29 @@ describe('LanguageChoice', () => {
       screen.getAllByText('A Language of Germany in the Braille script.')
     ).toHaveLength(1);
     expect(screen.getAllByText('Alemán, Allemand, Deutsch')).toHaveLength(1);
+  });
+
+  it('should also consider alternate localnames without duplicates', () => {
+    const props = {
+      list: [
+        {
+          full: 'ago-Latn-PG',
+          localnames: ['Anka Panide', 'Tainae'],
+          name: 'Tainae',
+          names: ['Anka Panide', 'Ivori'],
+          region: 'PG',
+          regionname: 'Papua New Guinea',
+          script: 'Latn',
+          sldr: true,
+          tag: 'ago',
+        },
+      ],
+      choose: jest.fn(),
+      t: languagePickerStrings_en,
+      secondary: true,
+    };
+    render(<LanguageChoice {...props} />);
+    expect(screen.getAllByText('Anka Panide, Ivori, Tainae')).toHaveLength(1);
   });
 
   it('should choose when clicked', () => {
