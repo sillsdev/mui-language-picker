@@ -60,7 +60,10 @@ export function LanguageChoice(props: IProps) {
       <>
         <Typography component={'span'}>
           {t.languageOf
-            .replace('$1', tag.regionname ? tag.regionname : '')
+            .replace(
+              '$1',
+              tag.regionname ? tag.regionname : tag.region ? tag.region : ''
+            )
             .replace('$2', scriptDetail(tag))}
         </Typography>
         <br />
