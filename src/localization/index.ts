@@ -14,6 +14,8 @@ export interface ILanguagePickerStrings {
   phonetic: string;
   changeName?: string;
   nameInstruction?: string;
+  changeFeatures?: string;
+  featureInstruction?: string;
   newName?: string;
   change?: string;
   noFonts?: string;
@@ -37,6 +39,9 @@ export const languagePickerStrings_en = {
   changeName: 'Change Name',
   nameInstruction:
     'If you would like to change the language name enter the new name here.',
+  changeFeatures: 'Change Features',
+  featureInstruction:
+    'Font feastures are optional. They are four characters followed by an optional number.',
   newName: 'New Language Name',
   change: 'Change',
   noFonts: 'No recommended fonts',

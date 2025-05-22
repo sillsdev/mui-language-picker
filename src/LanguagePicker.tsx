@@ -18,8 +18,10 @@ import {
   IconButton,
   styled,
   Tooltip,
+  Stack,
 } from '@mui/material';
 import ClearIcon from '@mui/icons-material/Clear';
+import SettingsIcon from '@mui/icons-material/Settings';
 import ChangeNameIcon from '@mui/icons-material/BorderColor';
 import LanguageChoice from './LanguageChoice';
 import { bcp47Find, bcp47Parse } from './bcp47';
@@ -40,6 +42,8 @@ import { GrowingSpacer } from './GrowingSpacer';
 import ChangeName from './ChangeName';
 import { getDisplayName, DisplayName } from './getDisplayName';
 import rtlScripts from './data/rtlScripts';
+import ChangeFeat from './ChangeFeat';
+import { languagePickerStrings_en as eng } from './localization';
 
 // const MAXOPTIONS = 50;
 
@@ -58,10 +62,12 @@ interface IProps extends IStateProps {
   value: string;
   name: string;
   font: string;
+  feats?: string;
   displayName?: DisplayName;
   setCode?: (code: string) => void;
   setName?: (name: string) => void;
   setFont?: (font: string) => void;
+  setFeats?: (features?: string) => void;
   setInfo?: (tag: LangTag) => void;
   setDir?: (rtl: boolean) => void;
   filter?: (code: string) => boolean;
@@ -76,17 +82,20 @@ export const LanguagePicker = (props: IProps) => {
   const { disabled, offline, required, filter, noScript, noFont } = props;
   const { value, name, font, setCode, setName, setFont, setInfo, setDir, t } =
     props;
+  const { feats, setFeats } = props;
   const { displayName } = props;
   const [open, setOpen] = React.useState(false);
   const [curValue, setCurValue] = React.useState(value);
   const [curName, setCurName] = React.useState(name);
   const [curFont, setCurFont] = React.useState(font);
+  const [curFeats, setCurFeats] = React.useState(feats);
   const [secondary, setSecondary] = React.useState(true);
   const [response, setResponse] = React.useState('');
   const [tag, setTag] = React.useState<LangTag>();
   const [defaultScript, setDefaultScript] = React.useState('');
   const [fontOpts, setFontOpts] = React.useState(Array<string>());
   const [newName, setNewName] = React.useState(false);
+  const [newFeat, setNewFeat] = React.useState(false);
   const langEl = React.useRef<HTMLInputElement | null>(null);
 
   const debouncedResponse = useDebounce({ value: response, delay: 500 });
@@ -154,6 +163,7 @@ export const LanguagePicker = (props: IProps) => {
     setCurValue(value);
     setCurName(name);
     setCurFont(font);
+    setCurFeats(feats);
     if (setCode) setCode(value);
     if (setName) setName(name);
     if (setFont) setFont(font);
@@ -176,6 +186,7 @@ export const LanguagePicker = (props: IProps) => {
     if (setCode) setCode(curValue);
     if (setName) setName(curName);
     if (setFont) setFont(curFont);
+    if (setFeats) setFeats(curFeats);
     if (setDir) setDir(rtlScripts.includes(defaultScript));
     if (setInfo && tag) setInfo(tag);
     if (tag) {
@@ -240,11 +251,22 @@ export const LanguagePicker = (props: IProps) => {
   const handleCloseName = () => {
     setNewName(false);
   };
-
   const handleSetName = (iname: string) => {
     setCurName(iname);
     const tagName = getDisplayName(iname, tag, displayName);
     if (tag) setResponse(respFormat(tagName, tag.tag));
+  };
+
+  const handleNewFeat = () => {
+    setNewFeat(true);
+  };
+
+  const handleCloseFeat = () => {
+    setNewFeat(false);
+  };
+
+  const handleSetFeat = (iFeats: string) => {
+    setCurFeats(iFeats);
   };
 
   React.useEffect(() => {
@@ -528,25 +550,38 @@ export const LanguagePicker = (props: IProps) => {
           {!noFont && (
             <FormControlLabel
               control={
-                <TextField
-                  id="select-font"
-                  data-testid="select-font"
-                  select={hasFonts}
-                  helperText={!hasFonts ? t.noFonts : undefined}
-                  sx={{ mx: 1 }}
-                  fullWidth
-                  label={`${t.font}${hasFonts ? ' *' : ''}`}
-                  value={fontOpts.includes(curFont) ? curFont : ''}
-                  onChange={addFontInfo}
-                  margin="normal"
-                  variant="filled"
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  sx={{ display: 'flex', flexGrow: 1, p: 1 }}
                 >
-                  {fontOpts.map((s) => (
-                    <MenuItem key={s} value={s}>
-                      {displayFamily(s)}
-                    </MenuItem>
-                  ))}
-                </TextField>
+                  <TextField
+                    id="select-font"
+                    data-testid="select-font"
+                    select={hasFonts}
+                    helperText={!hasFonts ? t.noFonts : undefined}
+                    sx={{ mx: 1 }}
+                    fullWidth
+                    label={`${t.font}${hasFonts ? ' *' : ''}`}
+                    value={fontOpts.includes(curFont) ? curFont : ''}
+                    onChange={addFontInfo}
+                    margin="normal"
+                    variant="filled"
+                  >
+                    {fontOpts.map((s) => (
+                      <MenuItem key={s} value={s}>
+                        {displayFamily(s)}
+                      </MenuItem>
+                    ))}
+                  </TextField>
+                  <IconButton
+                    onClick={handleNewFeat}
+                    title={t.changeFeatures || eng.changeFeatures}
+                    disabled={!curFont}
+                  >
+                    <SettingsIcon fontSize="small" />
+                  </IconButton>
+                </Stack>
               }
               label=""
               sx={{ width: '95%' }}
@@ -597,6 +632,16 @@ export const LanguagePicker = (props: IProps) => {
           onClose={handleCloseName}
           curName={curName}
           onNewName={handleSetName}
+          t={t}
+        />
+      )}
+      {newFeat && (
+        <ChangeFeat
+          isOpen={newFeat}
+          onClose={handleCloseFeat}
+          curFeats={curFeats}
+          onNewFeat={handleSetFeat}
+          offline={offline}
           t={t}
         />
       )}
