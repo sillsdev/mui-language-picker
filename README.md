@@ -70,6 +70,8 @@ Output should be a Language Picker when entered opens a dialog
 | setName\*  | (name: string) => void  | callback to change language name    |
 | font       | string                  | font family name                    |
 | setFont\*  | (font: string) => void  | callback to change font family name |
+| feats\*    | string                  | font features                       |
+| setFeats\* | (feats: string) => void | callback to change font features    |
 | setDir\*   | (rtl: boolean) => void  | callback to change script direction |
 | displayName\* | DisplayName          | function to control display of name |
 | setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
@@ -80,6 +82,9 @@ Output should be a Language Picker when entered opens a dialog
 | t          | ILanguagePickerStrings  | localization strings (see below)    |
 
 \* parameters marked with an asterisk are optional
+
+The `feats` parameter is formtted like the font-feature-settings css property.
+See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings) for more information.
 
 ### Helper functions
 
@@ -117,6 +122,10 @@ export const languagePickerStrings_en = {
   changeName: 'Change Name',
   nameInstruction:
     'If you would like to change the language name enter the new name here.',
+  changeFeatures: 'Change Features',
+  featureInstruction:
+    'Font feastures are optional. They are four characters followed by an optional number.',
+  invalidFeature: 'Invalid Feature',
   newName: 'New Language Name',
   change: 'Change',
   noFonts: 'No recommended fonts',
