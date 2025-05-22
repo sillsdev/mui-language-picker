@@ -118,7 +118,7 @@ export default function ChangeFeat({
             {!offline && (
               <a
                 href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_fonts/OpenType_fonts_guide#Font_features"
-                title="Open type font features"
+                title={t?.openTypeFeatures || eng.openTypeFeatures}
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -156,21 +156,28 @@ export default function ChangeFeat({
               })
               .concat([
                 <ListItem key={99} sx={{ width: 'auto' }}>
-                  <Chip label="Add Feature" onClick={handleAdd} />
+                  <Chip
+                    label={t?.addFeature || eng.addFeature}
+                    data-testid="add-feature"
+                    onClick={handleAdd}
+                  />
                 </ListItem>,
               ])}
           </Paper>
           <Dialog open={openAdd} onClose={handleCloseAdd(undefined)}>
-            <DialogTitle>Add a Font Feature</DialogTitle>
+            <DialogTitle>
+              {t?.addFeatureTitle || eng.addFeatureTitle}
+            </DialogTitle>
             <DialogContent>
               <DialogContentText>
-                Enter the font feature to add.
+                {t?.addFeatureInstruction || eng.addFeatureInstruction}
               </DialogContentText>
               <TextField
                 autoFocus
                 margin="dense"
                 id="feature"
-                label="Feature"
+                data-testid="feature-input"
+                label={t?.featureInput || eng.featureInput}
                 fullWidth
                 variant="standard"
                 value={oneFeat}
@@ -179,8 +186,15 @@ export default function ChangeFeat({
               />
             </DialogContent>
             <DialogActions>
-              <Button onClick={handleCloseAdd(undefined)}>Cancel</Button>
-              <Button onClick={handleCloseAdd(oneFeat)}>Add Feature</Button>
+              <Button onClick={handleCloseAdd(undefined)}>
+                {t?.cancel || eng.cancel}
+              </Button>
+              <Button
+                onClick={handleCloseAdd(oneFeat)}
+                data-testid="do-add-feature"
+              >
+                {t?.addFeature || eng.addFeature}
+              </Button>
             </DialogActions>
           </Dialog>
         </>

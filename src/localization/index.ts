@@ -17,6 +17,11 @@ export interface ILanguagePickerStrings {
   changeFeatures?: string;
   featureInstruction?: string;
   invalidFeature?: string;
+  openTypeFeatures?: string;
+  addFeature?: string;
+  addFeatureTitle?: string;
+  addFeatureInstruction?: string;
+  featureInput?: string;
   newName?: string;
   change?: string;
   noFonts?: string;
@@ -44,6 +49,11 @@ export const languagePickerStrings_en = {
   featureInstruction:
     'Font feastures are optional. They are four characters followed by an optional number.',
   invalidFeature: 'Invalid Feature',
+  openTypeFeatures: 'Open type font features',
+  addFeature: 'Add Feature',
+  addFeatureTitle: 'Add a font feature',
+  addFeatureInstruction: 'Enter the font feature to add.',
+  featureInput: 'Feature',
   newName: 'New Language Name',
   change: 'Change',
   noFonts: 'No recommended fonts',

@@ -184,6 +184,49 @@ describe('LanguagePicker', () => {
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
+  it('can add font feature settings ss01', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      feats: undefined,
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setFeats: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as Element,
+      { target: { value: 'en' } }
+    );
+    await waitFor(() => screen.getByText(/^en-001$/i));
+    fireEvent.click(screen.getByText(/^en-001$/i));
+    fireEvent.click(screen.getByTestId('change-features'));
+    fireEvent.click(screen.getByTestId('add-feature'));
+    fireEvent.change(
+      (
+        (screen.getByTestId('feature-input') as Element)
+          .childNodes[1] as Element
+      ).childNodes[0] as Element,
+      {
+        target: { value: 'ss01' },
+      }
+    );
+    fireEvent.click(screen.getByTestId('do-add-feature'));
+    fireEvent.click(screen.getByText(/^Change$/i));
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setFeats).toHaveBeenCalledWith('"ss01"');
+  });
+
   it('choosing zh-CN-x-pyn returns right values', async () => {
     const props = {
       value: 'und',
@@ -210,7 +253,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('zh-CN-x-pyn');
     expect(props.setName).toHaveBeenCalledWith('Chinese');
-    expect(props.setFont).toHaveBeenCalledWith('notoserifsc');
+    expect(props.setFont).toHaveBeenCalledWith('notosanssc');
   });
 
   it('choosing zhn-fonapi returns right values', async () => {
@@ -270,6 +313,37 @@ describe('LanguagePicker', () => {
     expect(props.setCode).toHaveBeenCalledWith('ar');
     expect(props.setName).toHaveBeenCalledWith('Arabic');
     expect(props.setFont).toHaveBeenCalledWith('scheherazadenew');
+    expect(props.setDir).toHaveBeenCalledWith(true);
+  });
+
+  it('choosing ur returns right values', async () => {
+    const props = {
+      value: 'und',
+      name: '',
+      font: '',
+      t: languagePickerStrings_en,
+      setCode: jest.fn(),
+      setName: jest.fn(),
+      setFont: jest.fn(),
+      setDir: jest.fn(),
+      setInfo: jest.fn(),
+    };
+    const { container } = render(<LanguagePicker {...props} />);
+    fireEvent.click(container.querySelector('input') as Element);
+    await waitFor(() =>
+      expect(screen.getByText('Choose Language Details')).not.toBe(null)
+    );
+    fireEvent.change(
+      screen.getAllByText(/Find a language by name, code, or country/i)[0]
+        .nextSibling?.firstChild as Element,
+      { target: { value: 'ur' } }
+    );
+    await waitFor(() => screen.getAllByText(/Pakistan/i));
+    fireEvent.click(screen.getAllByText(/Pakistan/i)[0]);
+    fireEvent.click(screen.getByText('Save'));
+    expect(props.setCode).toHaveBeenCalledWith('ur');
+    expect(props.setName).toHaveBeenCalledWith('Urdu');
+    expect(props.setFont).toHaveBeenCalledWith('awaminastaliq');
     expect(props.setDir).toHaveBeenCalledWith(true);
   });
 
@@ -368,7 +442,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo-Arab');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('scheherazadenew');
+    expect(props.setFont).toHaveBeenCalledWith('harmattan');
     expect(props.setDir).toHaveBeenCalledWith(true);
   });
 

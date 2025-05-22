@@ -576,6 +576,7 @@ export const LanguagePicker = (props: IProps) => {
                   </TextField>
                   <IconButton
                     onClick={handleNewFeat}
+                    data-testid="change-features"
                     title={t.changeFeatures || eng.changeFeatures}
                     disabled={!curFont}
                   >
