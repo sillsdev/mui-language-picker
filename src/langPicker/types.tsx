@@ -77,11 +77,6 @@ export interface IFamilies {
   [key: string]: IFamily;
 }
 
-export interface ICodeFamily {
-  defaultfamily: string;
-  apiversion: number;
-  families: IFamilies;
-}
 export interface FontMap {
   [code: string]: string;
 }

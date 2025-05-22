@@ -64,7 +64,7 @@ export const scriptName = new Map<string, string>(
   scriptNameData as [string, string][]
 );
 
-export const fontMap = new Map(fontData as [string, string][]);
+export const fontMap = new Map(fontData as [string, string[]][]);
 
 const families = familiesData as IFamilies;
 export const displayFamily = (familyId: string) =>

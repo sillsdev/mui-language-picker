@@ -1,6 +1,6 @@
 import React, { KeyboardEvent, ChangeEvent, MouseEvent, useMemo } from 'react';
 import { ILanguagePickerStrings } from './model';
-import { LangTag, ICodeFamily } from './langPicker/types';
+import { LangTag } from './langPicker/types';
 import {
   Button,
   Dialog,
@@ -33,6 +33,7 @@ import {
   scriptName,
   displayFamily,
   getLangTag,
+  getFamily,
 } from './langTags';
 import useDebounce from './useDebounce';
 import { GrowingSpacer } from './GrowingSpacer';
@@ -166,7 +167,7 @@ export const LanguagePicker = (props: IProps) => {
     if (tagP && tagP.name) {
       const tagName = getDisplayName(tagP.name, tagP, displayName);
       setResponse(respFormat(tagName, tagP.tag));
-      setCurValue(val ? val : tagP.tag);
+      setCurValue(val || tagP.tag);
       setCurName(tagP.name);
     }
   };
@@ -200,18 +201,14 @@ export const LanguagePicker = (props: IProps) => {
     { value: 'notosanstc', label: 'Noto Sans TC (Chinese)', rtl: false },
   ];
 
-  const selectDefaultFont = (scriptKey: string) => {
-    const fontFamilyText = fontMap.get(scriptKey);
-    if (fontFamilyText) {
-      const fontFamily = JSON.parse(fontFamilyText) as ICodeFamily;
-      const familyId = fontFamily.defaultfamily[0];
-      if (familyId && fontFamily.families[familyId]) {
-        setCurFont(fontFamily.families[familyId].familyid);
-        setFontOpts(
-          Object.keys(fontFamily.families).map(
-            (f) => fontFamily.families[f].familyid
-          )
-        );
+  const selectDefaultFont = (iTag: string, scriptKey: string) => {
+    const fontFamilies = fontMap.get(iTag) ?? fontMap.get(scriptKey);
+    if (fontFamilies) {
+      const familyId = fontFamilies[0];
+      const fontFamily = getFamily(familyId);
+      if (familyId && fontFamily) {
+        setCurFont(fontFamily.familyid);
+        setFontOpts(fontFamilies.filter((f) => getFamily(f)));
       }
     }
   };
@@ -219,11 +216,8 @@ export const LanguagePicker = (props: IProps) => {
   const selectFont = (tagP: LangTag | undefined) => {
     if (!tagP || tagP.tag === 'und') return;
     const parse = bcp47Parse(tagP.tag);
-    const script = getDefScript(
-      tagP.tag,
-      parse.script ? parse.script : tagP.script
-    );
-    const region = parse.region ? parse.region : tagP.region;
+    const script = getDefScript(tagP.tag, parse.script ?? tagP.script);
+    const region = parse.region ?? tagP.region;
     let key = script;
     if (region) {
       key = script + '-' + region;
@@ -234,7 +228,7 @@ export const LanguagePicker = (props: IProps) => {
     if (!fontMap.has(key)) {
       setCurFont(safeFonts[0].value);
       setFontOpts(safeFonts.map((f) => f.value));
-    } else selectDefaultFont(key);
+    } else selectDefaultFont(tagP.tag, key);
   };
 
   const hasFonts = useMemo(() => fontOpts && fontOpts.length > 0, [fontOpts]);
@@ -292,7 +286,7 @@ export const LanguagePicker = (props: IProps) => {
             myTag += '-x-' + i;
           });
           displayTag({ ...firstFind, tag: myTag });
-          if (val === IpaTag) selectDefaultFont('Latn');
+          if (val === IpaTag) selectDefaultFont('en', 'Latn');
           else selectFont(firstFind);
         }
       }
@@ -301,9 +295,7 @@ export const LanguagePicker = (props: IProps) => {
   const selectScript = (tagP: LangTag) => {
     const tagParts = bcp47Parse(tagP.tag);
     selectFont(tagP);
-    setDefaultScript(
-      getDefScript(tagP.tag, tagParts.script ? tagParts.script : tagP.script)
-    );
+    setDefaultScript(getDefScript(tagP.tag, tagParts.script ?? tagP.script));
   };
 
   const scriptList = (tagP: LangTag | undefined) => {
@@ -462,7 +454,7 @@ export const LanguagePicker = (props: IProps) => {
         value={value !== 'und' ? name + ' (' + value + ')' : ''}
         onClick={handleClickOpen}
         onKeyDown={handleClickOpen}
-        disabled={disabled ? disabled : false}
+        disabled={disabled ?? false}
       />
       <StyledDialog
         id="LanguagePicker"

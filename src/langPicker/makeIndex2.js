@@ -198,34 +198,104 @@ const finishScriptFont = () => {
 };
 
 const axios = require('axios');
+const sleepNow = (delay) =>
+  new Promise((resolve) => setTimeout(resolve, delay));
 
-const nextScriptFont = (n) => {
-  if (n >= scriptResult.length) {
-    finishScriptFont();
-    return;
+const oneLangFont = async (tag, langTag) => {
+  await sleepNow(200);
+  console.log('checking', tag);
+  const response = await axios.get(
+    `https://lff.api.languagetechnology.org/lang/${tag}`
+  );
+  const fonts = response.data.defaultfamily;
+  let script = langTag.script;
+  if (!script && langTag?.scripts) {
+    script = langTag?.scripts[0];
   }
-  const [s, i] = scriptResult[n];
-  if (!scriptName.has(s)) {
-    console.error(`script name missing: ${s}`);
+  const scriptFonts = scriptFontMap.get(script);
+  if (fonts.length !== scriptFonts.length || fonts[0] !== scriptFonts[0]) {
+    if (
+      fonts.reduce((p, c) => (scriptFonts.includes(c) ? p : false), true) ||
+      scriptFonts.reduce((p, c) => (fonts.includes(c) ? p : false), true)
+    ) {
+      if (fonts.length > scriptFonts.length) {
+        scriptFontMap.set(script, fonts);
+        console.log('extending values for', script, 'to', fonts);
+      }
+    } else {
+      console.log('adding special case for ', tag);
+      scriptFontMap.set(tag, fonts);
+    }
   }
-  const langTag = jsonData[i];
-  const tag = langTag?.tag;
-  if (tag)
-    axios
-      .get(`https://lff.api.languagetechnology.org/lang/${tag}`)
-      .then((response) => {
-        console.log('has result', tag);
-        scriptFontMap.set(s, JSON.stringify(response.data));
-        setTimeout(() => nextScriptFont(n + 1), 500);
-      })
-      .catch((error) => {
-        console.log(`${error.message}: ${tag}`);
-        if (error.code === 'ECONNRESET') nextScriptFont(n);
-        else {
-          missingFamilies.add(tag);
-          nextScriptFont(n + 1);
-        }
-      });
 };
 
-nextScriptFont(0);
+const checkLangFont = async () => {
+  // let n = 0;
+  for (const langTag of jsonData) {
+    let tag = langTag?.tag;
+    if (!tag) continue;
+    // if (++n > 200) break;
+    let err;
+    do {
+      try {
+        await oneLangFont(tag, langTag);
+        err = null;
+      } catch (error) {
+        err = error.code;
+        if (err !== 'ECONNRESET') {
+          if (tag.indexOf('-') === -1) {
+            missingFamilies.add(tag);
+          } else {
+            tag = tag.split('-')[0];
+            err = 'ECONNRESET';
+          }
+        }
+      }
+    } while (err === 'ECONNRESET');
+  }
+};
+
+const oneScriptFont = async (script, tag) => {
+  await sleepNow(200);
+  const response = await axios.get(
+    `https://lff.api.languagetechnology.org/lang/${tag}`
+  );
+  console.log(tag, 'has', script);
+  scriptFontMap.set(script, response?.data?.defaultfamily);
+};
+
+const nextScriptFont = async () => {
+  for (const [s, i] of scriptResult) {
+    if (!scriptName.has(s)) {
+      console.error(`script name missing: ${s}`);
+    }
+    const langTag = jsonData[i];
+    let tag = langTag?.tag;
+    if (!tag) continue;
+
+    let err;
+    do {
+      try {
+        await oneScriptFont(s, tag);
+        err = null;
+      } catch (error) {
+        err = error.code;
+        console.log(`${error.message}: ${tag}`);
+        if (err !== 'ECONNRESET') {
+          if (tag.indexOf('-') === -1) {
+            missingFamilies.add(tag);
+          } else {
+            console.log('retrying', tag);
+            tag = tag.split('-')[0];
+            err = 'ECONNRESET';
+          }
+        }
+      }
+    } while (err === 'ECONNRESET');
+  }
+  await checkLangFont();
+  finishScriptFont();
+};
+
+// eslint-disable-next-line @typescript-eslint/no-floating-promises
+nextScriptFont();
