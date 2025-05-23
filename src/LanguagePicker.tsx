@@ -574,14 +574,16 @@ export const LanguagePicker = (props: IProps) => {
                       </MenuItem>
                     ))}
                   </TextField>
-                  <IconButton
-                    onClick={handleNewFeat}
-                    data-testid="change-features"
-                    title={t.changeFeatures || eng.changeFeatures}
-                    disabled={!curFont}
-                  >
-                    <SettingsIcon fontSize="small" />
-                  </IconButton>
+                  {setFeats && (
+                    <IconButton
+                      onClick={handleNewFeat}
+                      data-testid="change-features"
+                      title={t.changeFeatures || eng.changeFeatures}
+                      disabled={!curFont}
+                    >
+                      <SettingsIcon fontSize="small" />
+                    </IconButton>
+                  )}
                 </Stack>
               }
               label=""
