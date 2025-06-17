@@ -1,6 +1,6 @@
 {
   "name": "mui-language-picker",
-  "version": "2.5.1",
+  "version": "2.5.2",
   "description": "Material UI language picker",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
