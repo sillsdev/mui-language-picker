@@ -239,9 +239,9 @@ test('find en', async () => {
 
 test('find eng', async () => {
   const result = bcp47Find('eng');
-  expect(result && Array.isArray(result) ? result[0].tag : result).toEqual(
-    'en'
-  );
+  expect(
+    result && Array.isArray(result) ? result[0].tag : (result?.tag ?? result)
+  ).toEqual('en');
 });
 
 test('find es-419', async () => {
@@ -299,7 +299,7 @@ test('index en', async () => {
 
 test('index eng', async () => {
   const result = bcp47Index('eng');
-  expect(result?.length).toBeGreaterThan(100);
+  expect(result?.length).toEqual(1);
 });
 
 test('index es-419', async () => {

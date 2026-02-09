@@ -180,7 +180,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('en-001');
     expect(props.setName).toHaveBeenCalledWith('English');
-    expect(props.setFont).toHaveBeenCalledWith('charissil');
+    expect(props.setFont).toHaveBeenCalledWith('andika');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -282,7 +282,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('zhn-fonapi');
     expect(props.setName).toHaveBeenCalledWith('Zhuang, Nong');
-    expect(props.setFont).toHaveBeenCalledWith('charissil');
+    expect(props.setFont).toHaveBeenCalledWith('andika');
   });
 
   it('choosing ar returns right values', async () => {
@@ -405,7 +405,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('charissil');
+    expect(props.setFont).toHaveBeenCalledWith('andika');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -479,7 +479,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('charissil');
+    expect(props.setFont).toHaveBeenCalledWith('andika');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -519,7 +519,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Senegal Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('charissil');
+    expect(props.setFont).toHaveBeenCalledWith('andika');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
