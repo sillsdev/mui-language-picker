@@ -47,7 +47,7 @@ export const languagePickerStrings_en = {
     'If you would like to change the language name enter the new name here.',
   changeFeatures: 'Change Features',
   featureInstruction:
-    'Font feastures are optional. They are four characters followed by an optional number.',
+    'Font features are optional. They are four characters followed by an optional number.',
   invalidFeature: 'Invalid Feature',
   openTypeFeatures: 'Open type font features',
   addFeature: 'Add Feature',
