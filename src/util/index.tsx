@@ -1,1 +1,1 @@
-export * from "./badChar";
+export * from './badChar';

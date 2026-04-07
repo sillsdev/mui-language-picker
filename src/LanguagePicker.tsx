@@ -289,8 +289,8 @@ export const LanguagePicker = (props: IProps) => {
         parse.variant === IpaTag
           ? IpaTag
           : parse.script
-          ? parse.script
-          : tagP?.script;
+            ? parse.script
+            : tagP?.script;
       if (script !== val) {
         let newTag = parse.language || 'und';
         if (val !== IpaTag) newTag += '-' + val;
