@@ -206,7 +206,7 @@ export const LanguagePicker = (props: IProps) => {
   };
 
   const safeFonts = [
-    { value: 'charissil', label: 'Charis SIL (Recommended)', rtl: false },
+    { value: 'charis', label: 'Charis (Recommended)', rtl: false },
     { value: 'annapurnasil', label: 'Annapurna SIL (Indic)', rtl: false },
     { value: 'scheherazadenew', label: 'Scheherazade New (Arabic)', rtl: true },
     { value: 'notosanstc', label: 'Noto Sans TC (Chinese)', rtl: false },

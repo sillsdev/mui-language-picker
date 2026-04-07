@@ -77,7 +77,7 @@ describe('LanguagePicker', () => {
     const props = {
       value: 'en',
       name: 'English',
-      font: 'charissil',
+      font: 'charis',
       t: languagePickerStrings_en,
     };
     const { container } = render(<LanguagePicker {...props} />);
@@ -109,7 +109,7 @@ describe('LanguagePicker', () => {
     const props = {
       value: 'en',
       name: 'English',
-      font: 'charissil',
+      font: 'charis',
       t: languagePickerStrings_en,
     };
     const { container } = render(<LanguagePicker {...props} />);
@@ -121,7 +121,7 @@ describe('LanguagePicker', () => {
     const props = {
       value: 'en',
       name: 'English',
-      font: 'charissil',
+      font: 'charis',
       t: languagePickerStrings_en,
     };
     const { container } = render(<LanguagePicker {...props} />);
