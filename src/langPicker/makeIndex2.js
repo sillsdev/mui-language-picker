@@ -7,7 +7,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 const readFileSync = require('fs').readFileSync;
 const writeFile = require('write');
-const json = readFileSync(__dirname + '/../data/langtags.json', 'utf8');
+const dataDir = __dirname + '/../data/';
+const json = readFileSync(dataDir + 'langtags.json', 'utf8');
 const jsonData = JSON.parse(json);
 console.log('json data:', jsonData.length);
 jsonData.push({
@@ -88,10 +89,7 @@ const maxes = Array.from(maxSet).sort((a, b) => a - b);
 console.log('maxes:', maxes.slice(-40));
 const header = `// This file is auto-generated. Modify the script that creates it.
 export default `;
-writeFile.sync(
-  __dirname + '/../data/langtagsIndex.ts',
-  header + JSON.stringify(result)
-);
+writeFile.sync(dataDir + 'langtagsIndex.ts', header + JSON.stringify(result));
 console.log(result.length);
 
 const tagMap = new Map();
@@ -118,10 +116,7 @@ jsonData.forEach((element, i) => {
   });
 });
 const tagResult = Array.from(tagMap).sort((a, b) => a[0].localeCompare(b[0]));
-writeFile.sync(
-  __dirname + '/../data/tagIndex.ts',
-  header + JSON.stringify(tagResult)
-);
+writeFile.sync(dataDir + 'tagIndex.ts', header + JSON.stringify(tagResult));
 console.log('tag map:', tagResult.length);
 
 // scriptMap
@@ -148,7 +143,7 @@ const codeScriptResult = Array.from(codeScripts).sort((a, b) =>
   a[0].localeCompare(b[0])
 );
 writeFile.sync(
-  __dirname + '/../data/codeScripts.ts',
+  dataDir + 'codeScripts.ts',
   header + JSON.stringify(codeScriptResult)
 );
 const scriptResult = Array.from(scriptMap).sort((a, b) =>
@@ -168,10 +163,10 @@ const getNames = (data) => {
   });
 };
 
-const csvData = readFileSync(__dirname + '/../data/scripts.csv', 'utf8');
+const csvData = readFileSync(dataDir + 'scripts.csv', 'utf8');
 getNames(csvData);
 writeFile.sync(
-  __dirname + '/../data/scriptName.ts',
+  dataDir + 'scriptName.ts',
   header + JSON.stringify(Array.from(scriptName), '', 2)
 );
 
@@ -180,18 +175,20 @@ const missingFamilies = new Set();
 
 const scriptFontMap = new Map();
 
+const lffUrl = 'lff.api.languagetechnology.org/lang';
+
 const finishScriptFont = () => {
   const scriptFontResult = Array.from(scriptFontMap).sort((a, b) =>
     a[0].localeCompare(b[0])
   );
   writeFile.sync(
-    __dirname + '/../data/scriptFontIndex.ts',
+    dataDir + 'scriptFontIndex.ts',
     header + JSON.stringify(scriptFontResult)
   );
   console.log('script map:', scriptFontResult.length);
   if (missingFamilies.size > 0) {
     console.warn(
-      'Tags missing at lff.api.languagetechnology.org/lang:',
+      `Tags missing at ${lffUrl}:`,
       JSON.stringify(Array.from(missingFamilies).sort())
     );
   }
@@ -202,11 +199,9 @@ const sleepNow = (delay) =>
   new Promise((resolve) => setTimeout(resolve, delay));
 
 const oneLangFont = async (tag, langTag) => {
-  await sleepNow(200);
+  await sleepNow(100);
   console.log('checking', tag);
-  const response = await axios.get(
-    `https://lff.api.languagetechnology.org/lang/${tag}`
-  );
+  const response = await axios.get(`https://${lffUrl}/${tag}`);
   const fonts = response.data.defaultfamily;
   let script = langTag.script;
   if (!script && langTag?.scripts) {
@@ -215,15 +210,15 @@ const oneLangFont = async (tag, langTag) => {
   const scriptFonts = scriptFontMap.get(script);
   if (fonts.length !== scriptFonts.length || fonts[0] !== scriptFonts[0]) {
     if (
-      fonts.reduce((p, c) => (scriptFonts.includes(c) ? p : false), true) ||
-      scriptFonts.reduce((p, c) => (fonts.includes(c) ? p : false), true)
+      fonts.every((f) => scriptFonts.includes(f)) ||
+      scriptFonts.every((f) => fonts.includes(f))
     ) {
       if (fonts.length > scriptFonts.length) {
         scriptFontMap.set(script, fonts);
         console.log('extending values for', script, 'to', fonts);
       }
     } else {
-      console.log('adding special case for ', tag);
+      console.log('adding special case for', tag);
       scriptFontMap.set(tag, fonts);
     }
   }
@@ -256,10 +251,8 @@ const checkLangFont = async () => {
 };
 
 const oneScriptFont = async (script, tag) => {
-  await sleepNow(200);
-  const response = await axios.get(
-    `https://lff.api.languagetechnology.org/lang/${tag}`
-  );
+  await sleepNow(100);
+  const response = await axios.get(`https://${lffUrl}/${tag}`);
   console.log(tag, 'has', script);
   scriptFontMap.set(script, response?.data?.defaultfamily);
 };
