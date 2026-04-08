@@ -62,24 +62,24 @@ Output should be a Language Picker when entered opens a dialog
 
 ### Parameter definitions
 
-| Parameter  | Type                    | Meaning                             |
-| ---------- | ----------------------- | ----------------------------------- |
-| value      | string                  | BCP 47 language code                |
-| setCode\*  | (value: string) => void | callback to change BCP 47 value     |
-| name       | string                  | language name                       |
-| setName\*  | (name: string) => void  | callback to change language name    |
-| font       | string                  | font family name                    |
-| setFont\*  | (font: string) => void  | callback to change font family name |
-| feats\*    | string                  | font features                       |
-| setFeats\* | (feats: string) => void | callback to change font features    |
-| setDir\*   | (rtl: boolean) => void  | callback to change script direction |
-| displayName\* | DisplayName          | function to control display of name |
-| setInfo\*  | (tag: LangTag) => void  | callback to receive tag information |
-| filter\*   | (tag: LangTag) => boolean  | allows filtering languages found by tag |
-| disabled\* | boolean                 | true if control disabled            |
-| offline\*  | boolean                 | true if picker in offline setting   |
-| required\* | boolean                 | true if language required (show *)  |
-| t          | ILanguagePickerStrings  | localization strings (see below)    |
+| Parameter     | Type                      | Meaning                                 |
+| ------------- | ------------------------- | --------------------------------------- |
+| value         | string                    | BCP 47 language code                    |
+| setCode\*     | (value: string) => void   | callback to change BCP 47 value         |
+| name          | string                    | language name                           |
+| setName\*     | (name: string) => void    | callback to change language name        |
+| font          | string                    | font family name                        |
+| setFont\*     | (font: string) => void    | callback to change font family name     |
+| feats\*       | string                    | font features                           |
+| setFeats\*    | (feats: string) => void   | callback to change font features        |
+| setDir\*      | (rtl: boolean) => void    | callback to change script direction     |
+| displayName\* | DisplayName               | function to control display of name     |
+| setInfo\*     | (tag: LangTag) => void    | callback to receive tag information     |
+| filter\*      | (tag: LangTag) => boolean | allows filtering languages found by tag |
+| disabled\*    | boolean                   | true if control disabled                |
+| offline\*     | boolean                   | true if picker in offline setting       |
+| required\*    | boolean                   | true if language required (show \*)     |
+| t             | ILanguagePickerStrings    | localization strings (see below)        |
 
 \* parameters marked with an asterisk are optional
 
@@ -89,15 +89,11 @@ See [MDN](https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings
 ### Helper functions
 
 ```typescript
-import {
-  getLangTag,
-  getRtl,
-  getFamily
-} from "mui-language-picker";
+import { getLangTag, getRtl, getFamily } from 'mui-language-picker';
 
-console.log(getLangTag(tag)) // Return langTag object (see below)
-console.log(getRtl(tag)) // returns true if rtl script
-console.log(getFamily(familyId)) // Returns fontFamily object (see below)
+console.log(getLangTag(tag)); // Return langTag object (see below)
+console.log(getRtl(tag)); // returns true if rtl script
+console.log(getFamily(familyId)); // Returns fontFamily object (see below)
 ```
 
 The `fontName` returned by the Language Picker is the `familyId`. Refer to [fonts.languagetechnology.org](https://fonts.languagetechnology.org/) for more information.
