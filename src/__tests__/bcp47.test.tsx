@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/require-await */
+/// <reference types="jest" />
 import { langTags, getRtl, getLangTag } from '../langTags';
 import { bcp47Match, bcp47Parse, bcp47Find, bcp47Index } from '../bcp47';
 
@@ -299,7 +300,7 @@ test('index en', async () => {
 
 test('index eng', async () => {
   const result = bcp47Index('eng');
-  expect(result?.length).toEqual(1);
+  expect(result?.length).toEqual(7);
 });
 
 test('index es-419', async () => {

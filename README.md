@@ -125,6 +125,7 @@ export const languagePickerStrings_en = {
   newName: 'New Language Name',
   change: 'Change',
   noFonts: 'No recommended fonts',
+  clearLanguage: 'Clear language',
 } as ILanguagePickerStrings;
 ```
 

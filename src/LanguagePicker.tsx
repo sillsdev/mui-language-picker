@@ -495,19 +495,22 @@ export const LanguagePicker = (props: IProps) => {
             onChange={handleChange}
             onClick={handleLanguageClick}
             variant="outlined"
-            InputProps={{
-              ref: langEl,
-              endAdornment: (
-                <InputAdornment position="end">
-                  <IconButton
-                    edge="end"
-                    aria-label="clear language"
-                    onClick={handleClear}
-                  >
-                    <ClearIcon color="primary" />
-                  </IconButton>
-                </InputAdornment>
-              ),
+            slotProps={{
+              input: {
+                ref: langEl,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      edge="end"
+                      aria-label={t.clearLanguage ?? eng.clearLanguage}
+                      title={t.clearLanguage ?? eng.clearLanguage}
+                      onClick={handleClear}
+                    >
+                      <ClearIcon color="primary" />
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              },
             }}
           />
           {optList()}

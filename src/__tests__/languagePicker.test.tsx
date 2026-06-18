@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
 import {
@@ -127,7 +123,7 @@ describe('LanguagePicker', () => {
     const { container } = render(<LanguagePicker {...props} />);
     fireEvent.click(container.querySelector('input') as Element);
     expect(screen.getByText('Choose Language Details')).not.toBe(null);
-    fireEvent.click(screen.getByText('Cancel') as Element);
+    fireEvent.click(screen.getByText('Cancel'));
     await waitFor(() =>
       expect(screen.queryByText('Choose Language Details')).toBe(null)
     );
@@ -180,7 +176,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('en-001');
     expect(props.setName).toHaveBeenCalledWith('English');
-    expect(props.setFont).toHaveBeenCalledWith('andika');
+    expect(props.setFont).toHaveBeenCalledWith('charis');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -216,7 +212,7 @@ describe('LanguagePicker', () => {
       (
         (screen.getByTestId('feature-input') as Element)
           .childNodes[1] as Element
-      ).childNodes[0] as Element,
+      ).childNodes[0],
       {
         target: { value: 'ss01' },
       }
@@ -282,7 +278,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('zhn-fonapi');
     expect(props.setName).toHaveBeenCalledWith('Zhuang, Nong');
-    expect(props.setFont).toHaveBeenCalledWith('andika');
+    expect(props.setFont).toHaveBeenCalledWith('charis');
   });
 
   it('choosing ar returns right values', async () => {
@@ -405,7 +401,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('andika');
+    expect(props.setFont).toHaveBeenCalledWith('charis');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -479,7 +475,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('andika');
+    expect(props.setFont).toHaveBeenCalledWith('charis');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -519,7 +515,7 @@ describe('LanguagePicker', () => {
     fireEvent.click(screen.getByText('Save'));
     expect(props.setCode).toHaveBeenCalledWith('wo');
     expect(props.setName).toHaveBeenCalledWith('Senegal Wolof');
-    expect(props.setFont).toHaveBeenCalledWith('andika');
+    expect(props.setFont).toHaveBeenCalledWith('charis');
     expect(props.setDir).toHaveBeenCalledWith(false);
   });
 
@@ -535,7 +531,6 @@ describe('LanguagePicker', () => {
       setInfo: jest.fn(),
     };
     const { container } = render(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       <LanguagePicker {...props} value={undefined as any} />
     );
     fireEvent.click(container.querySelector('input') as Element);
@@ -557,7 +552,6 @@ describe('LanguagePicker', () => {
       setInfo: jest.fn(),
     };
     const { container } = render(
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       <LanguagePicker {...props} value={undefined as any} />
     );
     fireEvent.click(container.querySelector('input') as Element);

@@ -25,6 +25,7 @@ export interface ILanguagePickerStrings {
   newName?: string;
   change?: string;
   noFonts?: string;
+  clearLanguage?: string;
 }
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
@@ -57,4 +58,5 @@ export const languagePickerStrings_en = {
   newName: 'New Language Name',
   change: 'Change',
   noFonts: 'No recommended fonts',
+  clearLanguage: 'Clear Language',
 } as ILanguagePickerStrings;
