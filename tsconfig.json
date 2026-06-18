@@ -7,6 +7,7 @@
     "moduleResolution": "node",
     "declaration": true,
     "outDir": "./dist",
+    "rootDir": "src",
     "strict": true,
     "allowJs": true,
     "esModuleInterop": true,
@@ -14,5 +15,6 @@
     "isolatedModules": true,
     "jsx": "react",
     "skipLibCheck": true
-  }
+  },
+  "include": ["src"]
 }
