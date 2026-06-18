@@ -47,7 +47,8 @@ module.exports = [
                 'Avoid using the `Function` type. Prefer a specific function type, like `() => void`.',
             },
             Boolean: {
-              message: 'Avoid using the `Boolean` type. Did you mean `boolean`?',
+              message:
+                'Avoid using the `Boolean` type. Did you mean `boolean`?',
             },
             Number: {
               message: 'Avoid using the `Number` type. Did you mean `number`?',
